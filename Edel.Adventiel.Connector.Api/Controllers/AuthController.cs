@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Autumn.Mvc.Data.Configurations;
 using Edel.Adventiel.Connector.Api.Models.V1;
 using Edel.Adventiel.Connector.Api.Models.V1.Auth;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +21,12 @@ namespace Edel.Adventiel.Connector.Api.Controllers
     public class AuthController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly AutumnDataSettings _settings;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(AutumnDataSettings settings, IConfiguration configuration)
         {
             _configuration = configuration;
+            _settings = settings;
         }
 
         [HttpPost]
@@ -28,12 +35,31 @@ namespace Edel.Adventiel.Connector.Api.Controllers
             if (!ModelState.IsValid)
                 return StatusCode((int) HttpStatusCode.BadRequest, new ErrorModel(ModelState));
 
-            var claims = new[]
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, request.Username));
+
+            foreach (var item in _settings.Routes.Keys)
             {
-                new Claim(ClaimTypes.Name, request.Username),
-                new Claim("cattle", "read write"),
-                new Claim("cattle_pregnancy-check", "read")
-            };
+                var routeAttribute = _settings.Routes[item];
+                var entityType = item.GetGenericArguments()[0];
+                var entityInfo = _settings.EntitiesInfos[entityType];
+                var stringBuilder =  new StringBuilder();
+                stringBuilder.Append("read,");
+                if (!entityInfo.IgnoreOperations.Contains(HttpMethod.Post))
+                {
+                    stringBuilder.Append("create,");
+                }
+                if (!entityInfo.IgnoreOperations.Contains(HttpMethod.Put))
+                {
+                    stringBuilder.Append("update,");
+                }
+                if (!entityInfo.IgnoreOperations.Contains(HttpMethod.Delete))
+                {
+                    stringBuilder.Append("delete,");
+                }
+                claims.Add(new Claim(routeAttribute.Template.Replace("/", "_").ToLowerInvariant(), stringBuilder.ToString().Trim(',')));
+            }
+
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes($"{_configuration["Jwt:SecurityKey"]}"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

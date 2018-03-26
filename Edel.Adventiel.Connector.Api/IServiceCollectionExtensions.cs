@@ -43,10 +43,19 @@ namespace Edel.Adventiel.Connector.Api
                         {
                             OnTokenValidated = async ctx =>
                             {
-                                var path = ctx.Request.Path.Value.Split('/');
-                                var claimType = path[2];
-                                if (path.Length >= 4)
-                                    claimType += "_" + path[3];
+                                var claimType = ctx.Request.Path.Value.TrimStart('/').Replace("/", "_");
+                                if (ctx.Request.Method == "GET" )
+                                {
+                                    var pathItem =  claimType.Split('_');
+                                    if (pathItem.Length >= 3)
+                                    {
+                                        claimType = string.Format("{0}_{1}_{2}", pathItem[0], pathItem[1], pathItem[2]);
+                                    }
+                                    else
+                                    {
+                                        claimType = string.Format("{0}_{1}", pathItem[0], pathItem[1]);
+                                    }
+                                }
                                 var claims = ctx.Principal.Claims.SingleOrDefault(c => c.Type == claimType);
                                 if (claims == null)
                                 {
@@ -54,14 +63,20 @@ namespace Edel.Adventiel.Connector.Api
                                 }
                                 else
                                 {
-                                    if (ctx.Request.Method =="GET" && !claims.Value.Contains("read"))
+                                    switch (ctx.Request.Method)
                                     {
-                                        ctx.Fail("");
-                                    }
-
-                                    if ((ctx.Request.Method == "POST" || ctx.Request.Method=="PUT") && !claims.Value.Contains("write"))
-                                    {
-                                        ctx.Fail("");
+                                        case "GET" when !claims.Value.Contains("read"):
+                                            ctx.Fail("");
+                                            break;
+                                        case "POST" when !claims.Value.Contains("create"):
+                                            ctx.Fail("create not authorized");
+                                            break;
+                                        case "PUT" when !claims.Value.Contains("update"):
+                                            ctx.Fail("update not authorized");
+                                            break;
+                                        case "DELETE" when !claims.Value.Contains("delete"):
+                                            ctx.Fail("delete not authorized");
+                                            break;
                                     }
                                 }
                             }
