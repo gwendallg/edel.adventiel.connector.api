@@ -3,9 +3,13 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Autumn.Mvc" Version="1.1.0" />
+    <PackageReference Include="Autumn.Mvc.Data.MongoDB" Version="1.2.2" />
+    <PackageReference Include="Autumn.Mvc.Data.Swagger" Version="1.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.3.0" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />

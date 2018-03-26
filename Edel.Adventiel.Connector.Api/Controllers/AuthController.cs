@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Edel.Adventiel.Connector.Api.Controllers.V1
+namespace Edel.Adventiel.Connector.Api.Controllers
 {
     [Route("v1/auth")]
     public class AuthController : Controller
@@ -27,12 +27,12 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
         {
             if (!ModelState.IsValid)
                 return StatusCode((int) HttpStatusCode.BadRequest, new ErrorModel(ModelState));
-            
+
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, request.Username),
-                new Claim("cattle","read" ), 
-                new Claim("cattle_pregnancy-check","read")
+                new Claim("cattle", "read"),
+                new Claim("cattle_pregnancy-check", "read")
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes($"{_configuration["Jwt:SecurityKey"]}"));
@@ -45,9 +45,9 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
 
-            return Ok(new AuthTokenResponse() { Token = new JwtSecurityTokenHandler().WriteToken(token)});
+            return Ok(new AuthTokenResponse() {Token = new JwtSecurityTokenHandler().WriteToken(token)});
 
         }
-        
+
     }
 }

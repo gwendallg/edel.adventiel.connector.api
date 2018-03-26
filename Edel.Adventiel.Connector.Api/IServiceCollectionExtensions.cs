@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
+using Autumn.Mvc.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,17 +12,6 @@ namespace Edel.Adventiel.Connector.Api
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddMongoDb(this IServiceCollection serviceCollection,
-            IConfiguration configuration)
-        {
-            var client = new MongoClient($"{configuration["ConnectionStrings:0:ConnectionString"]}");
-            var conventionPack = new ConventionPack();
-            conventionPack.Add(new CamelCaseElementNameConvention());
-            ConventionRegistry.Register("camel case", conventionPack, t => true);
-            serviceCollection.AddSingleton<IMongoClient>(client);
-            return serviceCollection;
-        }
-
         public static IServiceCollection AddSecurity(this IServiceCollection serviceCollection,
             IConfiguration configuration)
         {
@@ -73,7 +63,6 @@ namespace Edel.Adventiel.Connector.Api
                                     {
                                         ctx.Fail("");
                                     }
-
                                 }
                             }
                         };
