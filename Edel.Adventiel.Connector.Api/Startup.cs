@@ -3,6 +3,7 @@ using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.MongoDB;
 using Autumn.Mvc.Data.Swagger;
 using Edel.Adventiel.Connector.Api.Controllers;
+using Edel.Adventiel.Connector.Api.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -59,7 +60,7 @@ namespace Edel.Adventiel.Connector.Api
                     }
 
                     c.DocumentFilter<SwaggerDocumentFilter>();
-                    c.OperationFilter<SwaggerOperationFilter>();
+                    c.OperationFilter<DefaultSwaggerOperationFilter>();
                 })
                 .AddMvc();
         }

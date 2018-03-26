@@ -31,7 +31,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, request.Username),
-                new Claim("cattle", "read"),
+                new Claim("cattle", "read write"),
                 new Claim("cattle_pregnancy-check", "read")
             };
 

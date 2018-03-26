@@ -45,7 +45,7 @@ namespace Edel.Adventiel.Connector.Api
                             {
                                 var path = ctx.Request.Path.Value.Split('/');
                                 var claimType = path[2];
-                                if (path.Length > 4)
+                                if (path.Length >= 4)
                                     claimType += "_" + path[3];
                                 var claims = ctx.Principal.Claims.SingleOrDefault(c => c.Type == claimType);
                                 if (claims == null)
