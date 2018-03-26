@@ -13,5 +13,9 @@ namespace Edel.Adventiel.Connector.Api.Models.V1.Cattles.Breeding
     {
         [Required]
         public DateTime PregnancyCheckDate { get; set; }
+        
+        public string PregnancyCheckType { get; set; }
+        
+        public string PregnancyCheckResultType { get; set; }
     }
 }

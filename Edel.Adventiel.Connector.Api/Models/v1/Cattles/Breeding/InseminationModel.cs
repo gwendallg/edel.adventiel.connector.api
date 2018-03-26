@@ -13,5 +13,6 @@ namespace Edel.Adventiel.Connector.Api.Models.V1.Cattles.Breeding
     {
         [Required]
         public DateTime InseminationDate { get; set; }
+        
     }
 }
