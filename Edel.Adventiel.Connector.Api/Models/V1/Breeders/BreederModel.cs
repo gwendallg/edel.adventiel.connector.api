@@ -13,6 +13,7 @@ namespace Edel.Adventiel.Connector.Api.Models.V1.Breeders
 
         [Required] public string BreederCountryCode { get; set; }
 
+        [Ignore(Updatable = true)]
         public DateTime? LastImportDate { get; set; }
     }
 }

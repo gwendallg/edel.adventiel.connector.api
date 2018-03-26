@@ -1,16 +1,25 @@
-﻿using Autumn.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using AutoMapper.Configuration;
+using Autumn.Mvc;
 using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.MongoDB;
 using Autumn.Mvc.Data.Swagger;
 using Edel.Adventiel.Connector.Api.Controllers;
+using Edel.Adventiel.Connector.Api.Entities;
+using Edel.Adventiel.Connector.Api.Models.V1.Platforms;
+using Edel.Adventiel.Connector.Api.Services;
 using Edel.Adventiel.Connector.Api.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Driver;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Edel.Adventiel.Connector.Api
 {
@@ -63,6 +72,34 @@ namespace Edel.Adventiel.Connector.Api
                     c.OperationFilter<DefaultSwaggerOperationFilter>();
                 })
                 .AddMvc();
+
+            // register mongo Client
+            services.AddSingleton<IMongoClient>(s =>
+                new MongoClient($"{_configuration["ConnectionStrings:0:ConnectionString"]}"));
+            
+            // register mongo Database
+            services.AddScoped<IMongoDatabase>(s =>
+                s.GetService<IMongoClient>().GetDatabase($"{_configuration["ConnectionStrings:0:Database"]}"));
+            
+            // register security Service
+            services.AddSingleton<ISecurityService>(new SecurityService());
+           
+
+            // register Mapper,
+            var baseMappings = new MapperConfigurationExpression();
+            baseMappings.CreateMap<UserPostRequestModel, User>();
+            baseMappings.CreateMap<UserPutRequestModel, User>();
+            baseMappings.CreateMap<User, UserResponseModel>().ForMember(
+                d => d.Claims,
+                opt => opt.MapFrom(src => 
+                    src.Claims.Select(x=> new ClaimModel(){Type = x.Key,Value = x.Value}).ToList())
+                );
+            
+            var mapperConfiguration = new MapperConfiguration(baseMappings);            
+            var mapper = new Mapper(mapperConfiguration);
+            services.AddSingleton<IMapper>(mapper);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,6 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Edel.Adventiel.Connector.Api.Models.V1
 {
+    [BsonIgnoreExtraElements]
     public class MetaDataModel
     {
         public DateTime CreatedDate { get; set; }

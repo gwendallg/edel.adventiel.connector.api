@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Edel.Adventiel.Connector.Api.Models.V1.Auth
+namespace Edel.Adventiel.Connector.Api.Models.V1.Platforms
 {
-    public class AuthTokenRequest
+    public class AuthTokenRequestModel
     {
         [Required]
         public string Username { get; set; }

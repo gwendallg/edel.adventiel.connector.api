@@ -8,7 +8,7 @@ namespace Edel.Adventiel.Connector.Api.Models.V1.Cattles.Production.Milk
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleLactation")]
-    [Entity(Name = "cattle/lactation")]
+    [Entity(Name = "cattle-lactation")]
     public class LactationModel : AbstractCattleDataModel
     {
         [Required] public int LactationNumber { get; set; }

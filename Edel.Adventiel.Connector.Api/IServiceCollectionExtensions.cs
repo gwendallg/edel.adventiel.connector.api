@@ -43,30 +43,29 @@ namespace Edel.Adventiel.Connector.Api
                         {
                             OnTokenValidated = async ctx =>
                             {
+
                                 var claimType = ctx.Request.Path.Value.TrimStart('/').Replace("/", "_");
-                                if (ctx.Request.Method == "GET" )
+
+                                var pathItem = claimType.Split('_');
+                                if (pathItem.Length >= 3)
                                 {
-                                    var pathItem =  claimType.Split('_');
-                                    if (pathItem.Length >= 3)
-                                    {
-                                        claimType = string.Format("{0}_{1}_{2}", pathItem[0], pathItem[1], pathItem[2]);
-                                    }
-                                    else
-                                    {
-                                        claimType = string.Format("{0}_{1}", pathItem[0], pathItem[1]);
-                                    }
+                                    claimType = string.Format("{0}_{1}", pathItem[0], pathItem[1]);
                                 }
-                                var claims = ctx.Principal.Claims.SingleOrDefault(c => c.Type == claimType);
+                                var claims = ctx
+                                    .Principal
+                                    .Claims
+                                    .SingleOrDefault(c => c.Type == claimType);
+
                                 if (claims == null)
                                 {
-                                    ctx.Fail("00");
+                                    ctx.Fail("access not authorized");
                                 }
                                 else
                                 {
                                     switch (ctx.Request.Method)
                                     {
                                         case "GET" when !claims.Value.Contains("read"):
-                                            ctx.Fail("");
+                                            ctx.Fail("read not authorized");
                                             break;
                                         case "POST" when !claims.Value.Contains("create"):
                                             ctx.Fail("create not authorized");

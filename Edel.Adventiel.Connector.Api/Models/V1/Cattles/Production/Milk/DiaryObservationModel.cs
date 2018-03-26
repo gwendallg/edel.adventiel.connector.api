@@ -6,7 +6,7 @@ namespace Edel.Adventiel.Connector.Api.Models.V1.Cattles.Production.Milk
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleDiaryObservation")]
-    [Entity(Name = "cattle/diary-observation")]
+    [Entity(Name = "cattle-diary-observation")]
     public class DiaryObservationModel : AbstractCattleDataModel
     {
         public int LactationNumber { get; set; }
