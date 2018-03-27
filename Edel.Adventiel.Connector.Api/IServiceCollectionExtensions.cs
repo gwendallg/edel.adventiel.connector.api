@@ -33,7 +33,7 @@ namespace Edel.Adventiel.Connector.Api
                             ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
                             ValidIssuer = $"{configuration["Jwt:ValidIssuer"]}",
-                            ValidAudience = $"{configuration["Jwt:ValidAndience"]}",
+                            ValidAudience = $"{configuration["Jwt:ValidAudience"]}",
                             IssuerSigningKey =
                                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecurityKey"]))
 
