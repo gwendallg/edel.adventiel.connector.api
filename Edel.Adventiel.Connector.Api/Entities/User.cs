@@ -7,6 +7,9 @@ namespace Edel.Adventiel.Connector.Api.Entities
 {
     public class User
     {
+        /// <summary>
+        /// user name
+        /// </summary>
         [BsonId]
         public string Username { get; set; }
         public string Salt { get; set; }

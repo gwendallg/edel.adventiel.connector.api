@@ -92,7 +92,7 @@ namespace Edel.Adventiel.Connector.Api.Services
                     throw new Exception(string.Format("Claims {0} not exist", claim.Key));
                 }
 
-                var resourceType = entityTypeByRoute[claim.Key];
+                var resourceType = entityTypeByRoute[claim.Key];    
                 var claimRessource = claimsByEntity[resourceType];
             }
         }
@@ -121,6 +121,12 @@ namespace Edel.Adventiel.Connector.Api.Services
             return userDb;
         }
 
+        /// <summary>
+        /// authenticate user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public async Task<User> Authenticate(string userName, string password)
         {
             var user = await FindByUserNameAsync(userName);
@@ -132,17 +138,15 @@ namespace Edel.Adventiel.Connector.Api.Services
 
         static string GetHash(string password, string salt)
         {
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentNullException(nameof(password));
-            if (string.IsNullOrWhiteSpace(salt)) throw new ArgumentNullException(nameof(salt));
-            var text = string.Concat(password, salt);
-            // SHA512 is disposable by inheritance.  
-            using (var sha256 = SHA256.Create())
+            var sha512 = SHA512Managed.Create();
+            var bytes = Encoding.UTF8.GetBytes(string.Concat(password,salt));
+            var hash = sha512.ComputeHash(bytes);
+            var result = new StringBuilder();
+            foreach (var t in hash)
             {
-                // Send a sample text to hash.  
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
-                // Get the hashed string.  
-                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                result.Append(t.ToString("X2"));
             }
+            return result.ToString();
         }
 
         static string GetRandomSalt()
