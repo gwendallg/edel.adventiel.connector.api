@@ -13,5 +13,7 @@ namespace Edel.Adventiel.Connector.Api.Services
         Task<User> UpdateAsync(User user, string password, HttpContext context);
 
         Task<User> Authenticate(string userName, string password);
+
+        void TryAddAdminIfNotExistUsers(string adminPassword = "admin");
     }
 }

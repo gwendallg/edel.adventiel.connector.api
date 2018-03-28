@@ -1,17 +1,78 @@
 ﻿using System.Linq;
 using System.Text;
+using AutoMapper;
+using AutoMapper.Configuration;
 using Autumn.Mvc.Data;
+using Edel.Adventiel.Connector.Api.Entities;
+using Edel.Adventiel.Connector.Api.Models.V1.Platforms;
+using Edel.Adventiel.Connector.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Edel.Adventiel.Connector.Api
 {
     public static class IServiceCollectionExtensions
     {
+        public static IServiceCollection AddInitialization(this IServiceCollection serviceCollection,
+            IConfiguration configuration)
+        {
+            // mongo Client ioc registration
+            serviceCollection.AddScoped<IMongoClient>(s => new MongoClient($"{configuration["ConnectionStrings:0:ConnectionString"]}"));
+
+            // mongo Database ioc registration
+            serviceCollection.AddScoped(s => s.GetService<IMongoClient>().GetDatabase($"{configuration["ConnectionStrings:0:Database"]}"));
+
+            // mapper ioc registration
+            serviceCollection.AddSingleton<IMapper>(BuildMapper());
+
+            // initialization de la base base de donnés
+            TryAddAdminIfNotExistUsers(serviceCollection,configuration);
+            
+            // user service ioc registration
+            serviceCollection.AddScoped<IUserService, UserService>();
+            
+            return serviceCollection;
+        }
+        
+        /// <summary>
+        /// build mapper
+        /// </summary>
+        /// <returns></returns>
+        private static IMapper BuildMapper()
+        {
+            // register Mapper,
+            var baseMappings = new MapperConfigurationExpression();
+            baseMappings.CreateMap<UserPostRequestModel, User>().ForMember(
+                d => d.Claims,
+                opt => opt.MapFrom(src => src.Claims.ToDictionary(x => x.Type, x => x.Value))
+            );
+            baseMappings.CreateMap<UserPutRequestModel, User>().ForMember(
+                d => d.Claims,
+                opt => opt.MapFrom(src => src.Claims.ToDictionary(x => x.Type, x => x.Value))
+            );
+
+            baseMappings.CreateMap<User, UserResponseModel>().ForMember(
+                d => d.Claims,
+                opt => opt.MapFrom(src =>
+                    src.Claims.Select(x => new ClaimModel() {Type = x.Key, Value = x.Value}).ToList())
+            );
+            var mapperConfiguration = new MapperConfiguration(baseMappings);
+            return new Mapper(mapperConfiguration);
+        }
+
+        private static void TryAddAdminIfNotExistUsers(IServiceCollection serviceCollection, IConfiguration configuration)
+        {
+            var database = new
+                    MongoClient($"{configuration["ConnectionStrings:0:ConnectionString"]}")
+                .GetDatabase($"{configuration["ConnectionStrings:0:Database"]}");
+
+            var service = new UserService(serviceCollection.GetAutumnDataSettings(), database);
+            service.TryAddAdminIfNotExistUsers();
+        }
+
         public static IServiceCollection AddSecurity(this IServiceCollection serviceCollection,
             IConfiguration configuration)
         {
@@ -36,7 +97,6 @@ namespace Edel.Adventiel.Connector.Api
                             ValidAudience = $"{configuration["Jwt:ValidAudience"]}",
                             IssuerSigningKey =
                                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecurityKey"]))
-
                         };
 
                         options.Events = new JwtBearerEvents()
