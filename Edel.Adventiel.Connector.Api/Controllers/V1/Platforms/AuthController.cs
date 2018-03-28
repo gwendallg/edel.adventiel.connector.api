@@ -6,14 +6,11 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Autumn.Mvc.Data.Configurations;
-using Edel.Adventiel.Connector.Api.Entities;
 using Edel.Adventiel.Connector.Api.Models.V1.Platforms;
 using Edel.Adventiel.Connector.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using MongoDB.Driver;
 
 namespace Edel.Adventiel.Connector.Api.Controllers.V1.Platforms
 {
@@ -21,20 +18,13 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1.Platforms
     public class AuthController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly AutumnDataSettings _settings;
-        private readonly IMongoDatabase _database;
-        private readonly ISecurityService _securityService;
+        private readonly IUserService _userService;
 
-        public AuthController(
-            ISecurityService securityService,
-            IMongoDatabase database, 
-            AutumnDataSettings settings, 
+        public AuthController(IUserService userService, 
             IConfiguration configuration)
         {
-            _database = database;
             _configuration = configuration;
-            _settings = settings;
-            _securityService = securityService;
+            _userService = userService;
         }
 
         [HttpPost]
@@ -43,16 +33,10 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1.Platforms
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             // find user 
-            var user = await _database.GetCollection<User>("user")
-                .Find(u => u.Username == tokenRequestModel.Username)
-                .SingleOrDefaultAsync();
-
-            IEnumerable<Claim> claims;
-            // récupération des claims de l'utilisateur
-            if (user == null || _securityService.GetHash(tokenRequestModel.Password, user.Salt) != user.Hash)
-                return StatusCode((int) HttpStatusCode.Forbidden);
-
-            claims = user.Claims.Select(c => new Claim(c.Key, c.Value));
+            var user = await _userService.Authenticate(tokenRequestModel.Username, tokenRequestModel.Password);
+            if (user == null)return StatusCode((int) HttpStatusCode.Forbidden);
+            IList<Claim> claims = user.Claims.Select(c => new Claim(c.Key, c.Value)).ToList();
+            claims.Add(new Claim(ClaimTypes.Name, user.Username));
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes($"{_configuration["Jwt:SecurityKey"]}"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(

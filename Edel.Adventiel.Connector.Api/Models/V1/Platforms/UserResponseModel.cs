@@ -8,6 +8,6 @@ namespace Edel.Adventiel.Connector.Api.Models.V1.Platforms
         public string Salt { get; set; }
         public string Hash { get; set; }
         public List<ClaimModel> Claims { get; set; }
-        public MetaDataModel Metadata { get; set; }
+        public MetadataModel Metadata { get; set; }
     }
 }

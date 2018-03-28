@@ -45,7 +45,6 @@ namespace Edel.Adventiel.Connector.Api
                             {
 
                                 var claimType = ctx.Request.Path.Value.TrimStart('/').Replace("/", "_");
-
                                 var pathItem = claimType.Split('_');
                                 if (pathItem.Length >= 3)
                                 {

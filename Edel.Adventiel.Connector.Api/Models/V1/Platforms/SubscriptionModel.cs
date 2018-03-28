@@ -7,7 +7,7 @@ namespace Edel.Adventiel.Connector.Api.Models.V1.Platforms
 
     [BsonIgnoreExtraElements]
     [Entity(Name = "subscription")]
-    public class SubscriptionModel : AbstractElementModel
+    public class SubscriptionModel : AbstractElementModel<MetadataModel>
     {
         public string Login { get; set; }
         public string Password { get; set; }

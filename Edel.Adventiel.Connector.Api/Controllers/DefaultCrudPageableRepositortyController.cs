@@ -2,12 +2,19 @@
 using Autumn.Mvc.Configurations;
 using Autumn.Mvc.Data.Repositories;
 using Edel.Adventiel.Connector.Api.Models;
-using Edel.Adventiel.Connector.Api.Models.V1;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
 namespace Edel.Adventiel.Connector.Api.Controllers
 {
+    
+    /// <summary>
+    /// default crud controller
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TEntityPost"></typeparam>
+    /// <typeparam name="TEntityPut"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
     [Authorize]
     public class DefaultCrudPageableRepositortyController<TEntity, TEntityPost, TEntityPut, TKey>
         : Autumn.Mvc.Data.Controllers.RepositoryControllerAsync<TEntity, TEntityPost, TEntityPut, TKey>
@@ -19,28 +26,36 @@ namespace Edel.Adventiel.Connector.Api.Controllers
         {
         }
 
+        /// <summary>
+        /// on inserting
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         protected override TEntity OnInserting(TEntity entity)
         {
-            var element = entity as AbstractElementModel;
-            if (element != null)
+            dynamic e = entity;
+            e.Metadata = new MetadataModel
             {
-                element.Metadata = new MetaDataModel();
-                element.Metadata.CreatedDate = DateTime.UtcNow;
-                element.Metadata.CreatedAt = this.HttpContext.User.Identity.Name;
-            }
-
+                CreatedDate = DateTime.UtcNow,
+                CreatedAt = HttpContext.User.Identity.Name
+            };
             return entity;
         }
 
+        /// <summary>
+        /// on updating
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         protected override TEntity OnUpdating(TEntity entity)
         {
-            var element = entity as AbstractElementModel;
-            if (element != null && element.Metadata!=null)
+            dynamic e = entity;
+            e.Metadata = new MetadataModel
             {
-                element.Metadata.LastModifiedDate = DateTime.UtcNow;
-                element.Metadata.LastModifiedAt = this.HttpContext.User.Identity.Name;
-            }
-            return base.OnUpdating(entity);
+                LastModifiedDate = DateTime.UtcNow,
+                LastModifiedAt = HttpContext.User.Identity.Name
+            };
+            return entity;
         }
     }
 }

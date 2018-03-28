@@ -7,7 +7,7 @@ namespace Edel.Adventiel.Connector.Api.Models.V1.Breeders
 {
     [BsonIgnoreExtraElements]
     [Entity(Name = "breeder", Deletable = false)]
-    public class BreederModel : AbstractElementModel
+    public class BreederModel : AbstractElementModel<MetadataWithOriginModel>
     {
         [Required] public string BreederIdentifier { get; set; }
 

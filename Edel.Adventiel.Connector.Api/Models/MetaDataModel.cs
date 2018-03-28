@@ -1,12 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Autumn.Mvc.Data.Annotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Adventiel.Connector.Api.Models.V1
+namespace Edel.Adventiel.Connector.Api.Models
 {
     [BsonIgnoreExtraElements]
-    public class MetaDataModel
+    public class MetadataModel
     {
         public DateTime CreatedDate { get; set; }
         
