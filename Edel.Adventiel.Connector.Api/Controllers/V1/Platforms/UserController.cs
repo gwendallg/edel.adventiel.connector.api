@@ -69,10 +69,9 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1.Platforms
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            User user;
             try
             {
-                user = await _userService.FindByUserNameAsync(userName);
+                var user = await _userService.FindByUserNameAsync(userName);
                 user = _mapper.Map<User>(model);
                 if (user == null)
                     return NotFound();
