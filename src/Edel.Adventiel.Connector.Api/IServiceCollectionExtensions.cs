@@ -98,7 +98,7 @@ namespace Edel.Adventiel.Connector.Api
 
                         options.Events = new JwtBearerEvents()
                         {
-                            OnTokenValidated = async ctx =>
+                            OnTokenValidated = ctx =>
                             {
                                 var claimType = ctx.Request.Path.Value.TrimStart('/').Replace("/", "_");
                                 var pathItem = claimType.Split('_');
