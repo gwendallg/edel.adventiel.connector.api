@@ -10,6 +10,7 @@ using Edel.Adventiel.Connector.Api.Entities;
 using Edel.Adventiel.Connector.Api.Models;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
+// ReSharper disable All
 
 namespace Edel.Adventiel.Connector.Api.Services
 {

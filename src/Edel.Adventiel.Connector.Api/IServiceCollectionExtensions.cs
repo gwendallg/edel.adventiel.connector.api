@@ -4,18 +4,25 @@ using AutoMapper;
 using AutoMapper.Configuration;
 using Autumn.Mvc.Data;
 using Edel.Adventiel.Connector.Api.Entities;
-using Edel.Adventiel.Connector.Api.Models.V1.Platforms;
+using Edel.Adventiel.Connector.Api.Models.V1.Users;
 using Edel.Adventiel.Connector.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+// ReSharper disable All
 
 namespace Edel.Adventiel.Connector.Api
 {
     public static class IServiceCollectionExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static IServiceCollection AddInitialization(this IServiceCollection serviceCollection,
             IConfiguration configuration)
         {
@@ -45,20 +52,10 @@ namespace Edel.Adventiel.Connector.Api
         {
             // register Mapper,
             var baseMappings = new MapperConfigurationExpression();
-            baseMappings.CreateMap<UserPostRequestModel, User>().ForMember(
-                d => d.Claims,
-                opt => opt.MapFrom(src => src.Claims.ToDictionary(x => x.Type, x => x.Value))
-            );
-            baseMappings.CreateMap<UserPutRequestModel, User>().ForMember(
-                d => d.Claims,
-                opt => opt.MapFrom(src => src.Claims.ToDictionary(x => x.Type, x => x.Value))
-            );
-
-            baseMappings.CreateMap<User, UserResponseModel>().ForMember(
-                d => d.Claims,
-                opt => opt.MapFrom(src =>
-                    src.Claims.Select(x => new ClaimModel() {Type = x.Key, Value = x.Value}).ToList())
-            );
+            baseMappings.CreateMap<UserPostRequestModel, User>();
+            baseMappings.CreateMap<UserPutRequestModel, User>();
+            baseMappings.CreateMap<User, UserResponseModel>();
+            
             var mapperConfiguration = new MapperConfiguration(baseMappings);
             return new Mapper(mapperConfiguration);
         }
@@ -103,7 +100,6 @@ namespace Edel.Adventiel.Connector.Api
                         {
                             OnTokenValidated = async ctx =>
                             {
-
                                 var claimType = ctx.Request.Path.Value.TrimStart('/').Replace("/", "_");
                                 var pathItem = claimType.Split('_');
                                 if (pathItem.Length >= 3)

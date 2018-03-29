@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using AutoMapper.Configuration;
-using Autumn.Mvc;
+﻿using Autumn.Mvc;
 using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.MongoDB;
 using Autumn.Mvc.Data.Swagger;
 using Edel.Adventiel.Connector.Api.Controllers;
-using Edel.Adventiel.Connector.Api.Entities;
-using Edel.Adventiel.Connector.Api.Models;
-using Edel.Adventiel.Connector.Api.Models.V1;
-using Edel.Adventiel.Connector.Api.Models.V1.Platforms;
 using Edel.Adventiel.Connector.Api.Services;
 using Edel.Adventiel.Connector.Api.Swagger;
-using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Driver;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+// ReSharper disable All
 
 namespace Edel.Adventiel.Connector.Api
 {

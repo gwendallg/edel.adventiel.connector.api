@@ -12,9 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Edel.Adventiel.Connector.Api.Controllers.V1.Platforms
+namespace Edel.Adventiel.Connector.Api.Controllers
 {
-    [Route("v1/auth")]
+    [Route("auth")]
     public class AuthController : Controller
     {
         private readonly IConfiguration _configuration;

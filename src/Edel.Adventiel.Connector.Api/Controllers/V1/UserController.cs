@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Autumn.Mvc.Data.Models;
 using Edel.Adventiel.Connector.Api.Entities;
-using Edel.Adventiel.Connector.Api.Models.V1.Platforms;
+using Edel.Adventiel.Connector.Api.Models.V1.Users;
 using Edel.Adventiel.Connector.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+// ReSharper disable All
 
-namespace Edel.Adventiel.Connector.Api.Controllers.V1.Platforms
+
+namespace Edel.Adventiel.Connector.Api.Controllers.V1
 {
     [Authorize]
     [Route("v1/user")]
@@ -23,6 +25,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1.Platforms
             IMapper mapper)
         {
             _mapper = mapper;
+
             _userService = userService;
         }
 

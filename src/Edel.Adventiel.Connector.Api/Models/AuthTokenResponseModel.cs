@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿// ReSharper disable All
 
 namespace Edel.Adventiel.Connector.Api.Models.V1.Platforms
 {

@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
 using Autumn.Mvc.Configurations;
-using Autumn.Mvc.Data;
-using Autumn.Mvc.Data.Controllers;
 using Autumn.Mvc.Data.Swagger;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Edel.Adventiel.Connector.Api.Models.V1.Platforms
+namespace Edel.Adventiel.Connector.Api.Models.V1.Users
 {
     public class UserPutRequestModel
     {
         [Required]
         public string Password { get; set; }
         [Required]
-        public List<ClaimModel> Claims { get; set; } 
+        public Dictionary<string,string> Claims { get; set; } 
     }
 }
