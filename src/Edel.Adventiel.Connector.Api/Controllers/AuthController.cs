@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Edel.Adventiel.Connector.Api.Models.V1.Platforms;
-using Edel.Adventiel.Connector.Api.Services;
+using Edel.Adventiel.Connector.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

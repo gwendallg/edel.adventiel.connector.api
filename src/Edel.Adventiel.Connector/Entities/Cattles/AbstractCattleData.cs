@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Edel.Adventiel.Connector.Api.Models.V1.Cattles
+namespace Edel.Adventiel.Connector.Entities.Cattles
 {
-    public abstract class AbstractCattleDataModel : AbstractElementModel<MetadataWithOriginModel>
+    public abstract class AbstractCattleData : AbstractEntity<MetadataWithOrigin>
     {
         [Required]
         public string CattleIdentifier { get; set; }

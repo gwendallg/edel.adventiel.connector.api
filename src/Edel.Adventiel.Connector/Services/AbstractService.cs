@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace Edel.Adventiel.Connector.Api.Services
+namespace Edel.Adventiel.Connector.Services
 {
     public abstract class AbstractService<T>
         where T : class 

@@ -3,8 +3,9 @@ using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.MongoDB;
 using Autumn.Mvc.Data.Swagger;
 using Edel.Adventiel.Connector.Api.Controllers;
-using Edel.Adventiel.Connector.Api.Services;
 using Edel.Adventiel.Connector.Api.Swagger;
+using Edel.Adventiel.Connector.Entities.Users;
+using Edel.Adventiel.Connector.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +46,7 @@ namespace Edel.Adventiel.Connector.Api
                         .RepositoryControllerType(type: typeof(DefaultCrudPageableRepositortyController<,,,>))
                         .ApiVersion("v1")
                         .PluralizeController(false)
+                        .EntityAssembly(typeof(User).Assembly)
                 )
                 .AddAutumnMongo(config =>
                     config

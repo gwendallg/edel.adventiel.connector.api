@@ -4,12 +4,12 @@ using Autumn.Mvc.Data.Annotations;
 using Autumn.Mvc.Data.MongoDB.Annotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Adventiel.Connector.Api.Models.V1.Cattles.Breeding
+namespace Edel.Adventiel.Connector.Entities.Cattles.Breeding
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattlePregnancyCheck")]
     [Entity(Name = "cattle-pregnancy-check")]
-    public class PregnancyCheckModel : AbstractCattleDataModel
+    public class PregnancyCheck : AbstractCattleData
     {
         [Required]
         public DateTime PregnancyCheckDate { get; set; }

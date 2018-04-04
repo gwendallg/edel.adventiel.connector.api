@@ -1,10 +1,10 @@
 ﻿using System;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Adventiel.Connector.Api.Models
+namespace Edel.Adventiel.Connector.Entities
 {
     [BsonIgnoreExtraElements]
-    public class MetadataModel
+    public class Metadata
     {
         public DateTime CreatedDate { get; set; }
         

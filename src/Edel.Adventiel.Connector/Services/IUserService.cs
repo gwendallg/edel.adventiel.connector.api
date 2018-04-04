@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Edel.Adventiel.Connector.Api.Entities;
+using Edel.Adventiel.Connector.Entities.Users;
 using Microsoft.AspNetCore.Http;
 
-namespace Edel.Adventiel.Connector.Api.Services
+namespace Edel.Adventiel.Connector.Services
 {
     public interface IUserService
     {

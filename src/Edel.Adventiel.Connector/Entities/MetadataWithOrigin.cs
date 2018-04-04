@@ -1,8 +1,6 @@
-﻿using Edel.Adventiel.Connector.Api.Models;
-
-namespace Edel.Adventiel.Connector.Api.Models
+﻿namespace Edel.Adventiel.Connector.Entities
 {
-    public class MetadataWithOriginModel : MetadataModel
+    public class MetadataWithOrigin : Metadata
     {
         public string Origin { get; set; }
         public string OriginExternalId { get; set; }

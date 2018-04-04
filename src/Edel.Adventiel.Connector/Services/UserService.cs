@@ -6,13 +6,13 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Autumn.Mvc.Data.Configurations;
-using Edel.Adventiel.Connector.Api.Entities;
-using Edel.Adventiel.Connector.Api.Models;
+using Edel.Adventiel.Connector.Entities;
+using Edel.Adventiel.Connector.Entities.Users;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 // ReSharper disable All
 
-namespace Edel.Adventiel.Connector.Api.Services
+namespace Edel.Adventiel.Connector.Services
 {
     public class UserService : AbstractService<User>, IUserService
     {
@@ -34,7 +34,7 @@ namespace Edel.Adventiel.Connector.Api.Services
             user.Salt = GetRandomSalt();
             user.Hash = GetHash(password, user.Salt);
             CheckClaims(user);
-            user.Metadata= new MetadataModel();      
+            user.Metadata = new Metadata();
             user.Metadata.CreatedAt = context.User.Identity.Name;
             user.Metadata.CreatedDate = DateTime.UtcNow;
             await Collection().InsertOneAsync(user);
@@ -178,7 +178,7 @@ namespace Edel.Adventiel.Connector.Api.Services
             user.Salt = GetRandomSalt();
             user.Hash = GetHash(adminPassword, user.Salt);
             user.Claims = claims;
-            user.Metadata = new MetadataModel();
+            user.Metadata = new Metadata();
             user.Metadata.CreatedAt = "admin";
             user.Metadata.CreatedDate = DateTime.UtcNow;
             Collection().InsertOne(user);

@@ -1,7 +1,7 @@
 ﻿using System;
 using Autumn.Mvc.Configurations;
 using Autumn.Mvc.Data.Repositories;
-using Edel.Adventiel.Connector.Api.Models;
+using Edel.Adventiel.Connector.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
@@ -34,7 +34,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers
         protected override TEntity OnInserting(TEntity entity)
         {
             dynamic e = entity;
-            e.Metadata = new MetadataModel
+            e.Metadata = new Metadata
             {
                 CreatedDate = DateTime.UtcNow,
                 CreatedAt = HttpContext.User.Identity.Name
@@ -50,7 +50,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers
         protected override TEntity OnUpdating(TEntity entity)
         {
             dynamic e = entity;
-            e.Metadata = new MetadataModel
+            e.Metadata = new Metadata
             {
                 LastModifiedDate = DateTime.UtcNow,
                 LastModifiedAt = HttpContext.User.Identity.Name

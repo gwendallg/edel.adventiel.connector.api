@@ -3,9 +3,9 @@ using System.Text;
 using AutoMapper;
 using AutoMapper.Configuration;
 using Autumn.Mvc.Data;
-using Edel.Adventiel.Connector.Api.Entities;
-using Edel.Adventiel.Connector.Api.Models.V1.Users;
-using Edel.Adventiel.Connector.Api.Services;
+using Edel.Adventiel.Connector.Api.Models.Users;
+using Edel.Adventiel.Connector.Entities.Users;
+using Edel.Adventiel.Connector.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -54,7 +54,6 @@ namespace Edel.Adventiel.Connector.Api
             var baseMappings = new MapperConfigurationExpression();
             baseMappings.CreateMap<UserPostRequestModel, User>();
             baseMappings.CreateMap<UserPutRequestModel, User>();
-            baseMappings.CreateMap<User, UserResponseModel>();
             
             var mapperConfiguration = new MapperConfiguration(baseMappings);
             return new Mapper(mapperConfiguration);

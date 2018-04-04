@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Edel.Adventiel.Connector.Api.Models.V1.Users
+namespace Edel.Adventiel.Connector.Api.Models.Users
 {
     public class UserPostRequestModel : UserPutRequestModel
     {
         [Required]
-        public string Username { get; set; }
+        public string UserName { get; set; }
     }
 }

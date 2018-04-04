@@ -2,11 +2,11 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Adventiel.Connector.Api.Models
+namespace Edel.Adventiel.Connector.Entities
 {
    
-    public abstract class AbstractElementModel<T>
-        where T : MetadataModel
+    public abstract class AbstractEntity<T>
+        where T : Metadata
     {
         [Id]
         [BsonId]

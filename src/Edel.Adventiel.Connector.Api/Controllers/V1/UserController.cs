@@ -3,9 +3,9 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Autumn.Mvc.Data.Models;
-using Edel.Adventiel.Connector.Api.Entities;
-using Edel.Adventiel.Connector.Api.Models.V1.Users;
-using Edel.Adventiel.Connector.Api.Services;
+using Edel.Adventiel.Connector.Api.Models.Users;
+using Edel.Adventiel.Connector.Entities.Users;
+using Edel.Adventiel.Connector.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 // ReSharper disable All
@@ -37,15 +37,13 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
                 var user = await _userService.FindByUserNameAsync(userName);
                 if (user == null)
                     return NotFound();
-                var result = _mapper.Map<UserResponseModel>(user);
-                return Ok(result);
+                return Ok(user);
             }
             catch (Exception e)
             {
                 return StatusCode((int) HttpStatusCode.InternalServerError, new ErrorModelInternalError(e));
             }
         }
-    
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserPostRequestModel model)
@@ -58,8 +56,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
                 user = await _userService.AddAsync(user, model.Password, HttpContext);
                 var uri = string.Format("{0}/{1}", Request.HttpContext.Request.Path.ToString().TrimEnd('/'),
                     user.Username);
-                var result = _mapper.Map<UserResponseModel>(user);
-                return Created(uri, result);
+                return Created(uri, user);
             }
             catch (Exception e)
             {
@@ -82,8 +79,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
                 await _userService.UpdateAsync(user, model.Password, HttpContext);
                 var uri = string.Format("{0}/{1}", Request.HttpContext.Request.Path.ToString().TrimEnd('/'),
                     user.Username);
-                var result = _mapper.Map<UserResponseModel>(user);
-                return Created(uri, result);
+                return Ok(user);
             }
             catch (Exception e)
             {

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Edel.Adventiel.Connector.Api.Models.V1.Cattles
+namespace Edel.Adventiel.Connector.Entities.Cattles
 {
-    public class CattleIdentityModel
+    public class CattleIdentity
     {
         public string Name { get; set; }
 

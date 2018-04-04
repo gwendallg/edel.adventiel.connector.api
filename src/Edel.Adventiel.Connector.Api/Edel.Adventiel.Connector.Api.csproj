@@ -14,4 +14,11 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Edel.Adventiel.Connector\Edel.Adventiel.Connector.csproj" />
+    <ProjectReference Include="..\Edel.Adventiel.Connector\Edel.Adventiel.Connector.csproj">
+      <Project>{6CAB6C71-6F4A-4B2B-946A-7C18FDF5E9A4}</Project>
+      <Name>Edel.Adventiel.Connector</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
