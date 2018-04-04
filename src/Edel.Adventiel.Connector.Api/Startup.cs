@@ -63,8 +63,7 @@ namespace Edel.Adventiel.Connector.Api
                         c.SwaggerDoc(version, new Info {Title = "api", Version = version});
                     }
 
-                    c.DocumentFilter<SwaggerDocumentFilter>();
-                    c.OperationFilter<DefaultSwaggerOperationFilter>();
+                   c.OperationFilter<DefaultSwaggerOperationFilter>();
                 })
                 .AddInitialization(_configuration) 
                 .AddMvc();

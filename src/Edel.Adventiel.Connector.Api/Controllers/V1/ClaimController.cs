@@ -7,6 +7,7 @@ using System.Text;
 using Autumn.Mvc.Data.Configurations;
 using Autumn.Mvc.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Edel.Adventiel.Connector.Api.Controllers.V1
 {
@@ -24,6 +25,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
         /// find user
         /// </summary>
         /// <returns></returns>
+        [SwaggerOperation( Tags = new []{"claim"})]
         [HttpGet()]
         public IActionResult Get()
         {

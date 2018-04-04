@@ -11,6 +11,7 @@ using Edel.Adventiel.Connector.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Edel.Adventiel.Connector.Api.Controllers
 {
@@ -28,6 +29,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation( Tags = new []{"auth"})]
         public async Task<IActionResult> Token([FromBody] AuthTokenRequestModel tokenRequestModel)
         {
             if (!ModelState.IsValid)

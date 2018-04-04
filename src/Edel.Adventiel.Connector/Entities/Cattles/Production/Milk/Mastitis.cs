@@ -8,7 +8,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Production.Milk
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleMastitis")]
-    [Entity(Name = "cattle-mastitis")]
+    [Entity(Name = "cattle-mastitis",Insertable = false, Updatable = false, Deletable = false)]
     public class Mastitis : AbstractCattleData
     {
         public string CollectOriginCode { get; set; }

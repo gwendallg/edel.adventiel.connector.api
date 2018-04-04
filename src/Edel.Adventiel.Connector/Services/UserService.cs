@@ -173,6 +173,21 @@ namespace Edel.Adventiel.Connector.Services
             var scope = stringBuilder.ToString().TrimEnd(',').Trim();
             var claims = new Dictionary<string, string>();
             claims.Add("v1_user", scope);
+            foreach (var info in _dataSettings.EntitiesInfos.Values)
+            {
+                var claimKey = string.Format("{0}_{1}", info.ApiVersion, info.Name);
+                stringBuilder = new StringBuilder();
+                stringBuilder.Append("read, ");
+                if (!info.IgnoreOperations.Contains(HttpMethod.Post))
+                    stringBuilder.Append("create, ");
+                if (!info.IgnoreOperations.Contains(HttpMethod.Put))
+                    stringBuilder.Append("update, ");
+                if (!info.IgnoreOperations.Contains(HttpMethod.Delete))
+                    stringBuilder.Append("delete, ");
+                var claimValue = stringBuilder.ToString().Trim().TrimEnd(',');
+                claims.Add(claimKey, claimValue);
+            }
+            
             var user = new User();
             user.Username = "admin";
             user.Salt = GetRandomSalt();

@@ -11,7 +11,7 @@ namespace Edel.Adventiel.Connector.Entities.Subscriptions
     [Entity(Name = "edel-subscription")]
     public class EdelSubscription
     {
-        [Ignore(Updatable = true)]
+        [Ignore(Insertable = true)]
         [Required]
         [BsonId]
         [Id]
@@ -22,7 +22,8 @@ namespace Edel.Adventiel.Connector.Entities.Subscriptions
         [Ignore] public Metadata Metadata { get; set; }
 
         public bool Active { get; set; }
-        
+
+        [Ignore]
         public DateTime? LastCollectTime { get; set; }
     }
 }

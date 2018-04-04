@@ -8,6 +8,8 @@ using Edel.Adventiel.Connector.Entities.Users;
 using Edel.Adventiel.Connector.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
 // ReSharper disable All
 
 
@@ -34,6 +36,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
         /// <param name="userName"></param>
         /// <returns></returns>
         [HttpGet("{userName}")]
+        [SwaggerOperation( Tags = new []{"user"})]
         public async Task<IActionResult> Get(string userName)
         {
             try
@@ -55,6 +58,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
+        [SwaggerOperation( Tags = new []{"user"})]
         public async Task<IActionResult> Post([FromBody] UserPostRequestModel model)
         {
             if (!ModelState.IsValid)
@@ -80,6 +84,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{userName}")]
+        [SwaggerOperation( Tags = new []{"user"})]
         public async Task<IActionResult> Put(string userName, [FromBody] UserPutRequestModel model)
         {
             if (!ModelState.IsValid)

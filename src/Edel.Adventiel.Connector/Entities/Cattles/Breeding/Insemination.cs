@@ -8,7 +8,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Breeding
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleInsemination")]
-    [Entity(Name = "cattle-insemination")]
+    [Entity(Name = "cattle-insemination", Insertable = false, Updatable = false, Deletable = false)]
     public class Insemination : AbstractCattleData
     {
         [Required]

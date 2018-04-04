@@ -5,8 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Edel.Adventiel.Connector.Entities
 {
    
-    public abstract class AbstractEntity<T>
-        where T : Metadata
+    public abstract class AbstractEntity
     {
         [Id]
         [BsonId]
@@ -15,6 +14,6 @@ namespace Edel.Adventiel.Connector.Entities
         public string Id { get; set; }
         
         [Ignore]
-        public T Metadata { get; set; }
+        public Metadata Metadata { get; set; }
     }
 }

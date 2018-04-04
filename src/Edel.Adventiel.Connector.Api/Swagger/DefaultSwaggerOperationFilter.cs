@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using Autumn.Mvc.Configurations;
 using Autumn.Mvc.Data.Swagger;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +17,6 @@ namespace Edel.Adventiel.Connector.Api.Swagger
 
             if (operation.Parameters == null) return;
             if (!(context.ApiDescription.ActionDescriptor is ControllerActionDescriptor actionDescriptor)) return;
-
 
             var authorizeAttribute = actionDescriptor.ControllerTypeInfo.GetCustomAttribute(typeof(AuthorizeAttribute));
             if (authorizeAttribute == null) return;

@@ -7,14 +7,8 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Edel.Adventiel.Connector.Entities.Breeders
 {
     [BsonIgnoreExtraElements]
-    [Entity(Name = "breeder", Deletable = false)]
-    public class Breeder : AbstractEntity<MetadataWithOrigin>
+    [Entity(Name = "breeder", Insertable = false, Updatable = false, Deletable = false)]
+    public class Breeder : AbstractBreederData
     {
-        [Required] public string BreederIdentifier { get; set; }
-
-        [Required] public string BreederCountryCode { get; set; }
-
-        [Ignore(Updatable = true)]
-        public DateTime? LastImportDate { get; set; }
     }
 }

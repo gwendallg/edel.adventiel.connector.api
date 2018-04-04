@@ -2,7 +2,7 @@
 
 namespace Edel.Adventiel.Connector.Entities.Cattles
 {
-    public abstract class AbstractCattleData : AbstractEntity<MetadataWithOrigin>
+    public abstract class AbstractCattleData : AbstractEntity
     {
         [Required]
         public string CattleIdentifier { get; set; }
