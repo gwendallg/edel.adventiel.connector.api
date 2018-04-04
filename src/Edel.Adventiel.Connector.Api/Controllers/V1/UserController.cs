@@ -25,10 +25,14 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
             IMapper mapper)
         {
             _mapper = mapper;
-
             _userService = userService;
         }
 
+        /// <summary>
+        /// find user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         [HttpGet("{userName}")]
         public async Task<IActionResult> Get(string userName)
         {
@@ -45,6 +49,11 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
             }
         }
 
+        /// <summary>
+        /// create new user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserPostRequestModel model)
         {
@@ -64,6 +73,12 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
             }
         }
 
+        /// <summary>
+        /// update user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{userName}")]
         public async Task<IActionResult> Put(string userName, [FromBody] UserPutRequestModel model)
         {
@@ -72,9 +87,10 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
             try
             {
                 var user = await _userService.FindByUserNameAsync(userName);
-                user = _mapper.Map<User>(model);
                 if (user == null)
                     return NotFound();
+                user = _mapper.Map<User>(model);
+                user.Username = userName;
                 user.Claims = user.Claims;
                 await _userService.UpdateAsync(user, model.Password, HttpContext);
                 var uri = string.Format("{0}/{1}", Request.HttpContext.Request.Path.ToString().TrimEnd('/'),

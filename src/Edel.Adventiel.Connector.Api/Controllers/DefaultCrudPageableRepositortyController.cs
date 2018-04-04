@@ -20,6 +20,12 @@ namespace Edel.Adventiel.Connector.Api.Controllers
         : Autumn.Mvc.Data.Controllers.RepositoryControllerAsync<TEntity, TEntityPost, TEntityPut, TKey>
         where TEntity : class where TEntityPost : class where TEntityPut : class
     {
+        /// <summary>
+        /// initialize a new instance of controller
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="settings"></param>
+        /// <param name="httpContextAccessor"></param>
         public DefaultCrudPageableRepositortyController(ICrudPageableRepositoryAsync<TEntity, TKey> repository,
             AutumnSettings settings, IHttpContextAccessor httpContextAccessor)
             : base(repository, settings, httpContextAccessor)

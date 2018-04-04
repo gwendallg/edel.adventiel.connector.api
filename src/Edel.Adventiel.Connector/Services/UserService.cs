@@ -19,7 +19,7 @@ namespace Edel.Adventiel.Connector.Services
         private readonly AutumnDataSettings _dataSettings;
         private const string CScopeRead = "read";
         private const string CScopeCreate="create";
-        private const string CScopeUpdate="udpate";
+        private const string CScopeUpdate="update";
         private const string CScopeDelete="delete";
     
         private static string[] Scopes = {CScopeRead,CScopeCreate,CScopeUpdate,CScopeDelete };
