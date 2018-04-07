@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
@@ -23,8 +24,8 @@ namespace Edel.Adventiel.Connector.Services
      
         static EdelCollectorService()
         {
-            // register Mapper,
             var baseMappings = new MapperConfigurationExpression();
+
             baseMappings.CreateMap<typeIdentifiantExploitation, Breeder>()
                 .ForMember(dest => dest.BreederCountryCode, opt => opt.MapFrom(src => src.CodePaysExploitation))
                 .ForMember(dest => dest.BreederIdentifier, opt => opt.MapFrom(src => src.NumeroExploitation));
@@ -38,7 +39,8 @@ namespace Edel.Adventiel.Connector.Services
             baseMappings.CreateMap<Bovin, Cattle>()
                 .ForMember(dest => dest.CattleCountryCode, opt => opt.MapFrom(src => src.CodePays))
                 .ForMember(dest => dest.CattleIdentifier, opt => opt.MapFrom(src => src.NumeroNationalAnimal));
-
+            
+                    
             var mapperConfiguration = new MapperConfiguration(baseMappings);
             _mapper = new Mapper(mapperConfiguration);
         }
@@ -48,26 +50,63 @@ namespace Edel.Adventiel.Connector.Services
             _database = database;
         }
 
-        
-        public static void Start(IConfiguration configuration)
+
+        private static Dictionary<Type, List<object>> Map(MessageMdBDonneesGenetiquesAnimales donneesGenetiquesAnimales)
         {
+            var result = new Dictionary<Type, List<object>>();
+
+            #region breeder
             
+            var breeder =
+                _mapper.Map<typeIdentifiantExploitation, Breeder>(donneesGenetiquesAnimales.InformationsMessage
+                    .Exploitation);
+
+            result.Add(typeof(Breeder), new List<object>(new[] {breeder}));
+            
+            #endregion
+
+            return result;
+
         }
+    
 
-
-        public async Task CollectAsync(string userId, string password,
-            DateTime startingDate, DateTime? endingDate = null, string collectorAt = "admin")
+        public async Task<string> CollectAsync(int size = 10, string collectorAt = "admin")
         {
-            var datas = await GetDatas(userId, password, startingDate, endingDate);
-            var breeder = _mapper.Map<typeIdentifiantExploitation, Breeder>(datas.ReponseSpecifique
-                .MdBDonneesGenetiquesAnimales.InformationsMessage.Exploitation);
+            var subscriptions = await _database
+                .GetCollection<EdelSubscription>("edelSubscription")
+                .Find(c => true)
+                .Sort(Builders<EdelSubscription>.Sort.Descending(x => x.LastCollectTime))
+                .Limit(size)
+                .ToListAsync();
+
+            foreach (var subscription in subscriptions)
+            {
+                try
+                {
+                    var data = await GetDatas(
+                        subscription.UserId,
+                        subscription.Password.Decrypt(),
+                        subscription.LastCollectTime ?? DateTime.Now.AddMonths(-3),
+                        DateTime.Now);
+                }
+                catch (Exception e)
+                {
+                    subscription.LastMessage = e.Message;
+                    await _database
+                        .GetCollection<EdelSubscription>("edelSubscription")
+                        .ReplaceOneAsync(s => s.UserId == subscription.UserId, subscription);
+                }
+            }
+            
+            return "OK";
         }
+
 
 
         static async Task<MdBGetDonneesGenetiquesAnimalesResponse> GetDatas(string userId, string password,
             DateTime startingDate, DateTime? endingDate = null)
         {
-            var entreprise = await GetEntreprise(userId);
+                var entreprise = await GetEntreprise(userId);
             var urlResponse = await GetUrlResponse(entreprise);
             if (urlResponse.ReponseStandard.Anomalie != null)
                 throw new Exception(urlResponse.ReponseStandard.Anomalie.Message);

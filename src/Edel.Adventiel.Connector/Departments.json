@@ -1,0 +1,1071 @@
+[
+
+  {
+
+    "department": "02",
+
+    "site_id": "D",
+
+    "enterprise": "E020"
+
+  },
+
+  {
+
+    "department": "59",
+
+    "site_id": "D",
+
+    "enterprise": "E590"
+
+  },
+
+  {
+
+    "department": "60",
+
+    "site_id": "D",
+
+    "enterprise": "E600"
+
+  },
+
+  {
+
+    "department": "62",
+
+    "site_id": "D",
+
+    "enterprise": "E620"
+
+  },
+
+  {
+
+    "department": "80",
+
+    "code_site": "D",
+
+    "enterprise": "E800"
+
+  },
+
+  {
+
+    "department": "54",
+
+    "site_id": "G",
+
+    "enterprise": "E540"
+
+  },
+
+  {
+
+    "department": "55",
+
+    "site_id": "G",
+
+    "enterprise": "E550"
+
+  },
+
+  {
+
+    "department": "57",
+
+    "site_id": "G",
+
+    "enterprise": "E570"
+
+  },
+
+  {
+
+    "department": "67",
+
+    "site_id": "G",
+
+    "enterprise": "E670"
+
+  },
+
+  {
+
+    "department": "68",
+
+    "site_id": "G",
+
+    "enterprise": "E680"
+
+  },
+
+  {
+
+    "department": "88",
+
+    "site_id": "G",
+
+    "enterprise": "E880"
+
+  },
+
+  {
+
+    "department": "08",
+
+    "site_id": "J",
+
+    "enterprise": "E080"
+
+  },
+
+  {
+
+    "department": "25",
+
+    "site_id": "J",
+
+    "enterprise": "E250"
+
+  },
+
+  {
+
+    "department": "39",
+
+    "site_id": "J",
+
+    "enterprise": "E390"
+
+  },
+
+  {
+
+    "department": "51",
+
+    "site_id": "J",
+
+    "enterprise": "E510"
+
+  },
+
+  {
+
+    "department": "52",
+
+    "site_id": "J",
+
+    "enterprise": "E520"
+
+  },
+
+  {
+
+    "department": "70",
+
+    "site_id": "J",
+
+    "enterprise": "E700"
+
+  },
+
+  {
+
+    "department": "90",
+
+    "site_id": "J",
+
+    "enterprise": "E900"
+
+  },
+
+  {
+
+    "department": "09",
+
+    "site_id": "K",
+
+    "enterprise": "E900"
+
+  },
+
+  {
+
+    "department": "11",
+
+    "site_id": "K",
+
+    "enterprise": "E110"
+
+  },
+
+  {
+
+    "department": "12",
+
+    "site_id": "K",
+
+    "enterprise": "E120"
+
+  },
+
+  {
+
+    "department": "15",
+
+    "site_id": "K",
+
+    "enterprise": "E150"
+
+  },
+
+  {
+
+    "department": "19",
+
+    "site_id": "K",
+
+    "enterprise": "E190"
+
+  },
+
+  {
+
+    "department": "24",
+
+    "site_id": "K",
+
+    "enterprise": "E240"
+
+  },
+
+  {
+
+    "department": "30",
+
+    "site_id": "K",
+
+    "enterprise": "E300"
+
+  },
+
+  {
+
+    "department": "31",
+
+    "site_id": "K",
+
+    "enterprise": "E310"
+
+  },
+
+  {
+
+    "department": "32",
+
+    "site_id": "K",
+
+    "enterprise": "E320"
+
+  },
+
+  {
+
+    "department": "33",
+
+    "site_id": "K",
+
+    "enterprise": "E330"
+
+  },
+
+  {
+
+    "department": "34",
+
+    "site_id": "K",
+
+    "enterprise": "E340"
+
+  },
+
+  {
+
+    "department": "40",
+
+    "site_id": "K",
+
+    "enterprise": "E400"
+
+  },
+
+  {
+
+    "department": "46",
+
+    "site_id": "K",
+
+    "enterprise": "E460"
+
+  },
+
+  {
+
+    "department": "47",
+
+    "site_id": "K",
+
+    "enterprise": "E470"
+
+  },
+
+  {
+
+    "department": "48",
+
+    "site_id": "K",
+
+    "enterprise": "E480"
+
+  },
+
+  {
+
+    "department": "64",
+
+    "site_id": "K",
+
+    "enterprise": "E640"
+
+  },
+
+  {
+
+    "department": "65",
+
+    "site_id": "K",
+
+    "enterprise": "E650"
+
+  },
+
+  {
+
+    "department": "66",
+
+    "site_id": "K",
+
+    "enterprise": "E660"
+
+  },
+
+  {
+
+    "department": "81",
+
+    "site_id": "K",
+
+    "enterprise": "E810"
+
+  },
+
+  {
+
+    "department": "82",
+
+    "site_id": "K",
+
+    "enterprise": "E820"
+
+  },
+
+  {
+
+    "department": "87",
+
+    "site_id": "K",
+
+    "enterprise": "E870"
+
+  },
+
+  {
+
+    "department": "2A",
+
+    "site_id": "K",
+
+    "enterprise": "E200"
+
+  },
+
+  {
+
+    "department": "01",
+
+    "site_id": "N",
+
+    "enterprise": "E010"
+
+  }
+
+,
+
+  {
+
+    "department": "03",
+
+    "site_id": "N",
+
+    "enterprise": "E030"
+
+  } ,
+
+  {
+
+    "department": "07",
+
+    "site_id": "N",
+
+    "enterprise": "E070"
+
+  }
+
+,
+
+  {
+
+    "department": "04",
+
+    "site_id": "N",
+
+    "enterprise": "E130"
+
+  }
+
+,
+
+  {
+
+    "department": "05",
+
+    "site_id": "N",
+
+    "enterprise": "E130"
+
+  } ,
+
+  {
+
+    "department": "06",
+
+    "site_id": "N",
+
+    "enterprise": "E130"
+
+  },
+
+  {
+
+    "department": "13",
+
+    "site_id": "N",
+
+    "enterprise": "E130"
+
+  }
+
+,
+
+  {
+
+    "department": "83",
+
+    "site_id": "N",
+
+    "enterprise": "E130"
+
+  },
+
+  {
+
+    "department": "84",
+
+    "site_id": "N",
+
+    "enterprise": "E130"
+
+  },
+
+  {
+
+    "department": "18",
+
+    "site_id": "N",
+
+    "enterprise": "E180"
+
+  },
+
+  {
+
+    "department": "2B",
+
+    "site_id": "N",
+
+    "enterprise": "E201"
+
+  },
+
+  {
+
+    "department": "21",
+
+    "site_id": "N",
+
+    "enterprise": "E210"
+
+  },
+
+  {
+
+    "department": "23",
+
+    "site_id": "N",
+
+    "enterprise": "E230"
+
+  }
+
+,
+
+  {
+
+    "department": "26",
+
+    "site_id": "N",
+
+    "enterprise": "E260"
+
+  }
+
+,
+
+  {
+
+    "department": "38",
+
+    "site_id": "N",
+
+    "enterprise": "E380"
+
+  }
+
+,
+
+  {
+
+    "department": "42",
+
+    "site_id": "N",
+
+    "enterprise": "E420"
+
+  }
+
+,
+
+  {
+
+    "department": "69",
+
+    "site_id": "N",
+
+    "enterprise": "E420"
+
+  }
+
+,
+
+  {
+
+    "department": "43",
+
+    "site_id": "N",
+
+    "enterprise": "E430"
+
+  },
+
+  {
+
+    "department": "58",
+
+    "site_id": "N",
+
+    "enterprise": "E580"
+
+  }
+
+,
+
+  {
+
+    "department": "63",
+
+    "site_id": "N",
+
+    "enterprise": "E630"
+
+  }
+
+,
+
+  {
+
+    "department": "71",
+
+    "site_id": "N",
+
+    "enterprise": "E710"
+
+  }
+
+,
+
+  {
+
+    "department": "73",
+
+    "site_id": "N",
+
+    "enterprise": "E740"
+
+  }
+
+,
+
+  {
+
+    "department": "74",
+
+    "site_id": "N",
+
+    "enterprise": "E740"
+
+  },
+
+  {
+
+    "department": "75",
+
+    "site_id": "N",
+
+    "enterprise": "E750"
+
+  }
+
+,
+
+  {
+
+    "department": "77",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  }
+
+,
+
+  {
+
+    "department": "78",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  },
+
+  {
+
+    "department": "91",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  },
+
+  {
+
+    "department": "92",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  }
+
+,
+
+  {
+
+    "department": "93",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  }
+
+,
+
+  {
+
+    "department": "94",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  },
+
+  {
+
+    "department": "95",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  }
+
+,
+
+  {
+
+    "department": "10",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  },
+
+  {
+
+    "department": "45",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  },
+
+  {
+
+    "department": "89",
+
+    "site_id": "N",
+
+    "enterprise": "E890"
+
+  },
+
+  {
+
+    "department": "971",
+
+    "site_id": "N",
+
+    "enterprise": "E971"
+
+  }
+
+,
+
+  {
+
+    "department": "972",
+
+    "site_id": "N",
+
+    "enterprise": "E972"
+
+  }
+
+,
+
+  {
+
+    "department": "973",
+
+    "site_id": "N",
+
+    "enterprise": "E973"
+
+  }
+
+,
+
+  {
+
+    "department": "974",
+
+    "site_id": "N",
+
+    "enterprise": "E974"
+
+  }
+
+,
+
+  {
+
+    "department": "976",
+
+    "site_id": "N",
+
+    "enterprise": "E976"
+
+  },
+
+  {
+
+    "department": "36",
+
+    "site_id": "N",
+
+    "enterprise": "E360"
+
+  }
+
+,
+
+  {
+
+    "department": "14",
+
+    "site_id": "W",
+
+    "enterprise": "E140"
+
+  }
+
+,
+
+  {
+
+    "department": "27",
+
+    "site_id": "W",
+
+    "enterprise": "E270"
+
+  },
+
+  {
+
+    "department": "76",
+
+    "site_id": "W",
+
+    "enterprise": "E760"
+
+  }
+
+,
+
+  {
+
+    "department": "28",
+
+    "site_id": "W",
+
+    "enterprise": "E280"
+
+  }
+
+,
+
+  {
+
+    "department": "22",
+
+    "site_id": "W",
+
+    "enterprise": "E220"
+
+  },
+
+  {
+
+    "department": "29",
+
+    "site_id": "W",
+
+    "enterprise": "E290"
+
+  },
+
+  {
+
+    "department": "35",
+
+    "site_id": "W",
+
+    "enterprise": "E350"
+
+  }
+
+,
+
+  {
+
+    "department": "56",
+
+    "site_id": "W",
+
+    "enterprise": "E560"
+
+  },
+
+  {
+
+    "department": "37",
+
+    "site_id": "W",
+
+    "enterprise": "E370"
+
+  },
+
+  {
+
+    "department": "41",
+
+    "site_id": "W",
+
+    "enterprise": "E410"
+
+  },
+
+  {
+
+    "department": "44",
+
+    "site_id": "W",
+
+    "enterprise": "E410"
+
+  }
+
+,
+
+  {
+
+    "department": "49",
+
+    "site_id": "W",
+
+    "enterprise": "E490"
+
+  },
+
+  {
+
+    "department": "50",
+
+    "site_id": "W",
+
+    "enterprise": "E500"
+
+  },
+
+  {
+
+    "department": "53",
+
+    "site_id": "W",
+
+    "enterprise": "E530"
+
+  },
+
+  {
+
+    "department": "53",
+
+    "site_id": "W",
+
+    "enterprise": "E530"
+
+  }
+
+,
+
+  {
+
+    "department": "61",
+
+    "site_id": "W",
+
+    "enterprise": "E610"
+
+  },
+
+  {
+
+    "department": "72",
+
+    "site_id": "W",
+
+    "enterprise": "L720"
+
+  },
+
+  {
+
+    "department": "79",
+
+    "site_id": "W",
+
+    "enterprise": "L790"
+
+  },
+
+  {
+
+    "department": "85",
+
+    "site_id": "W",
+
+    "enterprise": "L850"
+
+  },
+
+  {
+
+    "department": "16",
+
+    "site_id": "W",
+
+    "enterprise": "L160"
+
+  },
+
+  {
+
+    "department": "86",
+
+    "site_id": "W",
+
+    "enterprise": "E860"
+
+  }
+
+]

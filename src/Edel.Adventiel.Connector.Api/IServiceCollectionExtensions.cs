@@ -6,6 +6,8 @@ using Autumn.Mvc.Data;
 using Edel.Adventiel.Connector.Api.Models.Users;
 using Edel.Adventiel.Connector.Entities.Users;
 using Edel.Adventiel.Connector.Services;
+using Hangfire;
+using Hangfire.Mongo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -26,24 +28,42 @@ namespace Edel.Adventiel.Connector.Api
         public static IServiceCollection AddInitialization(this IServiceCollection serviceCollection,
             IConfiguration configuration)
         {
+            var connectionString = $"{configuration["ConnectionStrings:0:ConnectionString"]}";
+            var databaseName = $"{configuration["ConnectionStrings:0:Database"]}";
             // mongo Client ioc registration
-            serviceCollection.AddScoped<IMongoClient>(s => new MongoClient($"{configuration["ConnectionStrings:0:ConnectionString"]}"));
+
+            var mongoClient = new MongoClient(connectionString);
+            serviceCollection.AddSingleton<IMongoClient>(mongoClient);
 
             // mongo Database ioc registration
-            serviceCollection.AddScoped(s => s.GetService<IMongoClient>().GetDatabase($"{configuration["ConnectionStrings:0:Database"]}"));
+            serviceCollection.AddScoped(s => s.GetService<IMongoClient>().GetDatabase(databaseName));
 
             // mapper ioc registration
             serviceCollection.AddSingleton<IMapper>(BuildMapper());
 
             // initialization de la base base de donnés
-            TryAddAdminIfNotExistUsers(serviceCollection,configuration);
-            
+            TryAddAdminIfNotExistUsers(serviceCollection, configuration);
+
             // user service ioc registration
             serviceCollection.AddScoped<IUserService, UserService>();
-            
+            JobStorage.Current = new MongoStorage(connectionString, databaseName);
+            RecurringJob.AddOrUpdate(
+                "Edel Collector",
+                () =>  Job(connectionString,databaseName),
+                Cron.Minutely
+            );
+
             return serviceCollection;
         }
-        
+
+        public static void Job(string connectionString,string database)
+        {
+            var mongoClient = new MongoClient(connectionString);
+            var service = new EdelCollectorService(mongoClient.GetDatabase(database));
+            var task = service.CollectAsync();
+            task.Wait();
+        }
+
         /// <summary>
         /// build mapper
         /// </summary>

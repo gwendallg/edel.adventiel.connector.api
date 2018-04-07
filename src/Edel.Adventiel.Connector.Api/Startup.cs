@@ -1,11 +1,13 @@
-﻿using Autumn.Mvc;
+﻿using System;
+using Autumn.Mvc;
 using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.MongoDB;
-using Autumn.Mvc.Data.Swagger;
 using Edel.Adventiel.Connector.Api.Controllers;
 using Edel.Adventiel.Connector.Api.Swagger;
 using Edel.Adventiel.Connector.Entities.Users;
 using Edel.Adventiel.Connector.Services;
+using Hangfire;
+using Hangfire.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -63,18 +65,26 @@ namespace Edel.Adventiel.Connector.Api
                         c.SwaggerDoc(version, new Info {Title = "api", Version = version});
                     }
 
-                   c.OperationFilter<DefaultSwaggerOperationFilter>();
+                    c.OperationFilter<DefaultSwaggerOperationFilter>();
                 })
-                .AddInitialization(_configuration) 
+                .AddHangfire(config
+                    => config
+                        .UseMongoStorage($"{_configuration[key: "ConnectionStrings:0:ConnectionString"]}",
+                            $"{_configuration[key: "ConnectionStrings:0:Database"]}"))
+                .AddInitialization(_configuration)
                 .AddMvc();
-               
-           
+
             services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            /*
+            GlobalConfiguration.Configuration.UseMongoStorage(
+                ",
+                );*/
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -89,6 +99,8 @@ namespace Edel.Adventiel.Connector.Api
                             string.Format("API {0}", version));
                     }
                 })
+                .UseHangfireDashboard()
+                .UseHangfireServer()
                 .UseAuthentication()
                 .UseMvc();
         }

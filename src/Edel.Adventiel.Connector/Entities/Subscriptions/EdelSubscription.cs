@@ -25,5 +25,8 @@ namespace Edel.Adventiel.Connector.Entities.Subscriptions
 
         [Ignore]
         public DateTime? LastCollectTime { get; set; }
+        
+        [Ignore]
+        public String LastMessage { get; set; }
     }
 }

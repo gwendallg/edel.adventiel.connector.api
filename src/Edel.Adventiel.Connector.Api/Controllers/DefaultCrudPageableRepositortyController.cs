@@ -50,7 +50,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers
             var subscription = entity as EdelSubscription;
             if (subscription != null)
             {
-                subscription.Password = subscription.Password.Cipher();
+                subscription.Password = subscription.Password.Encrypt();
             }
             return entity;
         }
@@ -71,7 +71,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers
             var subscription = entity as EdelSubscription;
             if (subscription != null)
             {
-                subscription.Password = subscription.Password.Cipher();
+                subscription.Password = subscription.Password.Encrypt();
             }
             return entity;
         }
