@@ -37,8 +37,12 @@ namespace Edel.Adventiel.Connector.Api.Controllers
             // find user 
             var user = await _userService.Authenticate(tokenRequestModel.Username, tokenRequestModel.Password);
             if (user == null)return StatusCode((int) HttpStatusCode.Forbidden);
-            IList<Claim> claims = user.Claims.Select(c => new Claim(c.Key, c.Value)).ToList();
+            var claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Name, user.Username));
+            foreach (var item in user.Claims.Select(c => string.Format("{0}:{1}",c.Key,c.Value)))
+            {
+                claims.Add(new Claim(ClaimTypes.Role, item));
+            }
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes($"{_configuration["Jwt:SecurityKey"]}"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(

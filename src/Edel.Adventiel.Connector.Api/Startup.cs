@@ -1,10 +1,10 @@
-﻿using System;
-using Autumn.Mvc;
+﻿using Autumn.Mvc;
 using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.MongoDB;
+using Autumn.Mvc.Data.Swagger;
 using Edel.Adventiel.Connector.Api.Controllers;
 using Edel.Adventiel.Connector.Api.Swagger;
-using Edel.Adventiel.Connector.Entities.Users;
+using Edel.Adventiel.Connector.Entities;
 using Edel.Adventiel.Connector.Services;
 using Hangfire;
 using Hangfire.Mongo;
@@ -64,7 +64,7 @@ namespace Edel.Adventiel.Connector.Api
                     {
                         c.SwaggerDoc(version, new Info {Title = "api", Version = version});
                     }
-
+                    c.DocumentFilter<SwaggerDocumentFilter>();
                     c.OperationFilter<DefaultSwaggerOperationFilter>();
                 })
                 .AddHangfire(config
@@ -74,21 +74,17 @@ namespace Edel.Adventiel.Connector.Api
                 .AddInitialization(_configuration)
                 .AddMvc();
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserCollectionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            /*
-            GlobalConfiguration.Configuration.UseMongoStorage(
-                ",
-                );*/
-            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app
                 .UseSwagger()
                 .UseSwaggerUI(c =>

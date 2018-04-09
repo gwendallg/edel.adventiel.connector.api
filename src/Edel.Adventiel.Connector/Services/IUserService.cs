@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Edel.Adventiel.Connector.Entities.Users;
+using Edel.Adventiel.Connector.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace Edel.Adventiel.Connector.Services

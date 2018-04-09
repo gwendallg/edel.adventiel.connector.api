@@ -2,7 +2,6 @@
 using Autumn.Mvc.Configurations;
 using Autumn.Mvc.Data.Repositories;
 using Edel.Adventiel.Connector.Entities;
-using Edel.Adventiel.Connector.Entities.Subscriptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
@@ -47,7 +46,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers
                 CreatedAt = HttpContext.User.Identity.Name
             };
 
-            var subscription = entity as EdelSubscription;
+            var subscription = entity as Subscription;
             if (subscription != null)
             {
                 subscription.Password = subscription.Password.Encrypt();
@@ -68,7 +67,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers
                 LastModifiedDate = DateTime.UtcNow,
                 LastModifiedAt = HttpContext.User.Identity.Name
             };
-            var subscription = entity as EdelSubscription;
+            var subscription = entity as Subscription;
             if (subscription != null)
             {
                 subscription.Password = subscription.Password.Encrypt();

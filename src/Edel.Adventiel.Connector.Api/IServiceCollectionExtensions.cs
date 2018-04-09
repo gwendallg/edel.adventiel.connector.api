@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using Autumn.Mvc.Data;
 using Edel.Adventiel.Connector.Api.Models.Users;
-using Edel.Adventiel.Connector.Entities.Users;
+using Edel.Adventiel.Connector.Entities;
 using Edel.Adventiel.Connector.Services;
 using Hangfire;
 using Hangfire.Mongo;
@@ -41,25 +43,29 @@ namespace Edel.Adventiel.Connector.Api
             // mapper ioc registration
             serviceCollection.AddSingleton<IMapper>(BuildMapper());
 
+            var database = new
+                    MongoClient($"{configuration["ConnectionStrings:0:ConnectionString"]}")
+                .GetDatabase($"{configuration["ConnectionStrings:0:Database"]}");
+
             // initialization de la base base de donnés
-            TryAddAdminIfNotExistUsers(serviceCollection, configuration);
+            ConnectorHelper.Initialize(serviceCollection.GetAutumnDataSettings(), database);
 
             // user service ioc registration
-            serviceCollection.AddScoped<IUserService, UserService>();
+            serviceCollection.AddScoped<IUserService, UserCollectionService>();
             JobStorage.Current = new MongoStorage(connectionString, databaseName);
             RecurringJob.AddOrUpdate(
                 "Edel Collector",
-                () =>  Job(connectionString,databaseName),
+                () => Job(connectionString, databaseName),
                 Cron.Minutely
             );
 
             return serviceCollection;
         }
 
-        public static void Job(string connectionString,string database)
+        public static void Job(string connectionString, string database)
         {
             var mongoClient = new MongoClient(connectionString);
-            var service = new EdelCollectorService(mongoClient.GetDatabase(database));
+            var service = new CollectorService(mongoClient.GetDatabase(database));
             var task = service.CollectAsync();
             task.Wait();
         }
@@ -74,18 +80,19 @@ namespace Edel.Adventiel.Connector.Api
             var baseMappings = new MapperConfigurationExpression();
             baseMappings.CreateMap<UserPostRequestModel, User>();
             baseMappings.CreateMap<UserPutRequestModel, User>();
-            
+
             var mapperConfiguration = new MapperConfiguration(baseMappings);
             return new Mapper(mapperConfiguration);
         }
 
-        private static void TryAddAdminIfNotExistUsers(IServiceCollection serviceCollection, IConfiguration configuration)
+        private static void TryAddDepartmentsIfNotExist(IServiceCollection serviceCollection, IMongoDatabase database)
         {
-            var database = new
-                    MongoClient($"{configuration["ConnectionStrings:0:ConnectionString"]}")
-                .GetDatabase($"{configuration["ConnectionStrings:0:Database"]}");
 
-            var service = new UserService(serviceCollection.GetAutumnDataSettings(), database);
+        }
+
+        private static void TryAddAdminIfNotExistUsers(IServiceCollection serviceCollection,IMongoDatabase database)
+        {
+            var service = new UserCollectionService(serviceCollection.GetAutumnDataSettings(), database);
             service.TryAddAdminIfNotExistUsers();
         }
 
@@ -117,47 +124,56 @@ namespace Edel.Adventiel.Connector.Api
 
                         options.Events = new JwtBearerEvents()
                         {
-                            OnTokenValidated = async ctx =>
-                            {
-                                var claimType = ctx.Request.Path.Value.TrimStart('/').Replace("/", "_");
-                                var pathItem = claimType.Split('_');
-                                if (pathItem.Length >= 3)
-                                {
-                                    claimType = string.Format("{0}_{1}", pathItem[0], pathItem[1]);
-                                }
-                                var claims = ctx
-                                    .Principal
-                                    .Claims
-                                    .SingleOrDefault(c => c.Type == claimType);
-
-                                if (claims == null)
-                                {
-                                    ctx.Fail("access not authorized");
-                                }
-                                else
-                                {
-                                    switch (ctx.Request.Method)
-                                    {
-                                        case "GET" when !claims.Value.Contains("read"):
-                                            ctx.Fail("read not authorized");
-                                            break;
-                                        case "POST" when !claims.Value.Contains("create"):
-                                            ctx.Fail("create not authorized");
-                                            break;
-                                        case "PUT" when !claims.Value.Contains("update"):
-                                            ctx.Fail("update not authorized");
-                                            break;
-                                        case "DELETE" when !claims.Value.Contains("delete"):
-                                            ctx.Fail("delete not authorized");
-                                            break;
-                                    }
-                                }
-                            }
+                            OnTokenValidated = async ctx => CheckAuthorizationAsync(ctx)
                         };
                     }
                 );
 
             return serviceCollection;
+        }
+
+
+
+        private static async Task CheckAuthorizationAsync(TokenValidatedContext context)
+        {
+            var claimType = context.Request.Path.Value.TrimStart('/').Replace("/", "_");
+            var pathItem = claimType.Split('_');
+            if (pathItem.Length >= 3)
+            {
+                claimType = string.Format("{0}_{1}", pathItem[0], pathItem[1]);
+            }
+
+            claimType += ":";
+
+            var claim = context
+                .Principal
+                .Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .SingleOrDefault(c => c.Value.StartsWith(claimType));
+
+            if (claim == null)
+            {
+                context.Fail("access not authorized");
+            }
+            else
+            {
+                switch (context.Request.Method)
+                {
+                    case "GET" when !claim.Value.Contains(ScopeType.Read.ToString()):
+                        context.Fail("read not authorized");
+                        break;
+                    case "POST" when !claim.Value.Contains(ScopeType.Create.ToString()):
+                        context.Fail("create not authorized");
+                        break;
+                    case "PUT" when !claim.Value.Contains(ScopeType.Update.ToString()):
+                        context.Fail("update not authorized");
+                        break;
+                    case "DELETE" when !claim.Value.Contains(ScopeType.Delete.ToString()):
+                        context.Fail("delete not authorized");
+                        break;
+                }
+
+            }
         }
     }
 }

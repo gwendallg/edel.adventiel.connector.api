@@ -4,16 +4,12 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Edel.Adventiel.Connector.Entities
 {
-   
+
     public abstract class AbstractEntity
     {
-        [Id]
-        [BsonId]
-        [Ignore]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        
-        [Ignore]
-        public Metadata Metadata { get; set; }
+        /// <summary>
+        /// Meta dataof entity
+        /// </summary>
+        [Ignore] public Metadata Metadata { get; set; }
     }
 }

@@ -7,14 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Autumn.Mvc.Data.Configurations;
 using Edel.Adventiel.Connector.Entities;
-using Edel.Adventiel.Connector.Entities.Users;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 // ReSharper disable All
 
 namespace Edel.Adventiel.Connector.Services
 {
-    public class UserService : AbstractService<User>, IUserService
+    public class UserCollectionService : AbstractCollectionService<User>, IUserService
     {
         private readonly AutumnDataSettings _dataSettings;
         private const string CScopeRead = "read";
@@ -24,18 +23,18 @@ namespace Edel.Adventiel.Connector.Services
     
         private static string[] Scopes = {CScopeRead,CScopeCreate,CScopeUpdate,CScopeDelete };
 
-        public UserService(AutumnDataSettings dataSettings, IMongoDatabase database) : base(database, "user")
+        public UserCollectionService(AutumnDataSettings dataSettings, IMongoDatabase database) : base(database, "user")
         {
             _dataSettings = dataSettings;
         }
 
-        public async Task<User> AddAsync(User user, string password, HttpContext context)
+        public async Task<User> AddAsync(User user, string password, HttpContext context = null)
         {
             user.Salt = GetRandomSalt();
             user.Hash = GetHash(password, user.Salt);
             CheckClaims(user);
             user.Metadata = new Metadata();
-            user.Metadata.CreatedAt = context.User.Identity.Name;
+            user.Metadata.CreatedAt = context == null ? "admin" : context.User.Identity.Name;
             user.Metadata.CreatedDate = DateTime.UtcNow;
             await Collection().InsertOneAsync(user);
             return user;

@@ -5,9 +5,10 @@ using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
+using Edel.Adventiel.Connector.Entities;
 using Edel.Adventiel.Connector.Entities.Breeders;
 using Edel.Adventiel.Connector.Entities.Cattles;
-using Edel.Adventiel.Connector.Entities.Subscriptions;
+using Edel.Adventiel.Connector.Entities.References;
 using MongoDB.Driver;
 using WsAnnuaires;
 using WsGuichets;
@@ -17,12 +18,12 @@ using typeVersionPK = WsAnnuaires.typeVersionPK;
 
 namespace Edel.Adventiel.Connector.Services
 {
-    public class EdelCollectorService : IEdelCollectorService
+    public class CollectorService : ICollectorService
     {
         private static readonly IMapper _mapper;
         private readonly IMongoDatabase _database;
      
-        static EdelCollectorService()
+        static CollectorService()
         {
             var baseMappings = new MapperConfigurationExpression();
 
@@ -45,7 +46,7 @@ namespace Edel.Adventiel.Connector.Services
             _mapper = new Mapper(mapperConfiguration);
         }
 
-        public EdelCollectorService(IMongoDatabase database)
+        public CollectorService(IMongoDatabase database)
         {
             _database = database;
         }
@@ -68,14 +69,14 @@ namespace Edel.Adventiel.Connector.Services
             return result;
 
         }
-    
+
 
         public async Task<string> CollectAsync(int size = 10, string collectorAt = "admin")
         {
             var subscriptions = await _database
-                .GetCollection<EdelSubscription>("edelSubscription")
+                .GetCollection<Subscription>("edelSubscription")
                 .Find(c => true)
-                .Sort(Builders<EdelSubscription>.Sort.Descending(x => x.LastCollectTime))
+                .Sort(Builders<Subscription>.Sort.Descending(x => x.LastCollectTime))
                 .Limit(size)
                 .ToListAsync();
 
@@ -83,8 +84,11 @@ namespace Edel.Adventiel.Connector.Services
             {
                 try
                 {
-                    var data = await GetDatas(
+                    var department = await FindDepartementAsync(subscription.UserId);
+                    var password = subscription.Password.Decrypt();
+                    var data = await GetDatasAsync(
                         subscription.UserId,
+                        department,
                         subscription.Password.Decrypt(),
                         subscription.LastCollectTime ?? DateTime.Now.AddMonths(-3),
                         DateTime.Now);
@@ -93,25 +97,37 @@ namespace Edel.Adventiel.Connector.Services
                 {
                     subscription.LastMessage = e.Message;
                     await _database
-                        .GetCollection<EdelSubscription>("edelSubscription")
+                        .GetCollection<Subscription>("edelSubscription")
                         .ReplaceOneAsync(s => s.UserId == subscription.UserId, subscription);
                 }
             }
-            
+
             return "OK";
         }
 
 
+        /// <summary>
+        /// recherche le département de rattachement de l'exploitation
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        private async Task<Department> FindDepartementAsync(string userId)
+        {
+            var departementId = userId.Substring(0, 2);
+            return await _database
+                .GetCollection<Department>("department")
+                .Find(d => d.Id == departementId)
+                .SingleOrDefaultAsync();
+        }
 
-        static async Task<MdBGetDonneesGenetiquesAnimalesResponse> GetDatas(string userId, string password,
+        static async Task<MdBGetDonneesGenetiquesAnimalesResponse> GetDatasAsync(string userId, Department departement, string password,
             DateTime startingDate, DateTime? endingDate = null)
         {
-                var entreprise = await GetEntreprise(userId);
-            var urlResponse = await GetUrlResponse(entreprise);
+            var urlResponse = await GetUrlResponse(departement.Enterprise);
             if (urlResponse.ReponseStandard.Anomalie != null)
                 throw new Exception(urlResponse.ReponseStandard.Anomalie.Message);
 
-            var identificationResponse = await CreateIdentificationResponse(userId, password, entreprise,
+            var identificationResponse = await CreateIdentificationResponse(userId, password, departement.Enterprise,
                 urlResponse.ReponseSpecifique.InfosServiceMetierRegional.UrlGuichet);
             if (identificationResponse.ReponseStandard.Anomalie != null)
                 throw new Exception(identificationResponse.ReponseStandard.Anomalie.Message);

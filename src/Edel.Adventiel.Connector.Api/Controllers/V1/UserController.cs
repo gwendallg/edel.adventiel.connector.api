@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Autumn.Mvc.Data.Models;
 using Edel.Adventiel.Connector.Api.Models.Users;
-using Edel.Adventiel.Connector.Entities.Users;
+using Edel.Adventiel.Connector.Entities;
 using Edel.Adventiel.Connector.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
