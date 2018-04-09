@@ -74,8 +74,8 @@ namespace Edel.Adventiel.Connector.Services
         public async Task<string> CollectAsync(int size = 10, string collectorAt = "admin")
         {
             var subscriptions = await _database
-                .GetCollection<Subscription>("edelSubscription")
-                .Find(c => true)
+                .GetCollection<Subscription>("subscription")
+                .Find(c => c.Active)
                 .Sort(Builders<Subscription>.Sort.Descending(x => x.LastCollectTime))
                 .Limit(size)
                 .ToListAsync();
@@ -85,7 +85,6 @@ namespace Edel.Adventiel.Connector.Services
                 try
                 {
                     var department = await FindDepartementAsync(subscription.UserId);
-                    var password = subscription.Password.Decrypt();
                     var data = await GetDatasAsync(
                         subscription.UserId,
                         department,
@@ -97,7 +96,7 @@ namespace Edel.Adventiel.Connector.Services
                 {
                     subscription.LastMessage = e.Message;
                     await _database
-                        .GetCollection<Subscription>("edelSubscription")
+                        .GetCollection<Subscription>("subscription")
                         .ReplaceOneAsync(s => s.UserId == subscription.UserId, subscription);
                 }
             }
@@ -143,23 +142,21 @@ namespace Edel.Adventiel.Connector.Services
                 throw new Exception(mdBGetDonneesGenetiquesAnimalesResponse.ReponseStandard.Anomalie.Message);
             return mdBGetDonneesGenetiquesAnimalesResponse;
         }
-
-        static async Task<string> GetEntreprise(string userId)
-        {
-            return "E220";
-        }
-        
+ 
         static async Task<tkGetUrlResponse> GetUrlResponse(string entreprise)
         {
             var client = CreateClient<WsAnnuaireClient>("http://wstest1-directory.fiea.fr/wsannuaire/WsAnnuaire");
-            var request = new tkGetUrlRequest();
-            request.VersionPK = new typeVersionPK();
-            request.VersionPK.CodeSiteVersion = "9";
-            request.VersionPK.CodeSiteService = "9";
-            request.VersionPK.NumeroVersion = "5.06";
-            request.VersionPK.NomService = "MdBEdel";
-            request.ProfilDemandeur = new typeProfil();
-            request.ProfilDemandeur.Entreprise = entreprise;
+            var request = new tkGetUrlRequest
+            {
+                VersionPK = new typeVersionPK
+                {
+                    CodeSiteVersion = "9",
+                    CodeSiteService = "9",
+                    NumeroVersion = "5.06",
+                    NomService = "MdBEdel"
+                },
+                ProfilDemandeur = new typeProfil {Entreprise = entreprise}
+            };
             return await client.tkGetUrlAsync(request);
         }
 
@@ -172,12 +169,10 @@ namespace Edel.Adventiel.Connector.Services
             {
                 binding = new BasicHttpsBinding();
                 ((BasicHttpsBinding) binding).Security.Mode = BasicHttpsSecurityMode.Transport;
-
             }
             else
             {
                 binding = new BasicHttpBinding();
-
             }
 
             binding.Name = "WebWorkerSoap";
@@ -193,25 +188,32 @@ namespace Edel.Adventiel.Connector.Services
             string uri)
         {
             var client = CreateClient<WsGuichetClient>(uri);
-            var request = new tkCreateIdentificationRequest();
-            request.Identification = new typeIdentification();
-            request.Identification.UserId = userId;
-            request.Identification.Password = password;
-            request.Identification.Profil = new WsGuichets.typeProfil();
-            request.Identification.Profil.Entreprise = entreprise;
+            var request = new tkCreateIdentificationRequest
+            {
+                Identification = new typeIdentification
+                {
+                    UserId = userId,
+                    Password = password,
+                    Profil = new WsGuichets.typeProfil {Entreprise = entreprise}
+                }
+            };
             return await client.tkCreateIdentificationAsync(request);
         }
 
         private static async Task<MdBGetDonneesGenetiquesAnimalesResponse> GetDonneesGenetiquesAnimalesResponse(string jeton, string userd, string uri, DateTime startingDate, DateTime? endingDate = null)
         {
             var client = CreateClient<wsMdBInterfaceClient>(uri);
-            var request = new MdBGetDonneesGenetiquesAnimalesRequest();
-            request.DateDebutDemande = startingDate;
-            request.DateFinDemande = endingDate ?? DateTime.Now;
-            request.Exploitation= new typeIdentifiantExploitation();
-            request.Exploitation.CodePaysExploitation =  TypeCodePays.FR;
-            request.Exploitation.NumeroExploitation = userd;
-            request.JetonAuthentification = jeton;
+            var request = new MdBGetDonneesGenetiquesAnimalesRequest
+            {
+                DateDebutDemande = startingDate,
+                DateFinDemande = endingDate ?? DateTime.Now,
+                Exploitation = new typeIdentifiantExploitation
+                {
+                    CodePaysExploitation = TypeCodePays.FR,
+                    NumeroExploitation = userd
+                },
+                JetonAuthentification = jeton
+            };
 
             return await client.MdBGetDonneesGenetiquesAnimalesAsync(request);
         } 

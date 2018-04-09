@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Edel.Adventiel.Connector.Entities;
 using Microsoft.AspNetCore.Http;
@@ -12,9 +13,16 @@ namespace Edel.Adventiel.Connector.Services
         {
         }
 
-        public Task<Subscription> AddAsync(Subscription subscription, string password, HttpContext context)
+        public async Task<Subscription> AddAsync(Subscription subscription, string password, HttpContext context)
         {
-            throw new System.NotImplementedException();
+            subscription.Password = password.Encrypt();
+            subscription.Metadata = new Metadata()
+            {
+                CreatedDate = DateTime.UtcNow,
+                CreatedAt = context == null ? "admin" : context.User.Identity.Name
+            };
+            await Collection().InsertOneAsync(subscription);
+            return subscription;
         }
 
         public async Task<List<Subscription>> FindToCollectAsync(int size = 10)
