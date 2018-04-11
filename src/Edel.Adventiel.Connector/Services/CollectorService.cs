@@ -37,7 +37,7 @@ namespace Edel.Adventiel.Connector.Services
                 .ForMember(dest => dest.BreedCode, opt => opt.MapFrom(src => src.CodeRaceBovin))
                 .ForMember(dest => dest.Sex, opt => opt.MapFrom(src => src.Sexe));
 
-            baseMappings.CreateMap<Bovin, Cattle>()
+            baseMappings.CreateMap<Bovin, CattleBreeder>()
                 .ForMember(dest => dest.CattleCountryCode, opt => opt.MapFrom(src => src.CodePays))
                 .ForMember(dest => dest.CattleIdentifier, opt => opt.MapFrom(src => src.NumeroNationalAnimal));
             

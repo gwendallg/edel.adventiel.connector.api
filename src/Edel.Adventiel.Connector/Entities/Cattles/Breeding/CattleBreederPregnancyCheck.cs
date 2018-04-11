@@ -7,12 +7,11 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Edel.Adventiel.Connector.Entities.Cattles.Breeding
 {
     [BsonIgnoreExtraElements]
-    [Collection(Name = "cattleInsemination")]
-    [Entity(Name = "cattle-insemination", Insertable = false, Updatable = false, Deletable = false)]
-    public class Insemination : AbstractCattleData
+    [Collection(Name = "cattlePregnancyCheck")]
+    [Entity(Name = "cattle-pregnancy-check")]
+    public class CattleBreederPregnancyCheck : AbstractCattleBreederEvent
     {
-        [Required]
-        public DateTime InseminationDate { get; set; }
-        
+        public string PregnancyCheckType { get; set; }
+        public string PregnancyCheckResult { get; set; }
     }
 }

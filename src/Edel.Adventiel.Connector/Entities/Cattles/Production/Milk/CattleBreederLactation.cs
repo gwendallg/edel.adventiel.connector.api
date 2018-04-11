@@ -8,8 +8,8 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Production.Milk
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleLactation")]
-    [Entity(Name = "cattle-lactation",Insertable = false, Updatable = false, Deletable = false)]
-    public class Lactation : AbstractCattleData
+    [Entity(Name = "cattle-lactation")]
+    public class CattleBreederLactation : AbstractCattleBreederEvent
     {
         [Required] public int LactationNumber { get; set; }
 

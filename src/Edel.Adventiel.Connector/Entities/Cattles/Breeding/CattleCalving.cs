@@ -8,13 +8,10 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Breeding
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleCalving")]
-    [Entity(Name = "cattle-calving", Insertable = false, Updatable = false, Deletable = false)]
-    public class Calving : AbstractCattleData
+    [Entity(Name = "cattle-calving")]
+    public class Calving : AbstractCattleBreederEvent
     {
-        [Required]
-        public DateTime CalvingDate { get; set; }
-        
-        public string CalvingCondition { get; set; }
+        public string CalvingCondition{ get; set; }
         
         public int? CalvinRank { get; set; }
         

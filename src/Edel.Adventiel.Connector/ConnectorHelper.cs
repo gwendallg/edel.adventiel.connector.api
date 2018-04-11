@@ -7,6 +7,9 @@ using Autumn.Mvc.Data.Configurations;
 using Edel.Adventiel.Connector.Entities;
 using MongoDB.Driver;
 using System.Linq;
+using System.Reflection;
+using Autumn.Mvc.Data.MongoDB.Annotations;
+using Edel.Adventiel.Connector.Entities.Cattles.Breeding;
 using Edel.Adventiel.Connector.Entities.References;
 using Edel.Adventiel.Connector.Services;
 using Newtonsoft.Json;
@@ -20,6 +23,7 @@ namespace Edel.Adventiel.Connector
             TryAddAdminIfNotExistUsers(dataSettings, database);
             TryAddResourceIfNotExist<Site>(database);
             TryAddResourceIfNotExist<Department>(database);
+            TryAddResourceIfNotExist<CalvingCondition>(database);
         }
 
         private static void TryAddAdminIfNotExistUsers( AutumnDataSettings dataSettings,IMongoDatabase database,
@@ -70,7 +74,8 @@ namespace Edel.Adventiel.Connector
 
         private static void TryAddResourceIfNotExist<T>(IMongoDatabase database) where T:AbstractEntityWithId
         {
-            var collection = database.GetCollection<T>(typeof(T).Name.ToLower());
+            var collectionAttribute = (CollectionAttribute) typeof(T).GetCustomAttribute(typeof(CollectionAttribute));
+            var collection = database.GetCollection<T>(collectionAttribute.Name);
             var count = collection.Count(u => true);
             if (count != 0) return;
 

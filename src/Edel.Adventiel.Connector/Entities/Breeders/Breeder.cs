@@ -7,7 +7,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Edel.Adventiel.Connector.Entities.Breeders
 {
     [BsonIgnoreExtraElements]
-    [Entity(Name = "breeder", Insertable = false, Updatable = false, Deletable = false)]
+    [Entity(Name = "breeder")]
     public class Breeder : AbstractBreederData
     {
     }

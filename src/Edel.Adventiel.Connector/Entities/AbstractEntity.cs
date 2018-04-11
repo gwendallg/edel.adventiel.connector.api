@@ -7,9 +7,6 @@ namespace Edel.Adventiel.Connector.Entities
 
     public abstract class AbstractEntity
     {
-        /// <summary>
-        /// Meta dataof entity
-        /// </summary>
         [Ignore] public Metadata Metadata { get; set; }
     }
 }

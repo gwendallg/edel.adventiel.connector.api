@@ -1,0 +1,21 @@
+﻿[{
+  "Id":"1",
+  "Label":"Sans aide"
+},{
+  "Id":"2",
+  "Label":"Avec aide facile"
+},{
+  "Id":"3",
+  "Label":"Avec aide difficile"
+},{
+  "Id":"4",
+  "Label":"Cesarienne"
+}
+,{
+  "Id":"5",
+  "Label":"Veau decoupe"
+},{
+  "Id":"I",
+  "Label":"Inconnu"
+}
+]
