@@ -39,17 +39,13 @@ namespace Edel.Adventiel.Connector.Api.Controllers
         /// <returns></returns>
         protected override TEntity OnInserting(TEntity entity)
         {
-            dynamic e = entity;
-            e.Metadata = new Metadata
+            if (entity is IMetadataeable metadataeable)
             {
-                CreatedDate = DateTime.UtcNow,
-                CreatedAt = HttpContext.User.Identity.Name
-            };
-
-            var subscription = entity as Subscription;
-            if (subscription != null)
-            {
-                subscription.Password = subscription.Password.Encrypt();
+                metadataeable.Metadata = new Metadata()
+                {
+                    CreatedDate = DateTime.UtcNow,
+                    CreatedAt = HttpContext.User.Identity.Name
+                };
             }
             return entity;
         }
@@ -61,16 +57,13 @@ namespace Edel.Adventiel.Connector.Api.Controllers
         /// <returns></returns>
         protected override TEntity OnUpdating(TEntity entity)
         {
-            dynamic e = entity;
-            e.Metadata = new Metadata
+            if (entity is IMetadataeable metadataeable)
             {
-                LastModifiedDate = DateTime.UtcNow,
-                LastModifiedAt = HttpContext.User.Identity.Name
-            };
-            var subscription = entity as Subscription;
-            if (subscription != null)
-            {
-                subscription.Password = subscription.Password.Encrypt();
+                metadataeable.Metadata = new Metadata()
+                {
+                    LastModifiedDate = DateTime.UtcNow,
+                    LastModifiedAt = HttpContext.User.Identity.Name
+                };
             }
             return entity;
         }
