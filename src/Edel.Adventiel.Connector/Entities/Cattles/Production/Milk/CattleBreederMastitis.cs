@@ -9,7 +9,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Production.Milk
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleMastitis")]
     [Entity(Name = "cattle-mastitis")]
-    public class CattleBreederMastitis : AbstractCattleBreederEvent
+    public class CattleBreederMastitis : CattleBreederEvent
     {
         public string CollectOriginCode { get; set; }
         public string MastitisSeverity { get; set; }

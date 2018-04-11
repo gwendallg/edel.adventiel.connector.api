@@ -7,7 +7,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Production.Milk
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleDiaryObservation")]
     [Entity(Name = "cattle-diary-observation")]
-    public class CattleBreederDiaryObservation : AbstractCattleBreederEvent
+    public class CattleBreederDiaryObservation : CattleBreederEvent
     {
         public int LactationNumber { get; set; }
         public string FemaleStateCode { get; set; }

@@ -5,7 +5,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles
 {
     [BsonIgnoreExtraElements]
     [Entity(Name = "cattle")]
-    public class CattleBreeder : AbstractCattleBreederEvent
+    public class CattleBreeder : CattleBreederEvent
     {
         public CattleIdentity Identity { get; set; }
     }

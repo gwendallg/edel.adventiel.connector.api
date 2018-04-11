@@ -9,7 +9,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Breeding
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattlePregnancyCheck")]
     [Entity(Name = "cattle-pregnancy-check")]
-    public class CattleBreederPregnancyCheck : AbstractCattleBreederEvent
+    public class CattleBreederPregnancyCheck : CattleBreederEvent
     {
         public string PregnancyCheckType { get; set; }
         public string PregnancyCheckResult { get; set; }

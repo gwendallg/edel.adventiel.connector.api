@@ -7,7 +7,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Breeding
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleCalvingCondition")]
     [Entity(Name = "cattle-calving-condition")]
-    public class CalvingCondition : AbstractReferenceEntity
+    public class CalvingCondition : ReferenceEntity
     {
     }
 }

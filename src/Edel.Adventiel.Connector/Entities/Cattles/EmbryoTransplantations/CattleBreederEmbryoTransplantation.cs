@@ -7,7 +7,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.EmbryoTransplantations
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleEmbryoCollect")]
     [Entity(Name = "cattle-embryo-transplantation")]
-    public class CattleBreederEmbryoTransplantation : AbstractCattleBreederEvent
+    public class CattleBreederEmbryoTransplantation : CattleBreederEvent
     {
         public TeamCollectOrTransfert TransfertTeam { get; set; }
         public string CollectNumberDocument { get; set; }

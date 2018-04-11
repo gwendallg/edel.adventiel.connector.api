@@ -6,7 +6,7 @@ namespace Edel.Adventiel.Connector.Entities.References
 {
     [Collection(Name = "department")]
     [Entity(Name = "department", Insertable = false, Updatable = false, Deletable = false)]
-    public class Department : AbstractEntityWithId
+    public class Department : Entity
     {
         [Required] public string SiteId { get; set; }
         [Required] public string Enterprise { get; set; }

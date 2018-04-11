@@ -9,7 +9,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Breeding
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleAbortion")]
     [Entity(Name = "cattle-abortion")]
-    public class CattleAbortion : AbstractCattleBreederEvent
+    public class CattleAbortion : CattleBreederEvent
     {
         public int? EndPregnancyRank { get; set; }
     }

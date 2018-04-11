@@ -7,7 +7,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Breeding
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleInsemination")]
     [Entity(Name = "cattle-insemination")]
-    public class CattleInsemination : AbstractCattleBreederEvent
+    public class CattleInsemination : CattleBreederEvent
     {
         public CattleInseminator Inseminator { get; set; }
         public CattleBreedingBull BreedingBull { get; set; }

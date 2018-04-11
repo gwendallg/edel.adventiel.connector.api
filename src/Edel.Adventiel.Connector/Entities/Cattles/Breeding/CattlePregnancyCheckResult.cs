@@ -7,7 +7,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Breeding
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattlePregnancyCheckResult")]
     [Entity(Name = "cattle-pregnancy-check-result")]
-    public class CattlePregnancyCheckResult : AbstractReferenceEntity
+    public class CattlePregnancyCheckResult : ReferenceEntity
     {
     }
 }

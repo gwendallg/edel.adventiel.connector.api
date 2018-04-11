@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Edel.Adventiel.Connector.Entities
 {
     [BsonIgnoreExtraElements]
-    public class User : AbstractEntity
+    public class User : Metadataeable
     {
         /// <summary>
         /// user name 

@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Edel.Adventiel.Connector.Entities
 {
-    public abstract class AbstractBreederData : AbstractEntityWithId
+    public abstract class BreederEntity : Metadataeable, IEntity
     {
         /// <summary>
         /// Id of entity
@@ -14,7 +14,7 @@ namespace Edel.Adventiel.Connector.Entities
         [BsonId]
         [Ignore]
         [BsonRepresentation(BsonType.ObjectId)]
-        public new string Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// breeder identifier

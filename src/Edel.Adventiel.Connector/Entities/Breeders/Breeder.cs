@@ -8,7 +8,7 @@ namespace Edel.Adventiel.Connector.Entities.Breeders
 {
     [BsonIgnoreExtraElements]
     [Entity(Name = "breeder")]
-    public class Breeder : AbstractBreederData
+    public class Breeder : BreederEntity
     {
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Edel.Adventiel.Connector.Entities.Cattles
 {
+    [BsonIgnoreExtraElements]
     public class CattleIdentity
     {
         /// <summary>

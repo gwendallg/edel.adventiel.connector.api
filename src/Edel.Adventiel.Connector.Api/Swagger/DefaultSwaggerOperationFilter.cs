@@ -25,7 +25,8 @@ namespace Edel.Adventiel.Connector.Api.Swagger
                 In = "header",
                 Type = "string",
                 Name = "Authorization",
-                Description = "Bearer token"
+                Description = "Bearer token",
+                Required = true
             };
             operation.Parameters.Add(parameter);
         }

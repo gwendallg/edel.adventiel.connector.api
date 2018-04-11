@@ -9,7 +9,7 @@ namespace Edel.Adventiel.Connector.Entities.Cattles.Production.Milk
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleLactation")]
     [Entity(Name = "cattle-lactation")]
-    public class CattleBreederLactation : AbstractCattleBreederEvent
+    public class CattleBreederLactation : CattleBreederEvent
     {
         [Required] public int LactationNumber { get; set; }
 

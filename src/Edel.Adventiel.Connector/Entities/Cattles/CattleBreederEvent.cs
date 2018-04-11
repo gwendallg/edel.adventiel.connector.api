@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Edel.Adventiel.Connector.Entities.Cattles
 {
-    public abstract class AbstractCattleBreederEvent : AbstractBreederData
+    public abstract class CattleBreederEvent : BreederEntity
     {
         
         [Required] public DateTime EventDate { get; set; }

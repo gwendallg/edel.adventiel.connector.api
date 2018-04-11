@@ -72,7 +72,7 @@ namespace Edel.Adventiel.Connector
             }
         }
 
-        private static void TryAddResourceIfNotExist<T>(IMongoDatabase database) where T:AbstractEntityWithId
+        private static void TryAddResourceIfNotExist<T>(IMongoDatabase database) where T:IEntity
         {
             var collectionAttribute = (CollectionAttribute) typeof(T).GetCustomAttribute(typeof(CollectionAttribute));
             var collection = database.GetCollection<T>(collectionAttribute.Name);
