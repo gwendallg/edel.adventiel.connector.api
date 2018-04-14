@@ -13,28 +13,23 @@ using MongoDB.Driver;
 
 namespace Edel.Adventiel.Connector.Services
 {
-    public class UserCollectionService : AbstractCollectionService<User>, IUserService
+    public class UserService : AbstractCollectionService<User>, IUserService
     {
         private readonly AutumnDataSettings _dataSettings;
-        private const string CScopeRead = "read";
-        private const string CScopeCreate="create";
-        private const string CScopeUpdate="update";
-        private const string CScopeDelete="delete";
-    
-        private static string[] Scopes = {CScopeRead,CScopeCreate,CScopeUpdate,CScopeDelete };
 
-        public UserCollectionService(AutumnDataSettings dataSettings, IMongoDatabase database) : base(database, "user")
+        public UserService(AutumnDataSettings dataSettings, IMongoDatabase database,
+            IHttpContextAccessor contextAccessor) : base(database, contextAccessor, "user")
         {
             _dataSettings = dataSettings;
         }
 
-        public async Task<User> AddAsync(User user, string password, HttpContext context = null)
+        public async Task<User> AddAsync(User user, string password)
         {
             user.Salt = GetRandomSalt();
             user.Hash = GetHash(password, user.Salt);
             CheckClaims(user);
             user.Metadata = new Metadata();
-            user.Metadata.CreatedAt = context == null ? "admin" : context.User.Identity.Name;
+            user.Metadata.CreatedAt = Context()?.User?.Identity?.Name;
             user.Metadata.CreatedDate = DateTime.UtcNow;
             await Collection().InsertOneAsync(user);
             return user;
@@ -47,6 +42,7 @@ namespace Edel.Adventiel.Connector.Services
                 .Routes
                 .ToDictionary(x => x.Value.Template.TrimStart('/').Replace('/', '_'), x => x.Key.GetGenericArguments()[0]);
             result.Add("v1_user", typeof(User));
+            result.Add("v1_subscription",typeof(Subscription));
             return result;
         }
 
@@ -58,24 +54,25 @@ namespace Edel.Adventiel.Connector.Services
                 var claims = new List<string>();
                 if (!item.Value.IgnoreOperations.Contains(HttpMethod.Post))
                 {
-                    claims.Add(CScopeCreate);
+                    claims.Add(ScopeType.Create.ToString());
                 }
 
                 if (!item.Value.IgnoreOperations.Contains(HttpMethod.Put))
                 {
-                    claims.Add(CScopeUpdate);
+                    claims.Add(ScopeType.Update.ToString());
                 }
 
                 if (!item.Value.IgnoreOperations.Contains(HttpMethod.Delete))
                 {
-                    claims.Add(CScopeDelete);
+                    claims.Add(ScopeType.Delete.ToString());
                 }
 
                 result.Add(item.Key, claims);
             }
-      
+
             // add no entity
-            result.Add(typeof(User),new List<string>(){CScopeRead,CScopeCreate,CScopeUpdate,CScopeDelete});
+            result.Add(typeof(User), Enum.GetNames(typeof(ScopeType)));
+            result.Add(typeof(Subscription), Enum.GetNames(typeof(ScopeType)));
             return result;
         }
 
@@ -104,7 +101,7 @@ namespace Edel.Adventiel.Connector.Services
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<User> UpdateAsync(User user, string password, HttpContext context)
+        public async Task<User> UpdateAsync(User user, string password)
         {
 
             var userDb = await Collection()
@@ -115,8 +112,9 @@ namespace Edel.Adventiel.Connector.Services
             userDb.Salt = GetRandomSalt();
             userDb.Hash = GetHash(password, userDb.Salt);
             userDb.Claims = user.Claims;
+            user.Metadata.LastModifiedDate = DateTime.UtcNow;
+            userDb.Metadata.LastModifiedAt = Context()?.User?.Identity?.Name;
             CheckClaims(userDb);
-
             await Collection().ReplaceOneAsync(u => u.Username == userDb.Username, userDb);
             return userDb;
         }
@@ -164,29 +162,30 @@ namespace Edel.Adventiel.Connector.Services
             var count = Collection().Count(u => true);
             if (count != 0) return;
             var stringBuilder = new StringBuilder();
-            foreach (var item in Scopes)
+            foreach (var item in Enum.GetNames(typeof(ScopeType)))
             {
                 stringBuilder.Append(string.Concat(item, " ,"));
             }
 
             var scope = stringBuilder.ToString().TrimEnd(',').Trim();
             var claims = new Dictionary<string, string>();
-            claims.Add("v1_user", scope);
+            claims.Add("v1_user",scope);
+            claims.Add("v1_subscriptin",scope);
             foreach (var info in _dataSettings.EntitiesInfos.Values)
             {
                 var claimKey = string.Format("{0}_{1}", info.ApiVersion, info.Name);
                 stringBuilder = new StringBuilder();
-                stringBuilder.Append("read, ");
+                stringBuilder.Append(ScopeType.Read.ToString() + ",");
                 if (!info.IgnoreOperations.Contains(HttpMethod.Post))
-                    stringBuilder.Append("create, ");
+                    stringBuilder.Append(ScopeType.Create.ToString() + ",");
                 if (!info.IgnoreOperations.Contains(HttpMethod.Put))
-                    stringBuilder.Append("update, ");
+                    stringBuilder.Append(ScopeType.Update.ToString() + ",");
                 if (!info.IgnoreOperations.Contains(HttpMethod.Delete))
-                    stringBuilder.Append("delete, ");
+                    stringBuilder.Append(ScopeType.Delete.ToString() + ",");
                 var claimValue = stringBuilder.ToString().Trim().TrimEnd(',');
                 claims.Add(claimKey, claimValue);
             }
-            
+
             var user = new User();
             user.Username = "admin";
             user.Salt = GetRandomSalt();

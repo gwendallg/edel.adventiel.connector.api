@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using Autumn.Mvc.Data;
+using Edel.Adventiel.Connector.Api.Models.Subscriptions;
 using Edel.Adventiel.Connector.Api.Models.Users;
 using Edel.Adventiel.Connector.Entities;
 using Edel.Adventiel.Connector.Services;
@@ -39,7 +40,7 @@ namespace Edel.Adventiel.Connector.Api
 
             // mongo Database ioc registration
             serviceCollection.AddScoped(s => s.GetService<IMongoClient>().GetDatabase(databaseName));
-
+      
             // mapper ioc registration
             serviceCollection.AddSingleton<IMapper>(BuildMapper());
 
@@ -47,11 +48,15 @@ namespace Edel.Adventiel.Connector.Api
                     MongoClient($"{configuration["ConnectionStrings:0:ConnectionString"]}")
                 .GetDatabase($"{configuration["ConnectionStrings:0:Database"]}");
 
+  
+            // user service ioc registration
+            serviceCollection.AddScoped<IUserService, UserService>();
+            serviceCollection.AddScoped<ISubscriptionService, SubscriptionService>();
+            
             // initialization de la base base de donnés
             ConnectorHelper.Initialize(serviceCollection.GetAutumnDataSettings(), database);
 
-            // user service ioc registration
-            serviceCollection.AddScoped<IUserService, UserCollectionService>();
+            
             JobStorage.Current = new MongoStorage(connectionString, databaseName);
             RecurringJob.AddOrUpdate(
                 "Edel Collector",
@@ -64,10 +69,11 @@ namespace Edel.Adventiel.Connector.Api
 
         public static void Job(string connectionString, string database)
         {
+            /*
             var mongoClient = new MongoClient(connectionString);
             var service = new CollectorService(mongoClient.GetDatabase(database));
             var task = service.CollectAsync();
-            task.Wait();
+            task.Wait();*/
         }
 
         /// <summary>
@@ -78,22 +84,17 @@ namespace Edel.Adventiel.Connector.Api
         {
             // register Mapper,
             var baseMappings = new MapperConfigurationExpression();
-            baseMappings.CreateMap<UserPostRequestModel, User>();
-            baseMappings.CreateMap<UserPutRequestModel, User>();
+            baseMappings
+                .CreateMap<UserPostRequestModel, User>();
+            baseMappings
+                .CreateMap<UserPutRequestModel, User>();
+            
+            baseMappings
+                .CreateMap<SubscriptionPostRequestModel, Subscription>()
+                .ForMember(d=>d.Password,o=>o.MapFrom(m=>m.Password.Encrypt()));
 
             var mapperConfiguration = new MapperConfiguration(baseMappings);
             return new Mapper(mapperConfiguration);
-        }
-
-        private static void TryAddDepartmentsIfNotExist(IServiceCollection serviceCollection, IMongoDatabase database)
-        {
-
-        }
-
-        private static void TryAddAdminIfNotExistUsers(IServiceCollection serviceCollection,IMongoDatabase database)
-        {
-            var service = new UserCollectionService(serviceCollection.GetAutumnDataSettings(), database);
-            service.TryAddAdminIfNotExistUsers();
         }
 
         public static IServiceCollection AddSecurity(this IServiceCollection serviceCollection,

@@ -6,11 +6,11 @@ namespace Edel.Adventiel.Connector.Services
 {
     public interface IUserService
     {
-        Task<User> AddAsync(User user, string password, HttpContext context);
+        Task<User> AddAsync(User user, string password);
 
         Task<User> FindByUserNameAsync(string userName);
-        
-        Task<User> UpdateAsync(User user, string password, HttpContext context);
+
+        Task<User> UpdateAsync(User user, string password);
 
         Task<User> Authenticate(string userName, string password);
 

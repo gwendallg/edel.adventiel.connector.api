@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.AspNetCore.Http;
+using MongoDB.Driver;
 
 namespace Edel.Adventiel.Connector.Services
 {
@@ -7,13 +8,23 @@ namespace Edel.Adventiel.Connector.Services
     {
         private readonly IMongoCollection<T> _collection;
 
-    
+        /// <summary>
+        /// get collection 
+        /// </summary>
+        /// <returns></returns>
         protected IMongoCollection<T> Collection()
         {
             return _collection;
         }
 
-        protected AbstractCollectionService(IMongoDatabase database, string collectionName) : base(database)
+        /// <summary>
+        /// initialize a new instance of AbstractCollectionService
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="contextAccessor"></param>
+        /// <param name="collectionName"></param>
+        protected AbstractCollectionService(IMongoDatabase database, IHttpContextAccessor contextAccessor,
+            string collectionName) : base(database, contextAccessor)
         {
             _collection = Database().GetCollection<T>(collectionName);
         }

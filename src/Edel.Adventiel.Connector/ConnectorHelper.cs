@@ -26,12 +26,11 @@ namespace Edel.Adventiel.Connector
             TryAddResourceIfNotExist<CalvingCondition>(database);
         }
 
-        private static void TryAddAdminIfNotExistUsers( AutumnDataSettings dataSettings,IMongoDatabase database,
-            string adminPassword = "admin")
+        private static void TryAddAdminIfNotExistUsers(AutumnDataSettings dataSettings, IMongoDatabase database)
         {
 
-            var userService = new UserCollectionService(dataSettings, database);
-            
+            var userService = new UserService(dataSettings, database, null);
+
             var collection = database.GetCollection<User>("user");
             var count = collection.Count(u => true);
             if (count != 0) return;
@@ -45,19 +44,20 @@ namespace Edel.Adventiel.Connector
             {
                 var claimKey = string.Format("{0}_{1}", info.ApiVersion, info.Name);
                 var stringBuilder = new StringBuilder();
-                stringBuilder.Append(ScopeType.Read.ToString()+',');
+                stringBuilder.Append(ScopeType.Read.ToString() + ',');
                 if (!info.IgnoreOperations.Contains(HttpMethod.Post))
-                    stringBuilder.Append(ScopeType.Create.ToString()+',');
+                    stringBuilder.Append(ScopeType.Create.ToString() + ',');
                 if (!info.IgnoreOperations.Contains(HttpMethod.Put))
-                    stringBuilder.Append(ScopeType.Update.ToString()+',');
+                    stringBuilder.Append(ScopeType.Update.ToString() + ',');
                 if (!info.IgnoreOperations.Contains(HttpMethod.Delete))
-                    stringBuilder.Append(ScopeType.Delete.ToString()+',');
+                    stringBuilder.Append(ScopeType.Delete.ToString() + ',');
                 var claimValue = stringBuilder.ToString().Trim().TrimEnd(',');
-                user.Claims .Add(claimKey, claimValue);
+                user.Claims.Add(claimKey, claimValue);
             }
-           
+
             user.Claims.Add("v1_user", $"{ScopeType.Read}, {ScopeType.Create}, {ScopeType.Update}, {ScopeType.Delete}");
-            var task= userService.AddAsync(user, "admin");
+            user.Claims.Add("v1_subscription",$"{ScopeType.Read}, {ScopeType.Create}, {ScopeType.Update}, {ScopeType.Delete}");
+            var task = userService.AddAsync(user, "admin");
             task.Wait();
         }
 

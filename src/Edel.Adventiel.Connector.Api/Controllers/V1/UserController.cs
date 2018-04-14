@@ -66,7 +66,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
             try
             {
                 var user = _mapper.Map<User>(model);
-                user = await _userService.AddAsync(user, model.Password, HttpContext);
+                user = await _userService.AddAsync(user, model.Password);
                 var uri = string.Format("{0}/{1}", Request.HttpContext.Request.Path.ToString().TrimEnd('/'),
                     user.Username);
                 return Created(uri, user);
@@ -97,7 +97,7 @@ namespace Edel.Adventiel.Connector.Api.Controllers.V1
                 user = _mapper.Map<User>(model);
                 user.Username = userName;
                 user.Claims = user.Claims;
-                await _userService.UpdateAsync(user, model.Password, HttpContext);
+                await _userService.UpdateAsync(user, model.Password);
                 var uri = string.Format("{0}/{1}", Request.HttpContext.Request.Path.ToString().TrimEnd('/'),
                     user.Username);
                 return Ok(user);

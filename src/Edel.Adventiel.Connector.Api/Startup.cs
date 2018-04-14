@@ -10,7 +10,9 @@ using Hangfire;
 using Hangfire.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using MongoDB.Bson.Serialization.Conventions;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
@@ -64,6 +66,7 @@ namespace Edel.Adventiel.Connector.Api
                     {
                         c.SwaggerDoc(version, new Info {Title = "api", Version = version});
                     }
+
                     c.DocumentFilter<SwaggerDocumentFilter>();
                     c.OperationFilter<DefaultSwaggerOperationFilter>();
                 })
@@ -71,10 +74,12 @@ namespace Edel.Adventiel.Connector.Api
                     => config
                         .UseMongoStorage($"{_configuration[key: "ConnectionStrings:0:ConnectionString"]}",
                             $"{_configuration[key: "ConnectionStrings:0:Database"]}"))
-                .AddInitialization(_configuration)
                 .AddMvc();
 
-            services.AddScoped<IUserService, UserCollectionService>();
+            services
+                .AddInitialization(_configuration)
+                .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
