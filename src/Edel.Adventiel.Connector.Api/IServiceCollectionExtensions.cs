@@ -8,6 +8,8 @@ using Autumn.Mvc.Data;
 using Edel.Adventiel.Connector.Api.Models.Subscriptions;
 using Edel.Adventiel.Connector.Api.Models.Users;
 using Edel.Adventiel.Connector.Entities;
+using Edel.Adventiel.Connector.Mappings.Breeders;
+using Edel.Adventiel.Connector.Mappings.Cattles;
 using Edel.Adventiel.Connector.Services;
 using Hangfire;
 using Hangfire.Mongo;
@@ -56,25 +58,10 @@ namespace Edel.Adventiel.Connector.Api
             // initialization de la base base de donnés
             ConnectorHelper.Initialize(serviceCollection.GetAutumnDataSettings(), database);
 
-            
-            JobStorage.Current = new MongoStorage(connectionString, databaseName);
-            RecurringJob.AddOrUpdate(
-                "Edel Collector",
-                () => Job(connectionString, databaseName),
-                Cron.Minutely
-            );
-
             return serviceCollection;
         }
 
-        public static void Job(string connectionString, string database)
-        {
-            /*
-            var mongoClient = new MongoClient(connectionString);
-            var service = new CollectorService(mongoClient.GetDatabase(database));
-            var task = service.CollectAsync();
-            task.Wait();*/
-        }
+       
 
         /// <summary>
         /// build mapper
@@ -88,10 +75,18 @@ namespace Edel.Adventiel.Connector.Api
                 .CreateMap<UserPostRequestModel, User>();
             baseMappings
                 .CreateMap<UserPutRequestModel, User>();
-            
             baseMappings
                 .CreateMap<SubscriptionPostRequestModel, Subscription>()
                 .ForMember(d=>d.Password,o=>o.MapFrom(m=>m.Password.Encrypt()));
+            
+            // maping edel -> connector
+            baseMappings
+                .AddProfile<BreederProfile>();
+            baseMappings
+                .AddProfile<CattleIdentityProfile>();
+            baseMappings
+                .AddProfile<CattleBreederProfile>();
+
 
             var mapperConfiguration = new MapperConfiguration(baseMappings);
             return new Mapper(mapperConfiguration);

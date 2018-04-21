@@ -4,7 +4,6 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.Configuration;
 using Edel.Adventiel.Connector.Entities;
 using Edel.Adventiel.Connector.Entities.Breeders;
 using Edel.Adventiel.Connector.Entities.Cattles;
@@ -20,50 +19,29 @@ namespace Edel.Adventiel.Connector.Services
 {
     public class CollectorService : ICollectorService
     {
-        private static readonly IMapper _mapper;
         private readonly IMongoDatabase _database;
-     
-        static CollectorService()
+        private readonly IMapper _mapper;
+        
+
+        public CollectorService(IMongoClient client, IMapper mapper)
         {
-            var baseMappings = new MapperConfigurationExpression();
-
-            baseMappings.CreateMap<typeIdentifiantExploitation, Breeder>()
-                .ForMember(dest => dest.BreederCountryCode, opt => opt.MapFrom(src => src.CodePaysExploitation))
-                .ForMember(dest => dest.BreederIdentifier, opt => opt.MapFrom(src => src.NumeroExploitation));
-            
-            baseMappings.CreateMap<Identite, CattleIdentity>()
-                .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.DateNaissance))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Nom))
-                .ForMember(dest => dest.BreedCode, opt => opt.MapFrom(src => src.CodeRaceBovin))
-                .ForMember(dest => dest.Sex, opt => opt.MapFrom(src => src.Sexe));
-
-            baseMappings.CreateMap<Bovin, CattleBreeder>()
-                .ForMember(dest => dest.CattleCountryCode, opt => opt.MapFrom(src => src.CodePays))
-                .ForMember(dest => dest.CattleIdentifier, opt => opt.MapFrom(src => src.NumeroNationalAnimal));
-            
-                    
-            var mapperConfiguration = new MapperConfiguration(baseMappings);
-            _mapper = new Mapper(mapperConfiguration);
-        }
-
-        public CollectorService(IMongoDatabase database)
-        {
-            _database = database;
+            _database = client.GetDatabase("EDEL");
+            _mapper = mapper;
         }
 
 
-        private static Dictionary<Type, List<object>> Map(MessageMdBDonneesGenetiquesAnimales donneesGenetiquesAnimales)
+        private Dictionary<Type, List<object>> Map(MessageMdBDonneesGenetiquesAnimales donneesGenetiquesAnimales)
         {
             var result = new Dictionary<Type, List<object>>();
 
             #region breeder
-            
+
             var breeder =
                 _mapper.Map<typeIdentifiantExploitation, Breeder>(donneesGenetiquesAnimales.InformationsMessage
                     .Exploitation);
 
             result.Add(typeof(Breeder), new List<object>(new[] {breeder}));
-            
+
             #endregion
 
             return result;
@@ -71,39 +49,106 @@ namespace Edel.Adventiel.Connector.Services
         }
 
 
-        public async Task<string> CollectAsync(int size = 10, string collectorAt = "admin")
+        public async Task CollectAsync(string userId)
         {
-            var subscriptions = await _database
-                .GetCollection<Subscription>("subscription")
-                .Find(c => c.Active)
-                .Sort(Builders<Subscription>.Sort.Descending(x => x.LastCollectTime))
-                .Limit(size)
-                .ToListAsync();
-
-            foreach (var subscription in subscriptions)
+           Subscription subscription = null;
+            try
             {
-                try
-                {
-                    var department = await FindDepartementAsync(subscription.UserId);
-                    var data = await GetDatasAsync(
-                        subscription.UserId,
-                        department,
-                        subscription.Password.Decrypt(),
-                        subscription.LastCollectTime ?? DateTime.Now.AddMonths(-3),
-                        DateTime.Now);
-                }
-                catch (Exception e)
-                {
-                    subscription.LastMessage = e.Message;
-                    await _database
-                        .GetCollection<Subscription>("subscription")
-                        .ReplaceOneAsync(s => s.UserId == subscription.UserId, subscription);
-                }
-            }
+                var department = await FindDepartementAsync(userId);
 
-            return "OK";
+                subscription = await _database
+                    .GetCollection<Subscription>("subscription")
+                    .Find(s => s.UserId == userId && s.Active)
+                    .SingleOrDefaultAsync();
+                if (subscription == null) return;
+/*
+               
+               var data = await GetDatasAsync(
+                    subscription.UserId,
+                    department,
+                    subscription.Password.Decrypt(),
+                    subscription.LastCollectTime ?? DateTime.Now.AddMonths(-3),
+                    DateTime.Now);
+
+                await PopulateBreederAsync(data);
+                await PopulateCattleAsync(data);*/
+                }
+            catch (Exception e)
+            {
+                if (subscription == null) throw;
+                subscription.LastMessage = e.Message;
+                await _database
+                    .GetCollection<Subscription>("subscription")
+                    .ReplaceOneAsync(s => s.UserId == subscription.UserId, subscription);
+            }
         }
 
+        private async Task PopulateBreederAsync(MdBGetDonneesGenetiquesAnimalesResponse response)
+        {
+
+            var breederCollection = _database.GetCollection<Breeder>("breeder");
+            var exploitation = response.ReponseSpecifique.MdBDonneesGenetiquesAnimales.InformationsMessage.Exploitation;
+
+            var breeder = await breederCollection.Find(b =>
+                b.BreederCountryCode == exploitation.CodePaysExploitation.ToString() &&
+                b.BreederIdentifier == exploitation.NumeroExploitation.Trim())
+            .SingleOrDefaultAsync();
+
+            if (breeder == null)
+            {
+                breeder = _mapper.Map<Breeder>(exploitation);
+                breeder.Metadata = new Metadata()
+                {
+                    CreatedAt = "admin",
+                    CreatedDate = DateTime.UtcNow
+                };
+                await breederCollection.InsertOneAsync(breeder);
+            }
+            else
+            {
+                _mapper.Map(exploitation, breeder);
+                breeder.Metadata.LastModifiedAt = "admin";
+                breeder.Metadata.LastModifiedDate = DateTime.UtcNow;
+                await breederCollection.ReplaceOneAsync(b => b.Id == breeder.Id, breeder);
+
+            }
+        }
+
+        private async Task PopulateCattleAsync(MdBGetDonneesGenetiquesAnimalesResponse response)
+        {
+            var cattleCollection = _database.GetCollection<CattleBreeder>("cattle");
+            var exploitation = response.ReponseSpecifique.MdBDonneesGenetiquesAnimales.InformationsMessage.Exploitation;
+
+            foreach (var bovin in response.ReponseSpecifique.MdBDonneesGenetiquesAnimales.Bovin)
+            {
+                var cattle = await cattleCollection.Find(b =>
+                        b.BreederCountryCode == exploitation.CodePaysExploitation.ToString() &&
+                        b.BreederIdentifier == exploitation.NumeroExploitation.Trim() &&
+                        b.CattleCountryCode == bovin.CodePays.ToString() &&
+                        b.CattleIdentifier == bovin.NumeroNationalAnimal.Trim())
+                    .SingleOrDefaultAsync();
+
+                if (cattle == null)
+                {
+                    cattle = _mapper.Map<CattleBreeder>(bovin);
+                    cattle.BreederCountryCode = exploitation.CodePaysExploitation.ToString();
+                    cattle.BreederIdentifier = exploitation.NumeroExploitation.Trim();
+                    cattle.Metadata = new Metadata()
+                    {
+                        CreatedAt = "admin",
+                        CreatedDate = DateTime.UtcNow
+                    };
+                    await cattleCollection.InsertOneAsync(cattle);
+                }
+                else
+                {
+                    _mapper.Map(bovin, cattle);
+                    cattle.Metadata.LastModifiedAt = "admin";
+                    cattle.Metadata.LastModifiedDate = DateTime.UtcNow;
+                    await cattleCollection.ReplaceOneAsync(b => b.Id == cattle.Id, cattle);
+                }
+            }
+        }
 
         /// <summary>
         /// recherche le département de rattachement de l'exploitation
@@ -184,7 +229,8 @@ namespace Edel.Adventiel.Connector.Services
             return (T) constructor.Invoke(new object[] {binding, remoteAddress});
         }
 
-        private static async Task<tkCreateIdentificationResponse> CreateIdentificationResponse(string userId, string password, string entreprise,
+        private static async Task<tkCreateIdentificationResponse> CreateIdentificationResponse(string userId,
+            string password, string entreprise,
             string uri)
         {
             var client = CreateClient<WsGuichetClient>(uri);

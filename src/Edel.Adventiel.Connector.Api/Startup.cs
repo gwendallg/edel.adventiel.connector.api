@@ -24,6 +24,7 @@ namespace Edel.Adventiel.Connector.Api
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private static IServiceFactory _serviceFactory;
         
         public Startup(IConfiguration configuration)
         {
@@ -34,6 +35,8 @@ namespace Edel.Adventiel.Connector.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = $"{_configuration[key: "ConnectionStrings:0:ConnectionString"]}";
+            var databaseName = $"{_configuration[key: "ConnectionStrings:0:Database"]}";
             services
                 .AddAutumn(config =>
                 {
@@ -54,8 +57,8 @@ namespace Edel.Adventiel.Connector.Api
                 )
                 .AddAutumnMongo(config =>
                     config
-                        .ConnectionString($"{_configuration[key: "ConnectionStrings:0:ConnectionString"]}")
-                        .Database($"{_configuration[key: "ConnectionStrings:0:Database"]}")
+                        .ConnectionString(connectionString)
+                        .Database(databaseName)
                         .Convention(new CamelCaseElementNameConvention())
                 )
                 .AddSecurity(_configuration)
@@ -72,18 +75,23 @@ namespace Edel.Adventiel.Connector.Api
                 })
                 .AddHangfire(config
                     => config
-                        .UseMongoStorage($"{_configuration[key: "ConnectionStrings:0:ConnectionString"]}",
-                            $"{_configuration[key: "ConnectionStrings:0:Database"]}"))
+                        .UseMongoStorage(connectionString,
+                            databaseName))
                 .AddMvc();
 
             services
                 .AddInitialization(_configuration)
+                .AddTransient<IServiceFactory,ServiceFactory>()
+                .AddTransient<ICollectorService, CollectorService>()
                 .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+           
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            IApplicationLifetime applicationLifetime)
         {
             if (env.IsDevelopment())
             {
@@ -104,6 +112,28 @@ namespace Edel.Adventiel.Connector.Api
                 .UseHangfireServer()
                 .UseAuthentication()
                 .UseMvc();
+            
+            var connectionString = $"{_configuration[key: "ConnectionStrings:0:ConnectionString"]}";
+            var databaseName = $"{_configuration[key: "ConnectionStrings:0:Database"]}";
+            JobStorage.Current = new MongoStorage(connectionString, databaseName);
+
+            applicationLifetime.ApplicationStarted.Register(() =>
+            {
+                _serviceFactory = app.ApplicationServices.GetService<IServiceFactory>();
+                RecurringJob.AddOrUpdate(
+                    "Edel Collector",
+                    () => CollectData(),
+                    Cron.Minutely
+                );
+            });
+        }
+
+
+        public void CollectData()
+        {
+            var collectorService = _serviceFactory.Get<ICollectorService>();
+            var task = collectorService.CollectAsync("22014107");
+            task.Wait();
         }
     }
 }
