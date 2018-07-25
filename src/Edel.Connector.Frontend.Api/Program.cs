@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Edel.Connector.Consumer.Api
+namespace Edel.Connector.Frontend.Api
 {
     public class Program
     {

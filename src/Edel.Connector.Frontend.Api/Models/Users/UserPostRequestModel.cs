@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Edel.Connector.Consumer.Api.Models.Users
+namespace Edel.Connector.Frontend.Api.Models.Users
 {
     public class UserPostRequestModel : UserPutRequestModel
     {

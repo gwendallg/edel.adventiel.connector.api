@@ -1,0 +1,59 @@
+version: '3.1'
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: edel-connector
+      MONGO_INITDB_ROOT_PASSWORD: edel-connector
+    ports:
+      - 27017:27017
+  
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8000:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: edel-connector
+      ME_CONFIG_MONGODB_ADMINPASSWORD: edel-connector
+    depends_on:
+      - mongo
+  zookeeper:
+    image: confluent/zookeeper
+    ports:
+      - 2181:2181
+
+  kafka:
+    image: confluent/kafka
+    links:
+      - zookeeper:zookeeper
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+
+  schema-registry:
+    image: confluent/schema-registry
+    links:
+      - zookeeper:zookeeper
+      - kafka:kafka
+    ports:
+      - 8081:8081
+    depends_on:
+      - zookeeper
+      - kafka
+  
+  rest-proxy:
+    image: confluent/rest-proxy
+    links:
+      - zookeeper:zookeeper
+      - kafka:kafka
+      - schema-registry:schema-registry
+    ports:
+      - 8082:8082
+    depends_on:
+      - zookeeper
+      - kafka
+      - schema-registry

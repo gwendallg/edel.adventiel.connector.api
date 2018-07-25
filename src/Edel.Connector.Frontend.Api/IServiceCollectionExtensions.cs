@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using Autumn.Mvc.Data;
-using Edel.Connector;
-using Edel.Connector.Consumer.Api.Models.Users;
 using Edel.Connector.Entities;
+using Edel.Connector.Frontend.Api.Models.Users;
 using Edel.Connector.Mappings.Breeders;
 using Edel.Connector.Mappings.Cattles;
 using Edel.Connector.Services;
@@ -18,7 +17,7 @@ using MongoDB.Driver;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 // ReSharper disable All
 
-namespace Edel.Connector.Consumer.Api
+namespace Edel.Connector.Frontend.Api
 {
     public static class IServiceCollectionExtensions
     {

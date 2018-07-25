@@ -10,7 +10,7 @@ using Edel.Connector.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Edel.Connector.Consumer.Api.Controllers.V1
+namespace Edel.Connector.Frontend.Api.Controllers.V1
 {
     [Route("v1/claim")]
     public class ClaimController : Controller
@@ -49,7 +49,7 @@ namespace Edel.Connector.Consumer.Api.Controllers.V1
                     result.Add(claimKey, claimValue);
                 }
 
-                result.Add("v1_user", $"{ScopeType.Read},{ScopeType.Create},${ScopeType.Update}");
+                result.Add("v1_user", $"{ScopeType.Read}, {ScopeType.Create}, {ScopeType.Update}");
                 return Ok(result);
             }
             catch (Exception e)

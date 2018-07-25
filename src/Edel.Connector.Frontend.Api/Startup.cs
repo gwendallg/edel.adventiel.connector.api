@@ -2,9 +2,9 @@
 using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.MongoDB;
 using Autumn.Mvc.Data.Swagger;
-using Edel.Connector.Consumer.Api.Controllers;
-using Edel.Connector.Consumer.Api.Swagger;
 using Edel.Connector.Entities;
+using Edel.Connector.Frontend.Api.Controllers;
+using Edel.Connector.Frontend.Api.Swagger;
 using Edel.Connector.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,7 +17,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 // ReSharper disable All
 
-namespace Edel.Connector.Consumer.Api
+namespace Edel.Connector.Frontend.Api
 {
     public class Startup
     {

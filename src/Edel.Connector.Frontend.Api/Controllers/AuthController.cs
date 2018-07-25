@@ -6,14 +6,14 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Edel.Connector.Consumer.Api.Models.Auths;
+using Edel.Connector.Frontend.Api.Models.Auths;
 using Edel.Connector.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Edel.Connector.Consumer.Api.Controllers
+namespace Edel.Connector.Frontend.Api.Controllers
 {
     [Route("auth")]
     public class AuthController : Controller

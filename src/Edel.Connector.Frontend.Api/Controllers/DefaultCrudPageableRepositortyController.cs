@@ -5,7 +5,7 @@ using Edel.Connector.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
-namespace Edel.Connector.Consumer.Api.Controllers
+namespace Edel.Connector.Frontend.Api.Controllers
 {
     
     /// <summary>
