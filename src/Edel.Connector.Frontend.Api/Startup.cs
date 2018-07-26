@@ -2,6 +2,7 @@
 using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.MongoDB;
 using Autumn.Mvc.Data.Swagger;
+using DnsClient.Protocol;
 using Edel.Connector.Entities;
 using Edel.Connector.Frontend.Api.Controllers;
 using Edel.Connector.Frontend.Api.Swagger;
@@ -97,6 +98,7 @@ namespace Edel.Connector.Frontend.Api
                     }
                 })
                 .UseAuthentication()
+                .UseEdelConnector()
                 .UseMvc();
         }
     }

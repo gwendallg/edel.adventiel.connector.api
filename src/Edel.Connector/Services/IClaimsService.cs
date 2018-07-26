@@ -7,7 +7,7 @@ namespace Edel.Connector.Services
     {
         IDictionary<Type, IList<ScopeType>> GetClaimsByEntityType();
 
-        IDictionary<Type, IList<ScopeType>> GetClaimsByResources();
+        IDictionary<string, IList<ScopeType>> GetClaimsByResources();
 
         IList<ScopeType> GetClaimsByResource(string resource);
 

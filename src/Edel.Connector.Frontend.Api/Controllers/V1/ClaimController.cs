@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using Autumn.Mvc.Data.Models;
 using Edel.Connector.Services;
@@ -30,24 +29,17 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
         {
             try
             {
-                var result = new Dictionary<string, string>();
-
-                foreach (var info in _claimsService.GetClaimsByEntityType())
+                var result = new Dictionary<string,string>();
+                foreach (var item in _claimsService.GetClaimsByResources())
                 {
-                    var claimKey = string.Format("{0}_{1}", info.ApiVersion, info.Name);
                     var stringBuilder = new StringBuilder();
-                    stringBuilder.Append($"{ScopeType.Read}, ");
-                    if (!info.IgnoreOperations.Contains(HttpMethod.Post))
-                        stringBuilder.Append($"{ScopeType.Create}, ");
-                    if (!info.IgnoreOperations.Contains(HttpMethod.Put))
-                        stringBuilder.Append($"{ScopeType.Update}, ");
-                    if (!info.IgnoreOperations.Contains(HttpMethod.Delete))
-                        stringBuilder.Append($"{ScopeType.Delete}, ");
-                    var claimValue = stringBuilder.ToString().Trim().TrimEnd(',');
-                    result.Add(claimKey, claimValue);
-                }
+                    foreach (var scope in item.Value)
+                    {
+                        stringBuilder.Append(scope + ", ");
+                    }
 
-                result.Add("v1_user", $"{ScopeType.Read}, {ScopeType.Create}, {ScopeType.Update}");
+                    result.Add(item.Key, stringBuilder.ToString().Trim().Trim(','));
+                }
                 return Ok(result);
             }
             catch (Exception e)

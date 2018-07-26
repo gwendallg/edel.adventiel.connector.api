@@ -40,6 +40,6 @@ namespace Edel.Connector.Services
         /// add user admin is not exist
         /// </summary>
         /// <param name="adminPassword"></param>
-        void TryAddAdminIfNotExistUsers(string adminPassword = "admin");
+        Task TryAddAdminIfNotExistUsersAsync(string adminPassword = "admin");
     }
 }

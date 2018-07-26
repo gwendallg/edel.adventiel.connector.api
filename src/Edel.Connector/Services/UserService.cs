@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Autumn.Mvc.Data.Configurations;
 using Edel.Connector.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Razor.Language;
 using MongoDB.Driver;
 
 namespace Edel.Connector.Services
@@ -136,44 +137,32 @@ namespace Edel.Connector.Services
             }
         }
 
-        public void TryAddAdminIfNotExistUsers(string adminPassword = "admin")
+        public async Task TryAddAdminIfNotExistUsersAsync(string adminPassword = "admin")
         {
-            var count = Collection().Count(u => true);
-            if (count != 0) return;
-            var stringBuilder = new StringBuilder();
-            foreach (var item in Enum.GetNames(typeof(ScopeType)))
+            var user = await Collection().Find(u => u.Username == "admin").SingleOrDefaultAsync();
+            if (user!=null) return;
+            user = new User() {Claims = new Dictionary<string, string>()};
+            foreach (var info in _claimsService.GetClaimsByResources())
             {
-                stringBuilder.Append(string.Concat(item, " ,"));
-            }
-
-            var scope = stringBuilder.ToString().TrimEnd(',').Trim();
-            var claims = new Dictionary<string, string>();
-            claims.Add("v1_user",scope);
-            claims.Add("v1_subscriptin",scope);
-            foreach (var info in _dataSettings.EntitiesInfos.Values)
-            {
-                var claimKey = string.Format("{0}_{1}", info.ApiVersion, info.Name);
-                stringBuilder = new StringBuilder();
-                stringBuilder.Append(ScopeType.Read.ToString() + ",");
-                if (!info.IgnoreOperations.Contains(HttpMethod.Post))
-                    stringBuilder.Append(ScopeType.Create.ToString() + ",");
-                if (!info.IgnoreOperations.Contains(HttpMethod.Put))
-                    stringBuilder.Append(ScopeType.Update.ToString() + ",");
-                if (!info.IgnoreOperations.Contains(HttpMethod.Delete))
-                    stringBuilder.Append(ScopeType.Delete.ToString() + ",");
+                var stringBuilder = new StringBuilder();
+                foreach (var item in info.Value)
+                {
+                    stringBuilder.Append(item + ",");
+                }
                 var claimValue = stringBuilder.ToString().Trim().TrimEnd(',');
-                claims.Add(claimKey, claimValue);
+                user.Claims.Add(info.Key, claimValue);
+
             }
 
-            var user = new User();
             user.Username = "admin";
             user.Salt = GetRandomSalt();
             user.Hash = GetHash(adminPassword, user.Salt);
-            user.Claims = claims;
-            user.Metadata = new Metadata();
-            user.Metadata.CreatedAt = "admin";
-            user.Metadata.CreatedDate = DateTime.UtcNow;
-            Collection().InsertOne(user);
+            user.Metadata = new Metadata
+            {
+                CreatedAt = "admin",
+                CreatedDate = DateTime.UtcNow
+            };
+            await Collection().InsertOneAsync(user);
         }
     }
 }

@@ -10,6 +10,29 @@ namespace Edel.Connector.Services
     public class ClaimsService : IClaimsService
     {
 
+        private static readonly Dictionary<Type, IList<ScopeType>> MappingTypeToClaims = new Dictionary<Type, IList<ScopeType>>()
+        {
+            {
+                typeof(User),
+                new List<ScopeType>(new []{ScopeType.Read,ScopeType.Create,ScopeType.Update})
+            },
+            {
+                typeof(Subscription),
+                new List<ScopeType>(new []{ScopeType.Read,ScopeType.Create,ScopeType.Update})
+            }
+        };
+
+        private static readonly Dictionary<string, Type> MappingStringToTypes = new Dictionary<string, Type>()
+        {
+            {
+                "v1_user",typeof(User)
+            },
+            {
+                "v1_subscription",typeof(Subscription)
+            }
+        };
+
+        
         private readonly AutumnDataSettings _dataSettings;
 
         public ClaimsService(AutumnDataSettings dataSettings)
@@ -17,16 +40,41 @@ namespace Edel.Connector.Services
             _dataSettings = dataSettings;
         }
 
-        public IDictionary<Type, IList<ScopeType>> GetClaimsByResources()
+        public IDictionary<string, IList<ScopeType>> GetClaimsByResources()
         {
-            return null;
+            var result = new Dictionary<string,IList<ScopeType>>();
+            foreach (var item in _dataSettings.EntitiesInfos)
+            {
+                var scopes = new List<ScopeType> {ScopeType.Read};
+                if (!item.Value.IgnoreOperations.Contains(HttpMethod.Post))
+                {
+                    scopes.Add(ScopeType.Create);
+                }
+
+                if (!item.Value.IgnoreOperations.Contains(HttpMethod.Put))
+                {
+                    scopes.Add(ScopeType.Update);
+                }
+
+                if (!item.Value.IgnoreOperations.Contains(HttpMethod.Delete))
+                {
+                    scopes.Add(ScopeType.Delete);
+                }
+                result.Add($"{item.Value.ApiVersion}_{item.Value.Name}", scopes);
+            }
+
+            foreach (var item in MappingStringToTypes)
+            {
+                result.Add(item.Key,GetClaimsByEntityType(item.Value));
+            }
+            return result;
         }
 
         public IList<ScopeType> GetClaimsByResource(string resource)
         {
-            return null;
+            var items = GetClaimsByResources();
+            return items.ContainsKey(resource) ? items[resource] : null;
         }
-
 
         public IList<ScopeType> GetClaimsByEntityType(Type entityType)
         {
@@ -51,15 +99,9 @@ namespace Edel.Connector.Services
             }
             else
             {
-                if (typeof(User) == entityType)
+                if (MappingTypeToClaims.ContainsKey(entityType))
                 {
-                    return new List<ScopeType>(new[]
-                        {ScopeType.Read, ScopeType.Create, ScopeType.Update, ScopeType.Delete}));
-                }
-
-                if (typeof(Subscription) == entityType)
-                {
-                    new List<ScopeType>(new[] {ScopeType.Read, ScopeType.Create, ScopeType.Update}));
+                    return MappingTypeToClaims[entityType];
                 }
             }
 
@@ -70,8 +112,8 @@ namespace Edel.Connector.Services
         {
             var result =
                 _dataSettings.EntitiesInfos.ToDictionary(item => item.Key, item => GetClaimsByEntityType(item.Key));
-            result.Add(typeof(User), GetClaimsByEntityType(typeof(User)));
-            result.Add(typeof(Subscription), GetClaimsByEntityType(typeof(Subscription)));
+            foreach (var item in MappingTypeToClaims)
+                result.Add(item.Key, item.Value);
             return result;
         }
 

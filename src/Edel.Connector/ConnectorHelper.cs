@@ -1,66 +1,38 @@
 ﻿    using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
-using System.Text;
-using Autumn.Mvc.Data.Configurations;
-using MongoDB.Driver;
-using System.Linq;
-using System.Reflection;
-using Autumn.Mvc.Data.MongoDB.Annotations;
+    using MongoDB.Driver;
+    using System.Reflection;
+    using Autumn.Mvc.Data.MongoDB.Annotations;
 using Edel.Connector.Entities;
 using Edel.Connector.Entities.Cattles.Breeding;
 using Edel.Connector.Entities.References;
 using Edel.Connector.Services;
-using Newtonsoft.Json;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json;
 
 namespace Edel.Connector
 {
     public static class ConnectorHelper
     {
-        public static void Initialize(AutumnDataSettings dataSettings, IMongoDatabase database,
-            IClaimsService claimsService)
+        public static void Initialize(IApplicationBuilder applicationBuilder)
         {
-            TryAddAdminIfNotExistUsers(dataSettings, database, claimsService);
+
+            var scope = applicationBuilder.ApplicationServices.CreateScope();
+            var database = (IMongoDatabase) scope.ServiceProvider.GetService(typeof(IMongoDatabase));
+            var userService = (IUserService) scope.ServiceProvider.GetService(typeof(IUserService));
+
+            TryAddAdminIfNotExistUsers(userService);
             TryAddResourceIfNotExist<Site>(database);
             TryAddResourceIfNotExist<Department>(database);
             TryAddResourceIfNotExist<CalvingCondition>(database);
         }
 
-        private static void TryAddAdminIfNotExistUsers(AutumnDataSettings dataSettings, IMongoDatabase database,
-            IClaimsService claimsService)
+        private static void TryAddAdminIfNotExistUsers(IUserService userService)
         {
 
-            var userService = new UserService(dataSettings, database, null, claimsService);
-
-            var collection = database.GetCollection<User>("user");
-            var count = collection.Count(u => true);
-            if (count != 0) return;
-
-            var user = new User
-            {
-                Username = "admin",
-                Claims = new Dictionary<string, string>()
-            };
-            foreach (var info in dataSettings.EntitiesInfos.Values)
-            {
-                var claimKey = string.Format("{0}_{1}", info.ApiVersion, info.Name);
-                var stringBuilder = new StringBuilder();
-                stringBuilder.Append(ScopeType.Read.ToString() + ',');
-                if (!info.IgnoreOperations.Contains(HttpMethod.Post))
-                    stringBuilder.Append(ScopeType.Create.ToString() + ',');
-                if (!info.IgnoreOperations.Contains(HttpMethod.Put))
-                    stringBuilder.Append(ScopeType.Update.ToString() + ',');
-                if (!info.IgnoreOperations.Contains(HttpMethod.Delete))
-                    stringBuilder.Append(ScopeType.Delete.ToString() + ',');
-                var claimValue = stringBuilder.ToString().Trim().TrimEnd(',');
-                user.Claims.Add(claimKey, claimValue);
-            }
-
-            user.Claims.Add("v1_user", $"{ScopeType.Read}, {ScopeType.Create}, {ScopeType.Update}, {ScopeType.Delete}");
-            user.Claims.Add("v1_subscription",
-                $"{ScopeType.Read}, {ScopeType.Create}, {ScopeType.Update}, {ScopeType.Delete}");
-            var task = userService.AddAsync(user, "admin");
+            var task = userService.TryAddAdminIfNotExistUsersAsync();
             task.Wait();
         }
 
@@ -76,19 +48,19 @@ namespace Edel.Connector
             }
         }
 
-        private static void TryAddResourceIfNotExist<T>(IMongoDatabase database) where T:IEntity
+        private static void TryAddResourceIfNotExist<T>(IMongoDatabase database) where T : IEntity
         {
             var collectionAttribute = (CollectionAttribute) typeof(T).GetCustomAttribute(typeof(CollectionAttribute));
             var collection = database.GetCollection<T>(collectionAttribute.Name);
             var count = collection.Count(u => true);
             if (count != 0) return;
 
-            var items = JsonConvert.DeserializeObject<List<T>>(Json(typeof(T).Name+"s.json"));
+            var items = JsonConvert.DeserializeObject<List<T>>(Json(typeof(T).Name + "s.json"));
             items.ForEach(it => it.Metadata = new Metadata() {CreatedAt = "admin", CreatedDate = DateTime.UtcNow});
             var task = collection.InsertManyAsync(items);
             task.Wait();
         }
-      
-        
+
+
     }
 }

@@ -44,17 +44,10 @@ namespace Edel.Connector.Frontend.Api
             // mapper ioc registration
             serviceCollection.AddSingleton<IMapper>(BuildMapper());
 
-            var database = new
-                    MongoClient($"{configuration["ConnectionStrings:0:ConnectionString"]}")
-                .GetDatabase($"{configuration["ConnectionStrings:0:Database"]}");
-
-
             // user service ioc registration
             serviceCollection.AddScoped<IUserService, UserService>();
             serviceCollection.AddScoped<ISubscriptionService, SubscriptionService>();
-
-            // initialization de la base base de donnés
-            ConnectorHelper.Initialize(serviceCollection.GetAutumnDataSettings(), database);
+            serviceCollection.AddScoped<IClaimsService, ClaimsService>();
 
             return serviceCollection;
         }
