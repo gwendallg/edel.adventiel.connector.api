@@ -13,6 +13,9 @@ namespace Edel.Connector.Services
         /// <param name="password"></param>
         /// <returns></returns>
         Task<Subscription> AddAsync(Subscription subscription, string password);
+
+        Task<Subscription> FindOneAsync(string userId);
+     
         Task<List<Subscription>> FindToCollectAsync(int size);
     }
 }

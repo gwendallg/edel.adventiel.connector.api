@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autumn.Mvc.Configurations;
 using Edel.Connector.Entities;
-using Edel.Connector.Services;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 
@@ -25,8 +24,14 @@ namespace Edel.Connector.Services
                 CreatedDate = DateTime.UtcNow
             };
             subscription.Hash = password.Encrypt();
+            subscription.LastImportStatus = ImportStatusType.Waiting;
             await Collection().InsertOneAsync(subscription);
             return subscription;
+        }
+
+        public async Task<Subscription> FindOneAsync(string userId)
+        {
+            return await Collection().Find(e => e.UserId == userId).SingleOrDefaultAsync();
         }
 
         public async Task<List<Subscription>> FindToCollectAsync(int size)

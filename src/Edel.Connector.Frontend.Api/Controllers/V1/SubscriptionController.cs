@@ -45,5 +45,27 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
                 return StatusCode((int) HttpStatusCode.InternalServerError, new ErrorModelInternalError(e));
             }
         }
+        
+        /// <summary>
+        /// find user
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        [HttpGet("{userid}")]
+        [SwaggerOperation( Tags = new []{"subscription"})]
+        public async Task<IActionResult> Get(string userid)
+        {
+            try
+            {
+                var subscription = await _subscriptionService.FindOneAsync(userid);
+                if (subscription == null)
+                    return NotFound();
+                return Ok(subscription);
+            }
+            catch (Exception e)
+            {
+                return StatusCode((int) HttpStatusCode.InternalServerError, new ErrorModelInternalError(e));
+            }
+        }
     }
 }

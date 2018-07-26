@@ -1,7 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Autumn.Mvc.Data.Annotations;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Edel.Connector.Entities
 {
@@ -30,12 +33,19 @@ namespace Edel.Connector.Entities
         /// last collect datetime
         /// </summary>
         [Ignore]
-        public DateTime? LastCollectTime { get; set; }
+        public DateTime? LastImportDate { get; set; }
 
         /// <summary>
         /// last message 
         /// </summary>
         [Ignore]
-        public string LastMessage { get; set; }
+        public string LastImportMessage { get; set; }
+
+        /// <summary>
+        /// status
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        [BsonRepresentation(BsonType.String)]
+        public ImportStatusType LastImportStatus { get; set; }
     }
 }

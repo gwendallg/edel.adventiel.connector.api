@@ -6,6 +6,7 @@ using AutoMapper;
 using AutoMapper.Configuration;
 using Autumn.Mvc.Data;
 using Edel.Connector.Entities;
+using Edel.Connector.Frontend.Api.Models.Subscriptions;
 using Edel.Connector.Frontend.Api.Models.Users;
 using Edel.Connector.Mappings.Breeders;
 using Edel.Connector.Mappings.Cattles;
@@ -70,6 +71,10 @@ namespace Edel.Connector.Frontend.Api
                 .CreateMap<UserPostRequestModel, User>();
             baseMappings
                 .CreateMap<UserPutRequestModel, User>();
+            baseMappings
+                .CreateMap<SubscriptionPostRequestModel, Subscription>();
+            baseMappings
+                .CreateMap<SubscriptionPutRequestModel, Subscription>();
 
             // maping edel -> connector
             baseMappings

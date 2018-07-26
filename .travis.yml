@@ -12,5 +12,5 @@ dotnet: 2.0.2
 os:
   - linux
 script:
-  - dotnet restore ./src/Edel.Adventiel.Connector.sln
-  - dotnet build --configuration Release ./src/Edel.Adventiel.Connector.sln
+  - dotnet restore ./src/Edel.Connector.sln
+  - dotnet build --configuration Release ./src/Edel.Connector.sln
