@@ -18,18 +18,20 @@ namespace Edel.Connector
 {
     public static class ConnectorHelper
     {
-        public static void Initialize(AutumnDataSettings dataSettings, IMongoDatabase database)
+        public static void Initialize(AutumnDataSettings dataSettings, IMongoDatabase database,
+            IClaimsService claimsService)
         {
-            TryAddAdminIfNotExistUsers(dataSettings, database);
+            TryAddAdminIfNotExistUsers(dataSettings, database, claimsService);
             TryAddResourceIfNotExist<Site>(database);
             TryAddResourceIfNotExist<Department>(database);
             TryAddResourceIfNotExist<CalvingCondition>(database);
         }
 
-        private static void TryAddAdminIfNotExistUsers(AutumnDataSettings dataSettings, IMongoDatabase database)
+        private static void TryAddAdminIfNotExistUsers(AutumnDataSettings dataSettings, IMongoDatabase database,
+            IClaimsService claimsService)
         {
 
-            var userService = new UserService(dataSettings, database, null);
+            var userService = new UserService(dataSettings, database, null, claimsService);
 
             var collection = database.GetCollection<User>("user");
             var count = collection.Count(u => true);

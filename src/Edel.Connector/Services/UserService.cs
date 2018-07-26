@@ -15,11 +15,13 @@ namespace Edel.Connector.Services
     public class UserService : AbstractCollectionService<User>, IUserService
     {
         private readonly AutumnDataSettings _dataSettings;
+        private readonly IClaimsService _claimsService;
 
         public UserService(AutumnDataSettings dataSettings, IMongoDatabase database,
-            IHttpContextAccessor contextAccessor) : base(database, contextAccessor, "user")
+            IHttpContextAccessor contextAccessor, IClaimsService claimsService) : base(database, contextAccessor, "user")
         {
             _dataSettings = dataSettings;
+            _claimsService = claimsService;
         }
 
         public async Task<User> AddAsync(User user, string password)
@@ -47,40 +49,9 @@ namespace Edel.Connector.Services
             return result;
         }
 
-        public Dictionary<Type, IList<string>> GetClaimsByEntityType()
-        {
-            var result = new Dictionary<Type, IList<string>>();
-            foreach (var item in _dataSettings.EntitiesInfos)
-            {
-                var claims = new List<string>();
-                if (!item.Value.IgnoreOperations.Contains(HttpMethod.Post))
-                {
-                    claims.Add(ScopeType.Create.ToString());
-                }
-
-                if (!item.Value.IgnoreOperations.Contains(HttpMethod.Put))
-                {
-                    claims.Add(ScopeType.Update.ToString());
-                }
-
-                if (!item.Value.IgnoreOperations.Contains(HttpMethod.Delete))
-                {
-                    claims.Add(ScopeType.Delete.ToString());
-                }
-
-                result.Add(item.Key, claims);
-            }
-
-            // add no entity
-            result.Add(typeof(User), Enum.GetNames(typeof(ScopeType)));
-            result.Add(typeof(Subscription), Enum.GetNames(typeof(ScopeType)));
-            return result;
-        }
-
-
         private void CheckClaims(User user)
         {
-            var claimsByEntity = GetClaimsByEntityType();
+            var claimsByEntity = _claimsService.GetClaimsByEntityType();
             var entityTypeByRoute = GetEntityTypeByRoute();
             foreach (var claim in user.Claims)
             {
@@ -89,10 +60,18 @@ namespace Edel.Connector.Services
                     throw new Exception(string.Format("Claims {0} not exist", claim.Key));
                 }
 
-                var resourceType = entityTypeByRoute[claim.Key];    
-                //var claimRessource = claimsByEntity[resourceType];
+                if (_claimsService.TryParse(claim.Value, out var scopes))
+                {
+                   // TODO  check claims    
+                }
+                else
+                {
+                    throw new Exception(string.Format("Scopes {0} not exist for Claim {1}", claim.Value, claim.Key));
+                }
             }
         }
+        
+        
 
         public async Task<User> FindByUserNameAsync(string userName)
         {

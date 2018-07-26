@@ -76,15 +76,6 @@ namespace Edel.Connector.Frontend.Api
             baseMappings
                 .CreateMap<SubscriptionPutRequestModel, Subscription>();
 
-            // maping edel -> connector
-            baseMappings
-                .AddProfile<BreederProfile>();
-            baseMappings
-                .AddProfile<CattleIdentityProfile>();
-            baseMappings
-                .AddProfile<CattleBreederProfile>();
-
-
             var mapperConfiguration = new MapperConfiguration(baseMappings);
             return new Mapper(mapperConfiguration);
         }

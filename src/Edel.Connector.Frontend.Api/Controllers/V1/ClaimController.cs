@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using Autumn.Mvc.Data.Configurations;
 using Autumn.Mvc.Data.Models;
 using Edel.Connector.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +13,11 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
     [Route("v1/claim")]
     public class ClaimController : Controller
     {
-        private readonly AutumnDataSettings _dataSettings;
+        private readonly IClaimsService _claimsService;
 
-        public ClaimController(AutumnDataSettings dataSettings)
+        public ClaimController(IClaimsService claimsService)
         {
-            _dataSettings = dataSettings;
+            _claimsService = claimsService;
         }
         
         /// <summary>
@@ -34,7 +32,7 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
             {
                 var result = new Dictionary<string, string>();
 
-                foreach (var info in _dataSettings.EntitiesInfos.Values)
+                foreach (var info in _claimsService.GetClaimsByEntityType())
                 {
                     var claimKey = string.Format("{0}_{1}", info.ApiVersion, info.Name);
                     var stringBuilder = new StringBuilder();
