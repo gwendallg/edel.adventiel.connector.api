@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autumn.Mvc.Configurations;
@@ -34,9 +35,12 @@ namespace Edel.Connector.Services
             return await Collection().Find(e => e.UserId == userId).SingleOrDefaultAsync();
         }
 
-        public async Task<List<Subscription>> FindToCollectAsync(int size)
+        public async Task<List<Subscription>> FindToCollectAsync(int size = 100)
         {
-            return new List<Subscription>();
+            return await Collection()
+                .Find(s => s.LastImportStatus == ImportStatusType.Waiting &&
+                           (s.LastImportDate == null || s.LastImportDate < DateTime.UtcNow.Date)).Limit(size)
+                .ToListAsync();
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Edel.Connector.Frontend.Api.Controllers
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
-            return Ok(new AuthTokenResponseModel() {Token = new JwtSecurityTokenHandler().WriteToken(token)});
+            return Ok(new AuthTokenResponseModel() {AccessToken = new JwtSecurityTokenHandler().WriteToken(token)});
         }
 
     }
