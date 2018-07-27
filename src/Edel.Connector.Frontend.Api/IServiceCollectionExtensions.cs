@@ -7,9 +7,11 @@ using AutoMapper.Configuration;
 using Edel.Connector.Entities;
 using Edel.Connector.Frontend.Api.Models.Subscriptions;
 using Edel.Connector.Frontend.Api.Models.Users;
+using Edel.Connector.HealthChecks;
 using Edel.Connector.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -46,9 +48,16 @@ namespace Edel.Connector.Frontend.Api
             serviceCollection.AddScoped<ISubscriptionService, SubscriptionService>();
             serviceCollection.AddScoped<IClaimsService, ClaimsService>();
 
+            // healthcheck
+            serviceCollection.AddHealthChecks(checks =>
+            {
+                // check user collection
+                checks.AddMongoCheck(connectionString, databaseName, new[] {"user"});
+            });
+
             return serviceCollection;
         }
-
+        
         /// <summary>
         /// build mapper
         /// </summary>

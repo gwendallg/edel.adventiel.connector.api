@@ -9,6 +9,7 @@
     <PackageReference Include="Autumn.Mvc.Data.Swagger" Version="1.2.3" />
     <PackageReference Include="Hangfire.Core" Version="1.6.19" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.HealthChecks" Version="1.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.3.0" />
   </ItemGroup>

@@ -13,6 +13,7 @@ namespace Edel.Connector.Frontend.Api
         private static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseHealthChecks("/health")
                 .Build();
     }
 }
