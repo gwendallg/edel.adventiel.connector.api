@@ -53,6 +53,7 @@ namespace Edel.Connector.Frontend.Api
             {
                 // check user collection
                 checks.AddMongoCheck(connectionString, databaseName, new[] {"user"});
+                checks.AddKafkaCheck("localhost:9092");
             });
 
             return serviceCollection;
