@@ -11,7 +11,6 @@ using Edel.Connector.HealthChecks;
 using Edel.Connector.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -47,13 +46,20 @@ namespace Edel.Connector.Frontend.Api
             serviceCollection.AddScoped<IUserService, UserService>();
             serviceCollection.AddScoped<ISubscriptionService, SubscriptionService>();
             serviceCollection.AddScoped<IClaimsService, ClaimsService>();
+            
+            // kafka registration
+            serviceCollection.AddScoped<IMessageService, MessageService>();
 
             // healthcheck
             serviceCollection.AddHealthChecks(checks =>
             {
                 // check user collection
                 checks.AddMongoCheck(connectionString, databaseName, new[] {"user"});
-                checks.AddKafkaCheck("localhost:9092");
+
+                var bootstrapServers = $"{configuration["Kafka:BootstrapServers"]}";
+                var topic = $"{configuration["Kafka:Topic"]}";
+
+                checks.AddKafkaCheck(bootstrapServers, topic);
             });
 
             return serviceCollection;
@@ -80,6 +86,7 @@ namespace Edel.Connector.Frontend.Api
             return new Mapper(mapperConfiguration);
         }
 
+        
         public static IServiceCollection AddSecurity(this IServiceCollection serviceCollection,
             IConfiguration configuration)
         {

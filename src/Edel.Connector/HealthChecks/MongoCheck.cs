@@ -47,7 +47,7 @@ namespace Edel.Connector.HealthChecks
 
                 return HealthCheckResult.Healthy($"Successfully found all collection(s) on Mongo database");
             }
-            catch (Exception e)
+            catch
             {
                 return HealthCheckResult.Unhealthy($"Failed to connect to Mongo Database.");
             }

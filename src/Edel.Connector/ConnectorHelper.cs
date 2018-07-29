@@ -31,11 +31,9 @@ namespace Edel.Connector
 
         private static void TryAddAdminIfNotExistUsers(IUserService userService)
         {
-
             var task = userService.TryAddAdminIfNotExistUsersAsync();
             task.Wait();
         }
-
 
         private static string Json(string resourceFileName)
         {
@@ -60,7 +58,5 @@ namespace Edel.Connector
             var task = collection.InsertManyAsync(items);
             task.Wait();
         }
-
-
     }
 }

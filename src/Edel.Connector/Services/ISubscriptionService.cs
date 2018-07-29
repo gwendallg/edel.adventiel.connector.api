@@ -15,7 +15,7 @@ namespace Edel.Connector.Services
         Task<Subscription> AddAsync(Subscription subscription, string password);
 
         Task<Subscription> FindOneAsync(string userId);
-     
-        Task<List<Subscription>> FindToCollectAsync(int size);
+
+        Task NotifyRefreshDataAsync(int size);
     }
 }

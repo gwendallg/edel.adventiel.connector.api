@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
@@ -8,18 +10,19 @@ using Microsoft.Extensions.HealthChecks;
 
 namespace Edel.Connector.HealthChecks
 {
-    public class KafkaCheck :IHealthCheck
+    public class KafkaCheck : IHealthCheck
     {
         private readonly Dictionary<string, object> _configuration;
-        private const string Topic = "breeder-data-refresh";
+        private readonly string _topic;
 
-        public KafkaCheck(string bootstrapServers, string clientId)
+        public KafkaCheck(string bootstrapServers, string topic)
         {
+            _topic = topic;
             _configuration = new Dictionary<string, object>()
             {
                 ["bootstrap.servers"] = bootstrapServers,
                 ["retries"] = 0,
-                ["client.id"] = clientId,
+                ["client.id"] = BuildClientId(),
                 ["batch.num.messages"] = 1,
                 ["socket.blocking.max.ms"] = 1,
                 ["socket.nagle.disable"] = true,
@@ -33,6 +36,17 @@ namespace Edel.Connector.HealthChecks
                 ["message.send.max.retries"] = 0
             };
         }
+        
+        private static  string BuildClientId()
+        {
+            var hostName = Dns.GetHostName();
+            var ips = Dns.GetHostEntry(hostName)
+                .AddressList
+                .Select(a => a.ToString() + ",")
+                .Aggregate(string.Concat).TrimEnd(',');
+
+            return $"{hostName} ({ips})";
+        }
 
         public async ValueTask<IHealthCheckResult> CheckAsync(
             CancellationToken cancellationToken = new CancellationToken())
@@ -44,7 +58,7 @@ namespace Edel.Connector.HealthChecks
                         new BreederDataRefershMessageSerializer()))
                 {
                     var message = new BreederDataRefreshMessage() {IsHealthCheck = true};
-                    var result = await producer.ProduceAsync(Topic, null, message);
+                    var result = await producer.ProduceAsync(_topic, null, message);
                     if (result.Error.HasError)
                     {
                         throw new Exception(result.Error.Reason);
