@@ -5,7 +5,7 @@ using Autumn.Mvc.Data.MongoDB.Annotations;
 namespace Edel.Connector.Entities.References
 {
     [Collection(Name = "department")]
-    [Entity(Name = "department", Insertable = false, Updatable = false, Deletable = false)]
+    [Resource(Name = "department", Insertable = false, Updatable = false, Deletable = false)]
     // ReSharper disable once ClassNeverInstantiated.Global
     public class Department : Entity
     {

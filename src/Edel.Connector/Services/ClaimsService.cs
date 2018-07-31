@@ -43,7 +43,7 @@ namespace Edel.Connector.Services
         public IDictionary<string, IList<ScopeType>> GetClaimsByResources()
         {
             var result = new Dictionary<string,IList<ScopeType>>();
-            foreach (var item in _dataSettings.EntitiesInfos)
+            foreach (var item in _dataSettings.ResourceInfos)
             {
                 var scopes = new List<ScopeType> {ScopeType.Read};
                 if (!item.Value.IgnoreOperations.Contains(HttpMethod.Post))
@@ -79,9 +79,9 @@ namespace Edel.Connector.Services
         public IList<ScopeType> GetClaimsByEntityType(Type entityType)
         {
             var result = new List<ScopeType>();
-            if (_dataSettings.EntitiesInfos.ContainsKey(entityType))
+            if (_dataSettings.ResourceInfos.ContainsKey(entityType))
             {
-                var item = _dataSettings.EntitiesInfos[entityType];
+                var item = _dataSettings.ResourceInfos[entityType];
                 if (!item.IgnoreOperations.Contains(HttpMethod.Post))
                 {
                     result.Add(ScopeType.Create);

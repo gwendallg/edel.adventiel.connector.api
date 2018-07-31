@@ -6,7 +6,7 @@ namespace Edel.Connector.Entities.Cattles.Production.Milk
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleMilkControl")]
-    [Entity(Name = "cattle-milk-control")]
+    [Resource(Name = "cattle-milk-control")]
     public class CattleMilkControl : BreederEntity
     {
         public int? NumberTreatsPassage { get; set; }

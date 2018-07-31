@@ -6,7 +6,7 @@ namespace Edel.Connector.Entities.Cattles.Breeding
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleCalvingCondition")]
-    [Entity(Name = "cattle-calving-condition")]
+    [Resource(Name = "cattle-calving-condition")]
     // ReSharper disable once ClassNeverInstantiated.Global
     public class CalvingCondition : ReferenceEntity
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Autumn.Mvc.Data.Annotations;
+using Autumn.Mvc.Data.MongoDB.Annotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
@@ -9,6 +10,8 @@ using Newtonsoft.Json.Converters;
 namespace Edel.Connector.Entities
 {
     [BsonIgnoreExtraElements]
+    [Collection(Name = "subscription")]
+    [Entity(Name = "subscription")]
     public class Subscription : Metadataeable
     {
         /// <summary>
@@ -16,6 +19,7 @@ namespace Edel.Connector.Entities
         /// </summary>
         [Required]
         [BsonId]
+        [Id]
         public string UserId { get; set; }
 
         /// <summary>

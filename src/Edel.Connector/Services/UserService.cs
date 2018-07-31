@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Autumn.Mvc.Data.Configurations;
+using Autumn.Mvc.Data.Repositories;
 using Edel.Connector.Entities;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Razor.Language;
 using MongoDB.Driver;
 
 namespace Edel.Connector.Services
 {
-    public class UserService : AbstractCollectionService<User>, IUserService
+    public class UserService :  AbstractService, IUserService
     {
         private readonly AutumnDataSettings _dataSettings;
         private readonly IClaimsService _claimsService;
+        private readonly ICrudPageableRepositoryAsync<User, string> _userRepository;
 
         public UserService(AutumnDataSettings dataSettings, IMongoDatabase database,
-            IHttpContextAccessor contextAccessor, IClaimsService claimsService) : base(database, contextAccessor, "user")
+            IHttpContextAccessor contextAccessor, IClaimsService claimsService,
+            ICrudPageableRepositoryAsync<User, string> userRepository) : base(contextAccessor)
         {
             _dataSettings = dataSettings;
             _claimsService = claimsService;
+            _userRepository = userRepository;
         }
 
         public async Task<User> AddAsync(User user, string password)
@@ -35,8 +37,7 @@ namespace Edel.Connector.Services
                 CreatedAt = Context()?.User?.Identity?.Name,
                 CreatedDate = DateTime.UtcNow
             };
-            await Collection().InsertOneAsync(user);
-            return user;
+            return await _userRepository.InsertAsync(user);
         }
 
         private Dictionary<string, Type> GetEntityTypeByRoute()
@@ -71,23 +72,19 @@ namespace Edel.Connector.Services
                 }
             }
         }
-        
-        
+
+
 
         public async Task<User> FindByUserNameAsync(string userName)
         {
-            return await Collection()
-                .Find(u => u.Username == userName)
-                .SingleOrDefaultAsync();
+            var result = await _userRepository.FindAsync(u => u.Username == userName);
+            return result.TotalElements == 1L ? result.Content[0] : null;
         }
 
         public async Task<User> UpdateAsync(User user, string password)
         {
 
-            var userDb = await Collection()
-                .Find(u => u.Username == user.Username)
-                .SingleOrDefaultAsync();
-
+            var userDb = await FindByUserNameAsync(user.Username);
             if (userDb == null) throw new Exception("User not found");
             userDb.Salt = GetRandomSalt();
             userDb.Hash = GetHash(password, userDb.Salt);
@@ -95,8 +92,7 @@ namespace Edel.Connector.Services
             user.Metadata.LastModifiedDate = DateTime.UtcNow;
             userDb.Metadata.LastModifiedAt = Context()?.User?.Identity?.Name;
             CheckClaims(userDb);
-            await Collection().ReplaceOneAsync(u => u.Username == userDb.Username, userDb);
-            return userDb;
+            return await _userRepository.UpdateAsync(user, user.Username);
         }
 
         /// <summary>
@@ -139,9 +135,9 @@ namespace Edel.Connector.Services
 
         public async Task TryAddAdminIfNotExistUsersAsync(string adminPassword = "admin")
         {
-            var user = await Collection().Find(u => u.Username == "admin").SingleOrDefaultAsync();
-            if (user!=null) return;
-            user = new User() {Claims = new Dictionary<string, string>()};
+            var result = await _userRepository.FindAsync(u => u.Username == "admin");
+            if (result.HasContent) return;
+            var user = new User() {Claims = new Dictionary<string, string>()};
             foreach (var info in _claimsService.GetClaimsByResources())
             {
                 var stringBuilder = new StringBuilder();
@@ -149,6 +145,7 @@ namespace Edel.Connector.Services
                 {
                     stringBuilder.Append(item + ",");
                 }
+
                 var claimValue = stringBuilder.ToString().Trim().TrimEnd(',');
                 user.Claims.Add(info.Key, claimValue);
 
@@ -162,7 +159,8 @@ namespace Edel.Connector.Services
                 CreatedAt = "admin",
                 CreatedDate = DateTime.UtcNow
             };
-            await Collection().InsertOneAsync(user);
+
+            await _userRepository.InsertAsync(user);
         }
     }
 }

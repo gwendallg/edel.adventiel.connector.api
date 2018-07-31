@@ -8,7 +8,7 @@ namespace Edel.Connector.Entities.Cattles.Production.Milk
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleLactation")]
-    [Entity(Name = "cattle-lactation")]
+    [Resource(Name = "cattle-lactation")]
     public class CattleBreederLactation : CattleBreederEvent
     {
         [Required] public int LactationNumber { get; set; }

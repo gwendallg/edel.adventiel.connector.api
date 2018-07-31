@@ -8,7 +8,7 @@ namespace Edel.Connector.Entities.Cattles.EmbryoTransplantations
 
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleEmbryoCollect")]
-    [Entity(Name = "cattle-embryo-collect")]
+    [Resource(Name = "cattle-embryo-collect")]
     public class CattleBreederEmbryoCollect : CattleBreederEvent
     {
         public TeamCollectOrTransfert CollectTeam { get; set; }

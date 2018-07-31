@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Edel.Connector.Entities.Cattles
 {
     [BsonIgnoreExtraElements]
-    [Entity(Name = "cattle")]
+    [Resource(Name = "cattle")]
     // ReSharper disable once ClassNeverInstantiated.Global
     public class CattleBreeder : CattleBreederEvent
     {

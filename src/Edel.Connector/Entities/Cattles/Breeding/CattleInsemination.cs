@@ -6,7 +6,7 @@ namespace Edel.Connector.Entities.Cattles.Breeding
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleInsemination")]
-    [Entity(Name = "cattle-insemination")]
+    [Resource(Name = "cattle-insemination")]
     public class CattleInsemination : CattleBreederEvent
     {
         public CattleInseminator Inseminator { get; set; }

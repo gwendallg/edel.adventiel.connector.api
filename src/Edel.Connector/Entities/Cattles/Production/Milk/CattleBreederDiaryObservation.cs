@@ -6,7 +6,7 @@ namespace Edel.Connector.Entities.Cattles.Production.Milk
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattleDiaryObservation")]
-    [Entity(Name = "cattle-diary-observation")]
+    [Resource(Name = "cattle-diary-observation")]
     public class CattleBreederDiaryObservation : CattleBreederEvent
     {
         public int LactationNumber { get; set; }

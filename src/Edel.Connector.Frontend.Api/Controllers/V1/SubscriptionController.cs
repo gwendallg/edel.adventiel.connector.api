@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Autumn.Mvc.Data.Models;
+using Autumn.Mvc.Data.Repositories;
+using Autumn.Mvc.Models.Paginations;
 using Edel.Connector.Entities;
 using Edel.Connector.Frontend.Api.Models.Subscriptions;
 using Edel.Connector.Services;
@@ -21,6 +24,7 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
 
         public SubscriptionController(
             ISubscriptionService subscriptionService,
+            ICrudPageableRepositoryAsync<Subscription,string> crudPageableRepository,
             IMapper mapper)
         {
             _mapper = mapper;
@@ -66,6 +70,16 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
             {
                 return StatusCode((int) HttpStatusCode.InternalServerError, new ErrorModelInternalError(e));
             }
+        }
+
+        [HttpGet]
+        [SwaggerOperation(Tags = new[] {"subscription"})]
+        public async Task<IActionResult> Get(Expression<Func<Subscription, bool>> filter,
+            IPageable<Subscription> pageable)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(await _subscriptionService.FindAsync(filter, pageable));
         }
     }
 }

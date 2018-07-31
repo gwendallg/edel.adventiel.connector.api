@@ -8,7 +8,7 @@ namespace Edel.Connector.Entities.Cattles.Breeding
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattlePregnancyCheck")]
-    [Entity(Name = "cattle-pregnancy-check")]
+    [Resource(Name = "cattle-pregnancy-check")]
     public class CattleBreederPregnancyCheck : CattleBreederEvent
     {
         public string PregnancyCheckType { get; set; }

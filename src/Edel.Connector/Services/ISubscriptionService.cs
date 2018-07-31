@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Autumn.Mvc.Models.Paginations;
 using Edel.Connector.Entities;
 
 namespace Edel.Connector.Services
@@ -16,6 +18,8 @@ namespace Edel.Connector.Services
 
         Task<Subscription> FindOneAsync(string userId);
 
+        Task<IPage<Subscription>> FindAsync(Expression<Func<Subscription, bool>> filter, IPageable<Subscription> pageable);
+        
         Task NotifyRefreshDataAsync(int size);
     }
 }

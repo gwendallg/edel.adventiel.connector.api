@@ -6,7 +6,7 @@ namespace Edel.Connector.Entities.Cattles.Breeding
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "cattlePregnancyCheckResult")]
-    [Entity(Name = "cattle-pregnancy-check-result")]
+    [Resource(Name = "cattle-pregnancy-check-result")]
     public class CattlePregnancyCheckResult : ReferenceEntity
     {
     }
