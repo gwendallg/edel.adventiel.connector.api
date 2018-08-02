@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Autumn.Mvc.Models.Paginations;
-using Edel.Connector.Entities;
+using Edel.Connector.Models;
 
 namespace Edel.Connector.Services
 {
@@ -18,8 +18,7 @@ namespace Edel.Connector.Services
 
         Task<Subscription> FindOneAsync(string userId);
 
-        Task<IPage<Subscription>> FindAsync(Expression<Func<Subscription, bool>> filter, IPageable<Subscription> pageable);
-        
-        Task NotifyRefreshDataAsync(int size);
+        Task<IPage<Subscription>> FindAsync(Expression<Func<Subscription, bool>> filter,
+            IPageable<Subscription> pageable);
     }
 }

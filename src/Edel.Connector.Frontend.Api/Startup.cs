@@ -2,12 +2,10 @@
 using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.MongoDB;
 using Autumn.Mvc.Data.Swagger;
-using Edel.Connector.Entities;
 using Edel.Connector.Frontend.Api.Controllers;
 using Edel.Connector.Frontend.Api.Swagger;
+using Edel.Connector.Models;
 using Edel.Connector.Services;
-using Hangfire;
-using Hangfire.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -71,13 +69,7 @@ namespace Edel.Connector.Frontend.Api
                     c.DocumentFilter<SwaggerDocumentFilter>();
                     c.OperationFilter<DefaultSwaggerOperationFilter>();
                 })
-
-                .AddHangfire(
-                    c =>
-                    {
-                        c.UseMongoStorage(connectionString, databaseName);
-                    })
-                .AddMvc();
+               .AddMvc();
             services
                 .AddInitialization(_configuration)
                 .AddTransient<IServiceFactory, ServiceFactory>()
@@ -88,7 +80,7 @@ namespace Edel.Connector.Frontend.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             IApplicationLifetime applicationLifetime)
         {
-       
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -104,10 +96,7 @@ namespace Edel.Connector.Frontend.Api
                             string.Format("API {0}", version));
                     }
                 })
-                .UseHangfireServer()
-                .UseHangfireDashboard()
                 .UseAuthentication()
-                .UseEdelConnector()
                 .UseMvc();
         }
     }

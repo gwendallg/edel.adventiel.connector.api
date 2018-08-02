@@ -6,9 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Autumn.Mvc.Data.Configurations;
 using Autumn.Mvc.Data.Repositories;
-using Edel.Connector.Entities;
+using Edel.Connector.Models;
 using Microsoft.AspNetCore.Http;
-using MongoDB.Driver;
 
 namespace Edel.Connector.Services
 {
@@ -18,7 +17,7 @@ namespace Edel.Connector.Services
         private readonly IClaimsService _claimsService;
         private readonly ICrudPageableRepositoryAsync<User, string> _userRepository;
 
-        public UserService(AutumnDataSettings dataSettings, IMongoDatabase database,
+        public UserService(AutumnDataSettings dataSettings,
             IHttpContextAccessor contextAccessor, IClaimsService claimsService,
             ICrudPageableRepositoryAsync<User, string> userRepository) : base(contextAccessor)
         {
@@ -62,7 +61,7 @@ namespace Edel.Connector.Services
                     throw new Exception(string.Format("Claims {0} not exist", claim.Key));
                 }
 
-                if (_claimsService.TryParse(claim.Value, out var scopes))
+                if (!_claimsService.TryParse(claim.Value, out var scopes))
                 {
                    // TODO  check claims    
                 }
@@ -95,24 +94,18 @@ namespace Edel.Connector.Services
             return await _userRepository.UpdateAsync(user, user.Username);
         }
 
-        /// <summary>
-        /// authenticate user
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public async Task<User> Authenticate(string userName, string password)
         {
             var user = await FindByUserNameAsync(userName);
             if (user == null) return null;
             var expected = GetHash(password, user.Salt);
-            if (expected != user.Hash) return null;
-            return user;
+            return expected != user.Hash ? null : user;
         }
 
-        static string GetHash(string password, string salt)
+        private static string GetHash(string password, string salt)
         {
-            var sha512 = SHA512Managed.Create();
+            var sha512 = SHA512.Create();
             var bytes = Encoding.UTF8.GetBytes(string.Concat(password,salt));
             var hash = sha512.ComputeHash(bytes);
             var result = new StringBuilder();
@@ -123,7 +116,7 @@ namespace Edel.Connector.Services
             return result.ToString();
         }
 
-        static string GetRandomSalt()
+        private static string GetRandomSalt()
         {
             var bytes = new byte[128 / 8];
             using (var keyGenerator = RandomNumberGenerator.Create())

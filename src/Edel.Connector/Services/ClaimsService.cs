@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
 using Autumn.Mvc.Data.Configurations;
-using Edel.Connector.Entities;
+using Edel.Connector.Models;
 
 namespace Edel.Connector.Services
 {

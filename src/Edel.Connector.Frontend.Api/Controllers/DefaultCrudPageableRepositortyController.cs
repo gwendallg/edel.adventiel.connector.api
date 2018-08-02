@@ -1,7 +1,7 @@
 ﻿using System;
 using Autumn.Mvc.Configurations;
 using Autumn.Mvc.Data.Repositories;
-using Edel.Connector.Entities;
+using Edel.Connector.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 

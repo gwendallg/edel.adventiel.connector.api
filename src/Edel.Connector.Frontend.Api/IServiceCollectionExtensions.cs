@@ -4,10 +4,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
-using Edel.Connector.Entities;
 using Edel.Connector.Frontend.Api.Models.Subscriptions;
 using Edel.Connector.Frontend.Api.Models.Users;
 using Edel.Connector.HealthChecks;
+using Edel.Connector.Models;
 using Edel.Connector.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,10 +46,7 @@ namespace Edel.Connector.Frontend.Api
             serviceCollection.AddScoped<IUserService, UserService>();
             serviceCollection.AddScoped<ISubscriptionService, SubscriptionService>();
             serviceCollection.AddScoped<IClaimsService, ClaimsService>();
-            
-            // kafka registration
-            serviceCollection.AddScoped<IMessageService, MessageService>();
-
+      
             // healthcheck
             serviceCollection.AddHealthChecks(checks =>
             {
@@ -58,8 +55,6 @@ namespace Edel.Connector.Frontend.Api
 
                 var bootstrapServers = $"{configuration["Kafka:BootstrapServers"]}";
                 var topic = $"{configuration["Kafka:Topic"]}";
-
-                checks.AddKafkaCheck(bootstrapServers, topic);
             });
 
             return serviceCollection;

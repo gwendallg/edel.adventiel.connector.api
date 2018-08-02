@@ -19,15 +19,5 @@ namespace Edel.Connector.HealthChecks
                 cacheDuration.HasValue ? cacheDuration.Value : DefaulCacheDuration);
             return healthCheckBuilder;
         }
-
-        public static HealthCheckBuilder AddKafkaCheck(this HealthCheckBuilder healthCheckBuilder,
-            string bootstrapServers, string topic, TimeSpan? cacheDuration = null)
-        {
-            healthCheckBuilder.AddCheck("Kafka",
-                new KafkaCheck(bootstrapServers, topic),
-                cacheDuration.HasValue ? cacheDuration.Value : DefaulCacheDuration);
-            return healthCheckBuilder;
-        }
-
     }
 }

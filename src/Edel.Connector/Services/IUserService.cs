@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Edel.Connector.Entities;
+using Edel.Connector.Models;
 
 namespace Edel.Connector.Services
 {
