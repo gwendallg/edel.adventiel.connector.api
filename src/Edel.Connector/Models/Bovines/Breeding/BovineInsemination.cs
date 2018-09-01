@@ -10,7 +10,7 @@ namespace Edel.Connector.Models.Bovines.Breeding
     public class BovineInsemination : BovineEvent
     {
         public BovineInseminator Inseminator { get; set; }
-        public CattleBreedingBull BreedingBull { get; set; }
+        public BovineBreedingBull BreedingBull { get; set; }
         public bool? AiForEmbryoCollect { get; set; }
         public string DocumentReference { get; set; }
         public bool? HormonalTreatment { get; set; }

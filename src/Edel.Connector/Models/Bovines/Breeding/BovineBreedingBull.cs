@@ -1,6 +1,6 @@
 ﻿namespace Edel.Connector.Models.Bovines.Breeding
 {
-    public class CattleBreedingBull : BovineInfo
+    public class BovineBreedingBull : BovineInfo
     {
         public string BullIeIdentifier { get; set; }
         

@@ -12,12 +12,12 @@ namespace Edel.Connector.Models.Bovines
         /// <summary>
         /// bovine identifier
         /// </summary>
-        [Required] public string CattleIdentifier { get; set; }
+        [Required] public string BovineIdentifier { get; set; }
 
         /// <summary>
         /// bovine country code
         /// </summary>
-        [Required] public string CattleCountryCode { get; set; }
+        [Required] public string BovineCountryCode { get; set; }
         
         /// <summary>
         /// bovine identity
