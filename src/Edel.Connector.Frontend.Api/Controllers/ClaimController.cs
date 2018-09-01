@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
-using System.Text;
 using Autumn.Mvc.Data.Models;
 using Edel.Connector.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Edel.Connector.Frontend.Api.Controllers.V1
 {
+    [Authorize]
     [Route("v1/claim")]
     public class ClaimController : Controller
     {
@@ -30,15 +33,9 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
             try
             {
                 var result = new Dictionary<string,string>();
-                foreach (var item in _claimsService.GetClaimsByResources())
+                foreach (var item in _claimsService.GetClaimsByResourcePaths())
                 {
-                    var stringBuilder = new StringBuilder();
-                    foreach (var scope in item.Value)
-                    {
-                        stringBuilder.Append(scope + ", ");
-                    }
-
-                    result.Add(item.Key, stringBuilder.ToString().Trim().Trim(','));
+                    result.Add(item.Key, _claimsService.ToString(item.Value));
                 }
                 return Ok(result);
             }

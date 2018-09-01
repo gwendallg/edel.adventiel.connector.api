@@ -4,12 +4,12 @@ using Autumn.Mvc.Data.Annotations;
 using Autumn.Mvc.Data.MongoDB.Annotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles.Production.Milk
+namespace Edel.Connector.Models.Bovines.Production.Milk
 {
     [BsonIgnoreExtraElements]
-    [Collection(Name = "cattleLactation")]
-    [Resource(Name = "cattle-lactation")]
-    public class CattleBreederLactation : CattleBreederEvent
+    [Collection(Name = "bovineLactation")]
+    [Resource]
+    public class BovineLactation : BovineEvent
     {
         [Required] public int LactationNumber { get; set; }
 

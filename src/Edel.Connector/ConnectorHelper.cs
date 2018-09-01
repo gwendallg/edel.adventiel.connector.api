@@ -1,16 +1,16 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-    using MongoDB.Driver;
-    using System.Reflection;
-    using Autumn.Mvc.Data.MongoDB.Annotations;
+using MongoDB.Driver;
+using System.Reflection;
+using Autumn.Mvc.Data.MongoDB.Annotations;
 using Edel.Connector.Models;
-using Edel.Connector.Models.Cattles.Breeding;
+using Edel.Connector.Models.Bovines.Breeding;
 using Edel.Connector.Models.References;
 using Edel.Connector.Services;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.Extensions.DependencyInjection;
-    using Newtonsoft.Json;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Edel.Connector
 {
@@ -18,7 +18,6 @@ namespace Edel.Connector
     {
         public static void Initialize(IApplicationBuilder applicationBuilder)
         {
-
             var scope = applicationBuilder.ApplicationServices.CreateScope();
             var database = (IMongoDatabase) scope.ServiceProvider.GetService(typeof(IMongoDatabase));
             var userService = (IUserService) scope.ServiceProvider.GetService(typeof(IUserService));
@@ -26,7 +25,7 @@ namespace Edel.Connector
             TryAddAdminIfNotExistUsers(userService);
             TryAddResourceIfNotExist<Site>(database);
             TryAddResourceIfNotExist<Department>(database);
-            TryAddResourceIfNotExist<CalvingCondition>(database);
+            TryAddResourceIfNotExist<BovineCalvingCondition>(database);
         }
 
         private static void TryAddAdminIfNotExistUsers(IUserService userService)
@@ -50,7 +49,7 @@ namespace Edel.Connector
         {
             var collectionAttribute = (CollectionAttribute) typeof(T).GetCustomAttribute(typeof(CollectionAttribute));
             var collection = database.GetCollection<T>(collectionAttribute.Name);
-            var count = collection.Count(u => true);
+            var count = collection.CountDocuments(u => true);
             if (count != 0) return;
 
             var items = JsonConvert.DeserializeObject<List<T>>(Json(typeof(T).Name + "s.json"));

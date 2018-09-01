@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Edel.Connector.Frontend.Api.Models.Auths;
+using Edel.Connector.Models;
 using Edel.Connector.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +16,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Edel.Connector.Frontend.Api.Controllers
 {
-    [Route("auth")]
+    [Route("oauth")]
     public class AuthController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -29,19 +30,59 @@ namespace Edel.Connector.Frontend.Api.Controllers
         }
 
         [HttpPost]
-        [SwaggerOperation( Tags = new []{"auth"})]
-        public async Task<IActionResult> Token([FromBody] AuthTokenRequestModel tokenRequestModel)
+        [SwaggerOperation(Tags = new[] {"auth"})]
+        [Route("token")]
+        public async Task<IActionResult> TokenAsync(
+            [FromQuery(Name = "grant_type")] string grantType,
+            [FromQuery(Name = "username")] string userName,
+            [FromQuery(Name = "password")] string password,
+            [FromQuery(Name = "refresh_token")] string refreshToken)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            // find user 
-            var user = await _userService.Authenticate(tokenRequestModel.Username, tokenRequestModel.Password);
-            if (user == null)return StatusCode((int) HttpStatusCode.Forbidden);
+
+            if (string.IsNullOrWhiteSpace(grantType))
+                return BadRequest("grant_type is mandatory");
+            
+            switch (grantType)
+            {
+                case "password":
+                    return await ByPasswordAsync(userName, password);
+                case "refresh_token":
+                    return await ByRefreshTokenAsync(refreshToken);
+                default:
+                    return BadRequest($"{grantType} is not valid grant_type");
+            }
+        }
+
+        private async Task<IActionResult> ByPasswordAsync(string userName, string password)
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+                return BadRequest("username is mandatory");
+            if (string.IsNullOrWhiteSpace(password))
+                return BadRequest("password is mandatory");
+            
+            var user = await _userService.Authenticate(userName, password);
+            if (user == null) return StatusCode((int) HttpStatusCode.Forbidden);
+            return Ok(await BuildTokenAsync(user));
+        }
+
+        private async Task<IActionResult> ByRefreshTokenAsync(string refreshToken)
+        {
+            if (string.IsNullOrWhiteSpace(refreshToken))
+                return BadRequest("refresh_token is mandatory");
+            var user = await _userService.Authenticate(refreshToken);
+            if (user == null) return StatusCode((int) HttpStatusCode.Forbidden);
+            return Ok(await BuildTokenAsync(user));
+        }
+
+        
+        private async Task<AuthTokenResponseModel> BuildTokenAsync(User user)
+        {
             var claims = new List<Claim> {new Claim(ClaimTypes.Name, user.Username)};
-            foreach (var item in user.Claims.Select(c => string.Format("{0}:{1}",c.Key,c.Value)))
+            foreach (var item in user.Claims.Select(c => string.Format("{0}:{1}", c.Key, c.Value)))
             {
                 claims.Add(new Claim(ClaimTypes.Role, item));
             }
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes($"{_configuration["Jwt:SecurityKey"]}"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
@@ -50,8 +91,16 @@ namespace Edel.Connector.Frontend.Api.Controllers
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
-            return Ok(new AuthTokenResponseModel() {AccessToken = new JwtSecurityTokenHandler().WriteToken(token)});
-        }
 
+            var refreshToken = await _userService.CreateRefreshTokenAsync(user);
+            
+            return new AuthTokenResponseModel()
+            {
+                TokenType = "Bearer",
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                ExpiresIn = 30,
+                RefreshToken = refreshToken.Id
+            };
+        }
     }
 }

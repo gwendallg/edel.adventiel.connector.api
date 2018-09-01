@@ -2,13 +2,13 @@
 using Autumn.Mvc.Data.MongoDB.Annotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles.Breeding
+namespace Edel.Connector.Models.Bovines.Breeding
 {
     [BsonIgnoreExtraElements]
-    [Collection(Name = "cattleCalvingCondition")]
-    [Resource(Name = "cattle-calving-condition")]
+    [Collection(Name = "bovineCalvingCondition")]
+    [Resource]
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class CalvingCondition : ReferenceEntity
+    public class BovineCalvingCondition : ReferenceEntity
     {
     }
 }

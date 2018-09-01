@@ -1,5 +1,6 @@
 ﻿using Autumn.Mvc;
 using Autumn.Mvc.Data;
+using Autumn.Mvc.Data.Configurations;
 using Autumn.Mvc.Data.MongoDB;
 using Autumn.Mvc.Data.Swagger;
 using Edel.Connector.Frontend.Api.Controllers;
@@ -48,6 +49,7 @@ namespace Edel.Connector.Frontend.Api
                     config
                         .RepositoryControllerType(type: typeof(DefaultCrudPageableRepositortyController<,,,>))
                         .ApiVersion("v1")
+                        .NamingStrategy(new KebabCaseNamingStrategy())
                         .PluralizeController(false)
                         .EntityAssembly(typeof(User).Assembly)
                 )
@@ -98,6 +100,8 @@ namespace Edel.Connector.Frontend.Api
                 })
                 .UseAuthentication()
                 .UseMvc();
+            
+            ConnectorHelper.Initialize(app);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using Autumn.Mvc.Configurations;
 using Autumn.Mvc.Data.Swagger;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +25,7 @@ namespace Edel.Connector.Frontend.Api.Swagger
                 Description = "Bearer token",
                 Required = true
             };
+            if (operation.Parameters == null) operation.Parameters = new List<IParameter>();
             operation.Parameters.Add(parameter);
         }
 

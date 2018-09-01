@@ -3,15 +3,15 @@ using Autumn.Mvc.Data.Annotations;
 using Autumn.Mvc.Data.MongoDB.Annotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles.EmbryoTransplantations
+namespace Edel.Connector.Models.Bovines.EmbryoTransplantations
 {
 
     [BsonIgnoreExtraElements]
-    [Collection(Name = "cattleEmbryoCollect")]
-    [Resource(Name = "cattle-embryo-collect")]
-    public class CattleBreederEmbryoCollect : CattleBreederEvent
+    [Collection(Name = "bovineEmbryoCollect")]
+    [Resource]
+    public class BovineEmbryoCollect : BovineEvent
     {
-        public TeamCollectOrTransfert CollectTeam { get; set; }
+        public BovineTeamCollectOrTransfert CollectBovineTeam { get; set; }
         [Required] public int CollectNumber { get; set; }
         [Required] public string CollectType { get; set; }
         [Required] public string CollectNumberDocument { get; set; }

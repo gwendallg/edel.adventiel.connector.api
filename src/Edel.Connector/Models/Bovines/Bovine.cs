@@ -2,23 +2,26 @@
 using Autumn.Mvc.Data.Annotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles
+namespace Edel.Connector.Models.Bovines
 {
     [BsonIgnoreExtraElements]
-    [Resource(Name = "cattle")]
+    [Resource]
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class CattleBreeder : BreederEntity
+    public class Bovine : BreederEntity
     {
         /// <summary>
-        /// cattle identifier
+        /// bovine identifier
         /// </summary>
         [Required] public string CattleIdentifier { get; set; }
 
         /// <summary>
-        /// catte country code
+        /// bovine country code
         /// </summary>
         [Required] public string CattleCountryCode { get; set; }
         
-        public CattleIdentity Identity { get; set; }
+        /// <summary>
+        /// bovine identity
+        /// </summary>
+        public BovineIdentity Identity { get; set; }
     }
 }

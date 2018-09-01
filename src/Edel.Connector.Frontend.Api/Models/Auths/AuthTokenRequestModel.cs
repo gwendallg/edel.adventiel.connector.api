@@ -6,10 +6,12 @@ namespace Edel.Connector.Frontend.Api.Models.Auths
 {
     public class AuthTokenRequestModel
     {
-        [Required]
+        public string GrantType { get; set; }
+        
         public string Username { get; set; }
         
-        [Required]
         public string Password { get; set; }
+        
+        public string RefreshToken { get; set; }
     }
 }

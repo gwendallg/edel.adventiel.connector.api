@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autumn.Mvc.Data.MongoDB" Version="1.3.1" />
+    <PackageReference Include="Autumn.Mvc.Data.MongoDB" Version="1.4.0" />
     <PackageReference Include="Confluent.Kafka" Version="0.11.5" />
     <PackageReference Include="Microsoft.AspNetCore.HealthChecks" Version="1.0.0" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.4.1" />

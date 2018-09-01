@@ -1,4 +1,4 @@
-﻿namespace Edel.Connector.Services
+﻿namespace Edel.Connector.Models
 {
     /// <summary>
     /// scope of resource
@@ -8,18 +8,18 @@
         /// <summary>
         /// read resource
         /// </summary>
-        Read,
+        Read = 0,
         /// <summary>
         /// create resource
         /// </summary>
-        Create,
+        Create = 2,
         /// <summary>
         /// update resource
         /// </summary>
-        Update,
+        Update = 4,
         /// <summary>
         /// delete resource
         /// </summary>
-        Delete
+        Delete = 8
     }
 }

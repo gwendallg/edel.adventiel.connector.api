@@ -2,14 +2,14 @@
 using Autumn.Mvc.Data.MongoDB.Annotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles.Breeding
+namespace Edel.Connector.Models.Bovines.Breeding
 {
     [BsonIgnoreExtraElements]
-    [Collection(Name = "cattleInsemination")]
-    [Resource(Name = "cattle-insemination")]
-    public class CattleInsemination : CattleBreederEvent
+    [Collection(Name = "bovineInsemination")]
+    [Resource]
+    public class BovineInsemination : BovineEvent
     {
-        public CattleInseminator Inseminator { get; set; }
+        public BovineInseminator Inseminator { get; set; }
         public CattleBreedingBull BreedingBull { get; set; }
         public bool? AiForEmbryoCollect { get; set; }
         public string DocumentReference { get; set; }

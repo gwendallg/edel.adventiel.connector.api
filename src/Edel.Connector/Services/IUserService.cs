@@ -35,6 +35,21 @@ namespace Edel.Connector.Services
         /// <param name="password"></param>
         /// <returns></returns>
         Task<User> Authenticate(string userName, string password);
+        
+        /// <summary>
+        /// authenticate user
+        /// </summary>
+        /// <param name="refreshToken"></param>
+        /// <returns></returns>
+        Task<User> Authenticate(string refreshToken);
+
+        /// <summary>
+        /// create a refresh token
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="duration"></param>
+        /// <returns></returns>
+        Task<RefreshToken> CreateRefreshTokenAsync(User user, int duration = 120);
 
         /// <summary>
         /// add user admin is not exist

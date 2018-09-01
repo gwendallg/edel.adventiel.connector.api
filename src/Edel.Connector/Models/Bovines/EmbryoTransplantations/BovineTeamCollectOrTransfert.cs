@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles.EmbryoTransplantations
+namespace Edel.Connector.Models.Bovines.EmbryoTransplantations
 {
     [BsonIgnoreExtraElements]
-    public class TeamCollectOrTransfert
+    public class BovineTeamCollectOrTransfert
     {
         public Registration Registration { get; set; }
         public string Name { get; set; }

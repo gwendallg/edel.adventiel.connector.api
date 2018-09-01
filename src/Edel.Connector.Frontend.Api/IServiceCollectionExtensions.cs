@@ -45,7 +45,7 @@ namespace Edel.Connector.Frontend.Api
             // user service ioc registration
             serviceCollection.AddScoped<IUserService, UserService>();
             serviceCollection.AddScoped<ISubscriptionService, SubscriptionService>();
-            serviceCollection.AddScoped<IClaimsService, ClaimsService>();
+            serviceCollection.AddSingleton<IClaimsService, ClaimsService>();
       
             // healthcheck
             serviceCollection.AddHealthChecks(checks =>
@@ -56,7 +56,7 @@ namespace Edel.Connector.Frontend.Api
                 var bootstrapServers = $"{configuration["Kafka:BootstrapServers"]}";
                 var topic = $"{configuration["Kafka:Topic"]}";
             });
-
+ 
             return serviceCollection;
         }
         
@@ -122,11 +122,14 @@ namespace Edel.Connector.Frontend.Api
 
         private static Task CheckAuthorizationAsync(TokenValidatedContext context)
         {
-            var claimType = context.Request.Path.Value.TrimStart('/').Replace("/", "_");
-            var pathItem = claimType.Split('_');
+            var path = context.Request.Path.Value;
+            if(path.StartsWith("/v1/claim")) return Task.CompletedTask;
+            
+            var claimType = context.Request.Path.Value.TrimStart('/');
+            var pathItem = claimType.Split('/');
             if (pathItem.Length >= 3)
             {
-                claimType = string.Format("{0}_{1}", pathItem[0], pathItem[1]);
+                claimType = string.Format("{0}/{1}", pathItem[0], pathItem[1]);
             }
 
             claimType += ":";
@@ -145,16 +148,16 @@ namespace Edel.Connector.Frontend.Api
             {
                 switch (context.Request.Method)
                 {
-                    case "GET" when !claim.Value.Contains(ScopeType.Read.ToString()):
+                    case "GET" when !claim.Value.Contains(ScopeType.Read.ToString().ToLowerInvariant()):
                         context.Fail("read not authorized");
                         break;
-                    case "POST" when !claim.Value.Contains(ScopeType.Create.ToString()):
+                    case "POST" when !claim.Value.Contains(ScopeType.Create.ToString().ToLowerInvariant()):
                         context.Fail("create not authorized");
                         break;
-                    case "PUT" when !claim.Value.Contains(ScopeType.Update.ToString()):
+                    case "PUT" when !claim.Value.Contains(ScopeType.Update.ToString().ToLowerInvariant()):
                         context.Fail("update not authorized");
                         break;
-                    case "DELETE" when !claim.Value.Contains(ScopeType.Delete.ToString()):
+                    case "DELETE" when !claim.Value.Contains(ScopeType.Delete.ToString().ToLowerInvariant()):
                         context.Fail("delete not authorized");
                         break;
                 }

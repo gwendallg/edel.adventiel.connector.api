@@ -2,12 +2,12 @@
 using Autumn.Mvc.Data.MongoDB.Annotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles.Production.Milk
+namespace Edel.Connector.Models.Bovines.Production.Milk
 {
     [BsonIgnoreExtraElements]
-    [Collection(Name = "cattleMilkControl")]
-    [Resource(Name = "cattle-milk-control")]
-    public class CattleMilkControl : BreederEntity
+    [Collection(Name = "bovineMilkControl")]
+    [Resource]
+    public class BovineMilkControl : BreederEntity
     {
         public int? NumberTreatsPassage { get; set; }
         public bool? PresenceRobotTreats { get; set; }

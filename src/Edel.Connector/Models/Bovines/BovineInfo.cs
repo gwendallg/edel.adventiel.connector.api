@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles
+namespace Edel.Connector.Models.Bovines
 {
     [BsonIgnoreExtraElements]
-    public class CattleInfo
+    public class BovineInfo
     {
-        public CattleIdentity Identity { get; set; }
+        public BovineIdentity Identity { get; set; }
         
         /// <summary>
         /// cattle identifier

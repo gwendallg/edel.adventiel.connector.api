@@ -2,12 +2,12 @@
 using Autumn.Mvc.Data.MongoDB.Annotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles.Production.Milk
+namespace Edel.Connector.Models.Bovines.Production.Milk
 {
     [BsonIgnoreExtraElements]
-    [Collection(Name = "cattleDiaryObservation")]
-    [Resource(Name = "cattle-diary-observation")]
-    public class CattleBreederDiaryObservation : CattleBreederEvent
+    [Collection(Name = "bovineDiaryObservation")]
+    [Resource]
+    public class BovineDiaryObservation : BovineEvent
     {
         public int LactationNumber { get; set; }
         public string FemaleStateCode { get; set; }

@@ -6,7 +6,7 @@ namespace Edel.Connector.Models.Breeders
 {
     [BsonIgnoreExtraElements]
     [Collection(Name = "breeder")]
-    [Resource(Name = "breeder")]
+    [Resource()]
     public class Breeder : BreederEntity
     {
     }

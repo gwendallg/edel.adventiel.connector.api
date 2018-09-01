@@ -1,8 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace Edel.Connector.Models.Cattles.Breeding
+﻿namespace Edel.Connector.Models.Bovines.Breeding
 {
-    public class CattleSemenDose
+    public class c
     {
         public string StrawReference { get; set; }
         public string ConservationMode { get; set; }

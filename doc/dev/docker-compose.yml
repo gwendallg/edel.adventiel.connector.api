@@ -21,19 +21,19 @@ services:
     depends_on:
       - mongo
 
-  #zookeeper:
-  #  image: confluent/zookeeper
-  #  ports:
-  #    - 2181:2181
-  #
-  #kafka:
-  #  image: confluent/kafka
-  #  links:
-  #    - zookeeper:zookeeper
-  #  ports:
-  #    - 9092:9092
-  #  depends_on:
-  #    - zookeeper
+  zookeeper:
+    image: confluent/zookeeper
+    ports:
+      - 2181:2181
+  
+  kafka:
+    image: confluent/kafka
+    links:
+      - zookeeper:zookeeper
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
 
   #schema-registry:
   #  image: confluent/schema-registry

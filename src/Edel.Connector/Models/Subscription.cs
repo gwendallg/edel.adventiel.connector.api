@@ -2,10 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Autumn.Mvc.Data.Annotations;
 using Autumn.Mvc.Data.MongoDB.Annotations;
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Edel.Connector.Models
 {

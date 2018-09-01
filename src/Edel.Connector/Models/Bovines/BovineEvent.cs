@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Edel.Connector.Models.Cattles
+namespace Edel.Connector.Models.Bovines
 {
-    public abstract class CattleBreederEvent : BreederEntity
+    public abstract class BovineEvent : BreederEntity
     {
         
         [Required] public DateTime EventDate { get; set; }
@@ -11,11 +11,11 @@ namespace Edel.Connector.Models.Cattles
         /// <summary>
         /// cattle identifier
         /// </summary>
-        [Required] public string CattleIdentifier { get; set; }
+        [Required] public string BovineIdentifier { get; set; }
 
         /// <summary>
         /// catte country code
         /// </summary>
-        [Required] public string CattleCountryCode { get; set; }
+        [Required] public string BovineCountryCode { get; set; }
     }
 }

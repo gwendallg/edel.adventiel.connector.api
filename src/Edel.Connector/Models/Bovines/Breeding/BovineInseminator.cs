@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Edel.Connector.Models.Cattles.Breeding
+namespace Edel.Connector.Models.Bovines.Breeding
 {
-    public class CattleInseminator
+    public class BovineInseminator
     {
         [Required] public Enterprise Enterprise { get; set; }
         [Required] public string Code { get; set; }

@@ -8,7 +8,7 @@ namespace Edel.Connector.Models
     public abstract class BreederEntity : Metadataeable, IEntity
     {
         /// <summary>
-        /// Id of entity
+        /// data unique ID
         /// </summary>
         [Id]
         [BsonId]
@@ -17,7 +17,7 @@ namespace Edel.Connector.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// breeder identifier
+        /// breeder ID
         /// </summary>
         [Required]
         public string BreederIdentifier { get; set; }
@@ -27,5 +27,11 @@ namespace Edel.Connector.Models
         /// </summary>
         [Required]
         public string BreederCountryCode { get; set; }
+        
+        /// <summary>
+        /// data is obsolete
+        /// </summary>
+        [Required]
+        public bool IsObsolete { get; set; }
     }
 }

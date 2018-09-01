@@ -1,29 +1,29 @@
 ﻿using System;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Edel.Connector.Models.Cattles
+namespace Edel.Connector.Models.Bovines
 {
     [BsonIgnoreExtraElements]
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class CattleIdentity
+    public class BovineIdentity
     {
         /// <summary>
-        /// name of cattle
+        /// name of bovine
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// breed code
+        /// breed code of bovine
         /// </summary>
         public string BreedCode { get; set; }
         
         /// <summary>
-        /// birth date of cattle
+        /// birth date of bovine
         /// </summary>
         public DateTime? BirthDate { get; set; }
         
         /// <summary>
-        /// sex of cattle
+        /// sex of bovine
         /// </summary>
         public string Sex { get; set; }
     }
