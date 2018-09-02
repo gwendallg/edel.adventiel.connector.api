@@ -62,12 +62,10 @@ namespace Edel.Connector.Frontend.Api
                 .AddSecurity(_configuration)
                 .AddSwaggerGen(c =>
                 {
-
                     foreach (var version in services.GetAutumnDataSettings().ApiVersions)
                     {
                         c.SwaggerDoc(version, new Info {Title = "api", Version = version});
                     }
-
                     c.DocumentFilter<SwaggerDocumentFilter>();
                     c.OperationFilter<DefaultSwaggerOperationFilter>();
                 })

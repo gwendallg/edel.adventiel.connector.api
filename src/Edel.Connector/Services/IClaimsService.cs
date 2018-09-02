@@ -6,16 +6,13 @@ namespace Edel.Connector.Services
 {
     public interface IClaimsService
     {
-        IDictionary<Type, IList<ScopeType>> GetClaimsByEntityTypes();
 
-        IDictionary<string, IList<ScopeType>> GetClaimsByResourcePaths();
+        IList<Claim> All();
 
-        IList<ScopeType> GetClaimsByResourcePath(string resourcePath);
+        Claim FindByResourcePath(string resourcePath);
+
+        Claim FindByEntityType(Type entityType);
         
-        IList<ScopeType> GetClaimsByEntityType(Type entityType);
-      
         IList<ScopeType> Parse(string resourcePath, string scopes);
-
-        string ToString(IList<ScopeType> scopes);
     }
 }

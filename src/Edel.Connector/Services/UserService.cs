@@ -47,7 +47,7 @@ namespace Edel.Connector.Services
             foreach (var item in user.Claims)
             {
                 var scopes = _claimsService.Parse(item.Key, item.Value);
-                claims.Add(item.Key, _claimsService.ToString(scopes));
+                claims.Add(item.Key, ClaimHelper.ToString(scopes));
             }
 
             user.Claims = claims;
@@ -96,7 +96,7 @@ namespace Edel.Connector.Services
             {
                 Id = Guid.NewGuid().ToString().Replace("-",""),
                 UserName = user.Username,
-                ExpirationDate = DateTime.UtcNow.AddMinutes(duration)
+                ExpirationDate = DateTime.Now.AddMinutes(duration)
             };
 
             return await _refreshTokenRepository.InsertAsync(result);
@@ -130,11 +130,10 @@ namespace Edel.Connector.Services
             var result = await _userRepository.FindAsync(u => u.Username == "admin");
             if (result.HasContent) return;
             var user = new User() {Claims = new Dictionary<string, string>()};
-            foreach (var info in _claimsService.GetClaimsByResourcePaths())
+            foreach (var claim in _claimsService.All())
             {
-                user.Claims.Add(info.Key,_claimsService.ToString(info.Value));
+                user.Claims.Add(claim.ResourcePath,ClaimHelper.ToString(claim.Scopes));
             }
-
             user.Username = "admin";
             user.Salt = GetRandomSalt();
             user.Hash = GetHash(adminPassword, user.Salt);

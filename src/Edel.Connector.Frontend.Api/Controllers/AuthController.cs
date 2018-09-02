@@ -13,10 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Claim = System.Security.Claims.Claim;
 
 namespace Edel.Connector.Frontend.Api.Controllers
 {
-    [Route("oauth")]
+    [Route("v1/oauth")]
     public class AuthController : Controller
     {
         private readonly IConfiguration _configuration;

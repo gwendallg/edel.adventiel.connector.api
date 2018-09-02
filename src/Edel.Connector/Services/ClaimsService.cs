@@ -10,49 +10,18 @@ namespace Edel.Connector.Services
 {
     public class ClaimsService : IClaimsService
     {
-        
-        private static readonly Dictionary<Type, IList<ScopeType>> MappingTypeToClaims = new Dictionary<Type, IList<ScopeType>>()
-        {
-            {
-                typeof(User),
-                new List<ScopeType>(new []{ScopeType.Read,ScopeType.Create,ScopeType.Update})
-            },
-            {
-                typeof(Subscription),
-                new List<ScopeType>(new []{ScopeType.Read,ScopeType.Create,ScopeType.Update})
-            }
-        };
-
-        private static readonly Dictionary<string, Type> MappingStringToTypes = new Dictionary<string, Type>()
-        {
-            {
-                "v1/user",typeof(User)
-            },
-            {
-                "v1/subscription",typeof(Subscription)
-            },
-        };
-        
+        private readonly IList<Claim> _claims;
         private readonly AutumnDataSettings _dataSettings;
 
         public ClaimsService(AutumnDataSettings dataSettings)
         {
             _dataSettings = dataSettings;
-            _claimsByResourcePaths = BuildClaimsByResourcePaths();
-            _claimsByEntityTypes = BuildClaimsByEntityTypes();
-        }
-
-        private readonly IDictionary<string, IList<ScopeType>> _claimsByResourcePaths;
-        private readonly IDictionary<Type, IList<ScopeType>> _claimsByEntityTypes;
-
-        public IDictionary<string, IList<ScopeType>> GetClaimsByResourcePaths()
-        {
-            return _claimsByResourcePaths;
+            _claims = Build();
         }
     
-        private IDictionary<string, IList<ScopeType>> BuildClaimsByResourcePaths()
+        private IList<Claim> Build()
         {
-            var result = new Dictionary<string,IList<ScopeType>>();
+            var result = new List<Claim>();
             foreach (var item in _dataSettings.ResourceInfos)
             {
                 var scopes = new List<ScopeType> {ScopeType.Read};
@@ -74,74 +43,70 @@ namespace Edel.Connector.Services
                 var resource = _dataSettings.NamingStrategy == null
                     ? item.Value.Name
                     : _dataSettings.NamingStrategy.GetPropertyName(item.Value.Name, false);
-                
-                result.Add($"{item.Value.ApiVersion}/{resource}", scopes);
-            }
 
-            foreach (var item in MappingStringToTypes)
-            {
-                result.Add(item.Key,MappingTypeToClaims[item.Value]);
+                var claim = new Claim()
+                {
+                    ResourcePath = $"{item.Value.ApiVersion}/{resource}",
+                    ResourceType = item.Key,
+                    Scopes = scopes
+
+                };
+                result.Add(claim);
             }
+            
+            // claims for user
+            result.Add(new Claim()
+            {
+                ResourcePath = "v1/user",
+                ResourceType = typeof(User),
+                Scopes = new List<ScopeType>(new []{ScopeType.Read,ScopeType.Create,ScopeType.Update,ScopeType.Delete})
+            });
+            
+            // claims for subscription
+            result.Add(new Claim()
+            {
+                ResourcePath = "v1/subscription",
+                ResourceType = typeof(Subscription),
+                Scopes = new List<ScopeType>(new []{ScopeType.Read,ScopeType.Create,ScopeType.Update})
+            });
+            
+            // claims for claim
+            result.Add(new Claim()
+            {
+                ResourcePath = "v1/claim",
+                ResourceType = typeof(Claim),
+                Scopes = new List<ScopeType>(new []{ScopeType.Read})
+            });
             return result;
         }
 
-        public IList<ScopeType> GetClaimsByResourcePath(string resourcePath)
+
+        public IList<Claim> All()
         {
-            var items = _claimsByResourcePaths;
-            return items.ContainsKey(resourcePath) ? items[resourcePath] : null;
+            return _claims;
         }
 
-        public IList<ScopeType> GetClaimsByEntityType(Type entityType)
+        public Claim FindByResourcePath(string resourcePath)
         {
-            var items = _claimsByEntityTypes;
-            return items.ContainsKey(entityType) ? items[entityType] : null;
+            return _claims.SingleOrDefault(c => c.ResourcePath == resourcePath);
         }
 
-        public IDictionary<Type, IList<ScopeType>> GetClaimsByEntityTypes()
+        public Claim FindByEntityType(Type entityType)
         {
-            return _claimsByEntityTypes;
-        }
-
-        public IDictionary<Type, IList<ScopeType>> BuildClaimsByEntityTypes()
-        {
-            var result = new Dictionary<Type,IList<ScopeType>>();
-            foreach (var item in _dataSettings.ResourceInfos)
-            {
-                var scopes = new List<ScopeType>();
-                scopes.Add(ScopeType.Read);
-                if (!item.Value.IgnoreOperations.Contains(HttpMethod.Post))
-                {
-                    scopes.Add(ScopeType.Create);
-                }
-
-                if (!item.Value.IgnoreOperations.Contains(HttpMethod.Put))
-                {
-                    scopes.Add(ScopeType.Update);
-                }
-
-                if (!item.Value.IgnoreOperations.Contains(HttpMethod.Delete))
-                {
-                    scopes.Add(ScopeType.Delete);
-                }
-
-                result.Add(item.Key, scopes);
-            }
-            foreach (var item in MappingTypeToClaims)
-                result.Add(item.Key, item.Value);
-            return result;
+            return _claims.SingleOrDefault(c => c.ResourceType == entityType);
         }
 
         public IList<ScopeType> Parse(string resourcePath, string scopes)
         {
             if(string.IsNullOrWhiteSpace(scopes)) throw new ArgumentNullException(nameof(scopes));
-            var claims = GetClaimsByResourcePath(resourcePath);
+            var claims = FindByResourcePath(resourcePath);
             if (claims == null) throw new ClaimsException($"Claims not found for resource path {resourcePath}");
             var result = new List<ScopeType>();
             foreach (var item in scopes.Split(','))
             {
                 if (Enum.TryParse(typeof(ScopeType), item, true, out var scopeType))
                 {
-                    if (claims.Contains((ScopeType)scopeType))
+                    if (claims.Scopes.Contains((ScopeType)scopeType))
                     {
                         result.Add((ScopeType)scopeType);
                     }
@@ -158,12 +123,6 @@ namespace Edel.Connector.Services
             return result;
         }
 
-        public string ToString(IList<ScopeType> scopes)
-        {
-            return scopes
-                .OrderBy(o => o)
-                .Select(c => c.ToString().ToLowerInvariant())
-                .Aggregate((a, b) => a + ", "+ b);
-        }
+
     }
 }

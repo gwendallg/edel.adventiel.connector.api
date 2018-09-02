@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
+using Edel.Connector.Frontend.Api.Mappings.Claims;
 using Edel.Connector.Frontend.Api.Models.Subscriptions;
 using Edel.Connector.Frontend.Api.Models.Users;
 using Edel.Connector.HealthChecks;
@@ -76,6 +77,8 @@ namespace Edel.Connector.Frontend.Api
                 .CreateMap<SubscriptionPostRequestModel, Subscription>();
             baseMappings
                 .CreateMap<SubscriptionPutRequestModel, Subscription>();
+            
+            baseMappings.AddProfile(new ClaimProfile());
 
             var mapperConfiguration = new MapperConfiguration(baseMappings);
             return new Mapper(mapperConfiguration);
