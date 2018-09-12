@@ -21,12 +21,13 @@ namespace Edel.Connector
             var scope = applicationBuilder.ApplicationServices.CreateScope();
             var database = (IMongoDatabase) scope.ServiceProvider.GetService(typeof(IMongoDatabase));
             var userService = (IUserService) scope.ServiceProvider.GetService(typeof(IUserService));
-
+          
             TryAddAdminIfNotExistUsers(userService);
             TryAddResourceIfNotExist<Site>(database);
             TryAddResourceIfNotExist<Department>(database);
             TryAddResourceIfNotExist<BovineCalvingCondition>(database);
         }
+       
 
         private static void TryAddAdminIfNotExistUsers(IUserService userService)
         {

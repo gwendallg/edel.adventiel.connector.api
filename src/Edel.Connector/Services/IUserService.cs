@@ -11,7 +11,7 @@ namespace Edel.Connector.Services
         /// <param name="user"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        Task<User> AddAsync(User user, string password);
+        Task<User> InsertAsync(User user, string password);
         
         /// <summary>
         /// update user
@@ -20,6 +20,13 @@ namespace Edel.Connector.Services
         /// <param name="password"></param>
         /// <returns></returns>
         Task<User> UpdateAsync(User user, string password);
+
+        /// <summary>
+        /// delete user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task DeleteAsync(User user);
         
         /// <summary>
         /// find user by userName
@@ -34,14 +41,14 @@ namespace Edel.Connector.Services
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        Task<User> Authenticate(string userName, string password);
+        Task<User> AuthenticateByPassword(string userName, string password);
         
         /// <summary>
         /// authenticate user
         /// </summary>
         /// <param name="refreshToken"></param>
         /// <returns></returns>
-        Task<User> Authenticate(string refreshToken);
+        Task<User> AuthenticateByRefreshToken(string refreshToken);
 
         /// <summary>
         /// create a refresh token

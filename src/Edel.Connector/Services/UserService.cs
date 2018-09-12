@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Autumn.Mvc.Data.Repositories;
 using Edel.Connector.Models;
+using Edel.Connector.Services.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace Edel.Connector.Services
@@ -25,7 +26,7 @@ namespace Edel.Connector.Services
             _refreshTokenRepository = refreshTokenRepository;
         }
 
-        public async Task<User> AddAsync(User user, string password)
+        public async Task<User> InsertAsync(User user, string password)
         {
             user.Salt = GetRandomSalt();
             user.Hash = GetHash(password, user.Salt);
@@ -40,19 +41,31 @@ namespace Edel.Connector.Services
 
         private void ValidateClaims(User user)
         {
-            if(user ==null ) throw new ArgumentNullException(nameof(user));
+            if (user == null) throw new ArgumentNullException(nameof(user));
             if (user.Claims == null) return;
-            var claims = new Dictionary<string, string>();
-            
+            var claims = _claimsService.All();
             foreach (var item in user.Claims)
             {
-                var scopes = _claimsService.Parse(item.Key, item.Value);
-                claims.Add(item.Key, ClaimHelper.ToString(scopes));
-            }
+                var exist = claims.SingleOrDefault(c => c.ResourcePath == item.ResourcePath);
+                if (exist == null)
+                {
+                    throw new ClaimsException($"Claims not found for resource path {item.ResourcePath}");
+                }
 
-            user.Claims = claims;
+                var exclude = item.Scopes.Except(exist.Scopes);
+                if (!exclude.Any()) continue;
+                var invalidScopes = exclude.Select(s => s.ToString()).Aggregate(
+                    (a, b) => { return a + "," + b; });
+                throw new ClaimsException($"Scopes {item} not valid for resource path {invalidScopes}");
+            }
         }
-    
+
+        public async Task DeleteAsync(User user)
+        {
+            if(user == null) throw new ArgumentNullException(nameof(user));
+            await _userRepository.DeleteAsync(user.Username);
+        }
+
         public async Task<User> FindByUserNameAsync(string userName)
         {
             var result = await _userRepository.FindAsync(u => u.Username == userName);
@@ -73,7 +86,7 @@ namespace Edel.Connector.Services
         }
 
         /// <inheritdoc />
-        public async Task<User> Authenticate(string userName, string password)
+        public async Task<User> AuthenticateByPassword(string userName, string password)
         {
             var user = await FindByUserNameAsync(userName);
             if (user == null) return null;
@@ -81,7 +94,7 @@ namespace Edel.Connector.Services
             return expected != user.Hash ? null : user;
         }
 
-        public async Task<User> Authenticate(string refreshToken)
+        public async Task<User> AuthenticateByRefreshToken(string refreshToken)
         {
             var token = await _refreshTokenRepository.FindOneAsync(refreshToken);
             if (token == null) return null;
@@ -125,17 +138,11 @@ namespace Edel.Connector.Services
             }
         }
 
-        public async Task TryAddAdminIfNotExistUsersAsync(string adminPassword = "admin")
+        public async Task TryAddAdminIfNotExistUsersAsync(string adminPassword = "admin@acme.com")
         {
             var result = await _userRepository.FindAsync(u => u.Username == "admin");
             if (result.HasContent) return;
-            var user = new User() {Claims = new Dictionary<string, string>()};
-            foreach (var claim in _claimsService.All())
-            {
-                user.Claims.Add(claim.ResourcePath,ClaimHelper.ToString(claim.Scopes));
-            }
-            user.Username = "admin";
-            user.Salt = GetRandomSalt();
+            var user = new User {Claims = _claimsService.All(), Username = "admin", Salt = GetRandomSalt()};
             user.Hash = GetHash(adminPassword, user.Salt);
             user.Metadata = new Metadata
             {

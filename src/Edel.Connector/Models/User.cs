@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Autumn.Mvc.Data.Annotations;
 using Autumn.Mvc.Data.MongoDB.Annotations;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Edel.Connector.Models
@@ -14,10 +16,12 @@ namespace Edel.Connector.Models
         /// user name 
         /// </summary>
         [Id]
-        [BsonId] public string Username { get; set; }
+        [BsonId]
+        [EmailAddress]
+        public string Username { get; set; }
         public string Salt { get; set; }
         public string Hash { get; set; }
-        public Dictionary<string, string> Claims { get; set; }
-
+        public IList<Claim> Claims { get; set; }
+        public bool IsActive { get; set; }
     }
 }

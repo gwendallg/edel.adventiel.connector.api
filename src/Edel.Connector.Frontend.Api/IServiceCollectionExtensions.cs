@@ -53,9 +53,6 @@ namespace Edel.Connector.Frontend.Api
             {
                 // check user collection
                 checks.AddMongoCheck(connectionString, databaseName, new[] {"user"});
-
-                var bootstrapServers = $"{configuration["Kafka:BootstrapServers"]}";
-                var topic = $"{configuration["Kafka:Topic"]}";
             });
  
             return serviceCollection;
@@ -77,7 +74,6 @@ namespace Edel.Connector.Frontend.Api
                 .CreateMap<SubscriptionPostRequestModel, Subscription>();
             baseMappings
                 .CreateMap<SubscriptionPutRequestModel, Subscription>();
-            
             baseMappings.AddProfile(new ClaimProfile());
 
             var mapperConfiguration = new MapperConfiguration(baseMappings);

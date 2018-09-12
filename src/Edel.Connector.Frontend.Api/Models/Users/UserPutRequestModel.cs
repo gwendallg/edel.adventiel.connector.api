@@ -8,6 +8,6 @@ namespace Edel.Connector.Frontend.Api.Models.Users
         [Required]
         public string Password { get; set; }
         [Required]
-        public Dictionary<string,string> Claims { get; set; }
+        public List<ClaimRequestModel> Claims { get; set; }
     }
 }

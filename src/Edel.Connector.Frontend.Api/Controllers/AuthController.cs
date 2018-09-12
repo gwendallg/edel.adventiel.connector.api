@@ -61,7 +61,7 @@ namespace Edel.Connector.Frontend.Api.Controllers
             if (string.IsNullOrWhiteSpace(password))
                 return BadRequest("password is mandatory");
             
-            var user = await _userService.Authenticate(userName, password);
+            var user = await _userService.AuthenticateByPassword(userName, password);
             if (user == null) return StatusCode((int) HttpStatusCode.Forbidden);
             return Ok(await BuildTokenAsync(user));
         }
@@ -70,7 +70,7 @@ namespace Edel.Connector.Frontend.Api.Controllers
         {
             if (string.IsNullOrWhiteSpace(refreshToken))
                 return BadRequest("refresh_token is mandatory");
-            var user = await _userService.Authenticate(refreshToken);
+            var user = await _userService.AuthenticateByRefreshToken(refreshToken);
             if (user == null) return StatusCode((int) HttpStatusCode.Forbidden);
             return Ok(await BuildTokenAsync(user));
         }
@@ -79,9 +79,13 @@ namespace Edel.Connector.Frontend.Api.Controllers
         private async Task<AuthTokenResponseModel> BuildTokenAsync(User user)
         {
             var claims = new List<Claim> {new Claim(ClaimTypes.Name, user.Username)};
-            foreach (var item in user.Claims.Select(c => string.Format("{0}:{1}", c.Key, c.Value)))
+            foreach (var item in user.Claims)
             {
-                claims.Add(new Claim(ClaimTypes.Role, item));
+                var scopes = item.Scopes.Select(c=>c.ToString().ToLowerInvariant()).Aggregate((a, b) =>
+                {
+                    return a + "," + b;
+                });
+                claims.Add(new Claim(ClaimTypes.Role, $"{item.ResourcePath}:{scopes}"));
             }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes($"{_configuration["Jwt:SecurityKey"]}"));

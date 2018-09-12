@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Edel.Connector.Models.Bovines
 {
     [BsonIgnoreExtraElements]
-    [Resource]
+    [Resource(Deletable = false)]
     // ReSharper disable once ClassNeverInstantiated.Global
     public class Bovine : BreederEntity
     {
@@ -22,6 +22,7 @@ namespace Edel.Connector.Models.Bovines
         /// <summary>
         /// bovine identity
         /// </summary>
+        [Ignore(Updatable = true)]
         public BovineIdentity Identity { get; set; }
     }
 }

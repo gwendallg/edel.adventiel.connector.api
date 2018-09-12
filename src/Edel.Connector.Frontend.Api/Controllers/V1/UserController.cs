@@ -56,6 +56,10 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
         /// <returns></returns>
         [HttpPost]
         [SwaggerOperation( Tags = new []{"user"})]
+        [SwaggerResponse(200,Type=typeof(User))]
+        [SwaggerResponse(404)]
+        [SwaggerResponse(400,Type=typeof(ErrorModelInternalError))]
+        [SwaggerResponse(500,Type=typeof(ErrorModelInternalError))]
         public async Task<IActionResult> Post([FromBody] UserPostRequestModel model)
         {
             if (!ModelState.IsValid)
@@ -63,7 +67,7 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
             try
             {
                 var user = _mapper.Map<User>(model);
-                user = await _userService.AddAsync(user, model.Password);
+                user = await _userService.InsertAsync(user, model.Password);
                 var uri = string.Format("{0}/{1}", Request.HttpContext.Request.Path.ToString().TrimEnd('/'),
                     user.Username);
                 return Created(uri, user);
@@ -82,6 +86,9 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
         /// <returns></returns>
         [HttpPut("{userName}")]
         [SwaggerOperation( Tags = new []{"user"})]
+        [SwaggerResponse(200,Type=typeof(User))]
+        [SwaggerResponse(404)]
+        [SwaggerResponse(500,Type=typeof(ErrorModelBadRequest))]
         public async Task<IActionResult> Put(string userName, [FromBody] UserPutRequestModel model)
         {
             if (!ModelState.IsValid)
@@ -96,6 +103,25 @@ namespace Edel.Connector.Frontend.Api.Controllers.V1
                 user.Claims = user.Claims;
                 await _userService.UpdateAsync(user, model.Password);
                 return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return StatusCode((int) HttpStatusCode.InternalServerError, new ErrorModelInternalError(e));
+            }
+        }
+
+        [HttpDelete("{userName}")]
+        [SwaggerOperation( Tags = new []{"user"})]
+        [SwaggerResponse(200)]
+        public async Task<IActionResult> Delete(string userName)
+        {
+            try
+            {
+                var user = await _userService.FindByUserNameAsync(userName);
+                if (user == null)
+                    return NotFound();
+               await _userService.DeleteAsync(user);
+               return Ok();
             }
             catch (Exception e)
             {

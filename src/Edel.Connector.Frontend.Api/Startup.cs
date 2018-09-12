@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
@@ -74,6 +75,13 @@ namespace Edel.Connector.Frontend.Api
                 .AddInitialization(_configuration)
                 .AddTransient<IServiceFactory, ServiceFactory>()
                 .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
+            var pack = new ConventionPack
+            {
+                new EnumRepresentationConvention(BsonType.String)
+            };
+
+            ConventionRegistry.Register("EnumStringConvention", pack, t => true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
