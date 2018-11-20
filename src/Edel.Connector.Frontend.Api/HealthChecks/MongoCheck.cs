@@ -30,10 +30,10 @@ namespace Edel.Connector.Api.HealthChecks
             {
                 var client = new MongoClient(_connectionString);
                 var database = client.GetDatabase(_databaseName, _databaseSettings);
-                var result = await database.ListCollectionsAsync();
+                var result = await database.ListCollectionsAsync(cancellationToken: cancellationToken);
                 if (!(_collections?.Count() > 0))
                     return HealthCheckResult.Healthy($"Successfully found all collection(s) on Mongo database");
-                var collections = await result.ToListAsync();
+                var collections = await result.ToListAsync(cancellationToken: cancellationToken);
                 var names = collections.Select(b => b.GetValue("name").AsString).ToArray();
                 foreach (var collection in _collections)
                 {

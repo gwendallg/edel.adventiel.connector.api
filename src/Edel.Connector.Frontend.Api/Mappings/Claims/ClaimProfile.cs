@@ -4,7 +4,6 @@ using AutoMapper;
 using Edel.Connector.Api.Models;
 using Edel.Connector.Api.Models.Claims;
 using Edel.Connector.Api.Models.Users;
-using Edel.Connector.Models;
 
 namespace Edel.Connector.Api.Mappings.Claims
 {

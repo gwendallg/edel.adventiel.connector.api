@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Edel.Connector.Models;
 
 namespace Edel.Connector.Api.Models.Bovines.Breeding
 {

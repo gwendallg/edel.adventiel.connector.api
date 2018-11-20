@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Autumn.Mvc.Data.Annotations;
 using Autumn.Mvc.Data.MongoDB.Annotations;
-using Edel.Connector.Models;
 
 namespace Edel.Connector.Api.Models.References
 {

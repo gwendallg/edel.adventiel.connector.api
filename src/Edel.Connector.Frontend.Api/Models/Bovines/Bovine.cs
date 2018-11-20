@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Autumn.Mvc.Data.Annotations;
-using Edel.Connector.Models;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Edel.Connector.Api.Models.Bovines

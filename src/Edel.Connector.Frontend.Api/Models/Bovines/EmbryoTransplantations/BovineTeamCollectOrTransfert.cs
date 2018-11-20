@@ -1,5 +1,4 @@
-﻿using Edel.Connector.Models;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace Edel.Connector.Api.Models.Bovines.EmbryoTransplantations
 {

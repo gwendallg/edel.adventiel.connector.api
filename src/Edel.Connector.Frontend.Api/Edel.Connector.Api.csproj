@@ -3,6 +3,12 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="logs\**" />
+    <Content Remove="logs\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <None Remove="logs\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Remove="Resources\BovineCalvingConditions.json" />
     <Content Remove="Resources\Departments.json" />
     <Content Remove="Resources\Sites.json" />
