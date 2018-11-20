@@ -3,31 +3,34 @@ using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.Configurations;
 using Autumn.Mvc.Data.MongoDB;
 using Autumn.Mvc.Data.Swagger;
-using Edel.Connector.Frontend.Api.Controllers;
-using Edel.Connector.Frontend.Api.Swagger;
-using Edel.Connector.Models;
-using Edel.Connector.Services;
+using Edel.Connector.Api.Controllers;
+using Edel.Connector.Api.Models;
+using Edel.Connector.Api.Services;
+using Edel.Connector.Api.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using Newtonsoft.Json.Serialization;
+using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
-using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-// ReSharper disable All
 
-namespace Edel.Connector.Frontend.Api
+namespace Edel.Connector.Api
 {
     public class Startup
     {
         private readonly IConfiguration _configuration;
-    
+
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration).CreateLogger();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -67,15 +70,17 @@ namespace Edel.Connector.Frontend.Api
                     {
                         c.SwaggerDoc(version, new Info {Title = "api", Version = version});
                     }
+
                     c.DocumentFilter<SwaggerDocumentFilter>();
                     c.OperationFilter<DefaultSwaggerOperationFilter>();
                 })
-               .AddMvc();
+                .AddMvc();
+
             services
                 .AddInitialization(_configuration)
                 .AddTransient<IServiceFactory, ServiceFactory>()
                 .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
+
             var pack = new ConventionPack
             {
                 new EnumRepresentationConvention(BsonType.String)
@@ -86,6 +91,7 @@ namespace Edel.Connector.Frontend.Api
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            ILoggerFactory loggerFactory,
             IApplicationLifetime applicationLifetime)
         {
 
@@ -93,6 +99,8 @@ namespace Edel.Connector.Frontend.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            loggerFactory.AddSerilog(); 
 
             app
                 .UseSwagger()

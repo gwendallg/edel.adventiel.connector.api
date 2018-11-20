@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Edel.Connector.Frontend.Api.Swagger
+namespace Edel.Connector.Api.Swagger
 {
     public class DefaultSwaggerOperationFilter : SwaggerOperationFilter
     {

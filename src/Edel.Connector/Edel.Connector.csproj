@@ -9,9 +9,6 @@
     <PackageReference Include="System.ServiceModel.Http" Version="4.4.1" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\*.json" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Edel.Connector.Dto\Edel.Connector.Dto.csproj" />
   </ItemGroup>
 </Project>

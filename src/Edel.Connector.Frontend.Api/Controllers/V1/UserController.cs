@@ -3,14 +3,14 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Autumn.Mvc.Data.Models;
-using Edel.Connector.Frontend.Api.Models.Users;
-using Edel.Connector.Models;
-using Edel.Connector.Services;
+using Edel.Connector.Api.Models;
+using Edel.Connector.Api.Models.Users;
+using Edel.Connector.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Edel.Connector.Frontend.Api.Controllers.V1
+namespace Edel.Connector.Api.Controllers.V1
 {
     [Authorize]
     [Route("v1/user")]

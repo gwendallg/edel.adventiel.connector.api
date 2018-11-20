@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Edel.Connector.Frontend.Api.Models.Subscriptions
+namespace Edel.Connector.Api.Models.Subscriptions
 {
     public class SubscriptionPostRequestModel : SubscriptionPutRequestModel
     {

@@ -14,6 +14,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Edel.Connector.Dto\Edel.Connector.Dto.csproj" />
-    <ProjectReference Include="..\Edel.Connector\Edel.Connector.csproj" />
   </ItemGroup>
 </Project>

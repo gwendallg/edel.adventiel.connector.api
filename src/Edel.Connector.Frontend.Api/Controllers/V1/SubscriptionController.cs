@@ -6,14 +6,14 @@ using AutoMapper;
 using Autumn.Mvc.Data.Models;
 using Autumn.Mvc.Data.Repositories;
 using Autumn.Mvc.Models.Paginations;
-using Edel.Connector.Frontend.Api.Models.Subscriptions;
-using Edel.Connector.Models;
-using Edel.Connector.Services;
+using Edel.Connector.Api.Models;
+using Edel.Connector.Api.Models.Subscriptions;
+using Edel.Connector.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Edel.Connector.Frontend.Api.Controllers.V1
+namespace Edel.Connector.Api.Controllers.V1
 {
     [Authorize]
     [Route("v1/subscription")]

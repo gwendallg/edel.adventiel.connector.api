@@ -1,6 +1,4 @@
-﻿// ReSharper disable All
-
-namespace Edel.Connector.Frontend.Api.Models.Auths
+﻿namespace Edel.Connector.Api.Models.Auths
 {
     public class AuthTokenResponseModel
     {

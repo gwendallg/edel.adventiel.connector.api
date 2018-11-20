@@ -1,0 +1,155 @@
+2018-11-21 00:03:26.414 +01:00 [Information] User profile is available. Using '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-21 00:03:26.487 +01:00 [Debug] Reading data from file '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys\key-82cdc63c-4783-4a05-addc-a5e0c607481c.xml"'.
+2018-11-21 00:03:26.502 +01:00 [Debug] Found key {82cdc63c-4783-4a05-addc-a5e0c607481c}.
+2018-11-21 00:03:26.530 +01:00 [Debug] Considering key {82cdc63c-4783-4a05-addc-a5e0c607481c} with expiration date 2018-12-10 19:19:01Z as default key.
+2018-11-21 00:03:26.549 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 00:03:26.552 +01:00 [Debug] Decrypting secret element using Windows DPAPI.
+2018-11-21 00:03:26.555 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 00:03:26.567 +01:00 [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+2018-11-21 00:03:26.576 +01:00 [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+2018-11-21 00:03:26.586 +01:00 [Debug] Using key {82cdc63c-4783-4a05-addc-a5e0c607481c} as the default key.
+2018-11-21 00:03:26.588 +01:00 [Debug] Key ring with default key {82cdc63c-4783-4a05-addc-a5e0c607481c} was loaded during application startup.
+2018-11-21 00:03:27.579 +01:00 [Debug] Hosting starting
+2018-11-21 00:03:27.729 +01:00 [Debug] Hosting started
+2018-11-21 00:03:27.731 +01:00 [Debug] Loaded hosting startup assembly "Edel.Connector.Api"
+2018-11-21 00:03:27.733 +01:00 [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.ApplicationInsights.HostingStartup"
+2018-11-21 00:03:27.892 +01:00 [Debug] Connection id ""0HLIF7HGUJCJC"" started.
+2018-11-21 00:03:27.892 +01:00 [Debug] Connection id ""0HLIF7HGUJCJB"" started.
+2018-11-21 00:03:27.922 +01:00 [Debug] Connection id ""0HLIF7HGUJCJB"" received FIN.
+2018-11-21 00:03:27.923 +01:00 [Debug] Connection id ""0HLIF7HGUJCJB"" disconnecting.
+2018-11-21 00:03:27.926 +01:00 [Debug] Connection id ""0HLIF7HGUJCJB"" sending FIN.
+2018-11-21 00:03:27.922 +01:00 [Debug] Connection id ""0HLIF7HGUJCJC"" received FIN.
+2018-11-21 00:03:27.932 +01:00 [Debug] Connection id ""0HLIF7HGUJCJC"" disconnecting.
+2018-11-21 00:03:27.935 +01:00 [Debug] Connection id ""0HLIF7HGUJCJC"" sending FIN.
+2018-11-21 00:03:27.935 +01:00 [Debug] Connection id ""0HLIF7HGUJCJC"" stopped.
+2018-11-21 00:03:27.930 +01:00 [Debug] Connection id ""0HLIF7HGUJCJB"" stopped.
+2018-11-21 00:03:28.360 +01:00 [Debug] Connection id ""0HLIF7HGUJCJD"" started.
+2018-11-21 00:03:28.432 +01:00 [Debug] Connection id ""0HLIF7HGUJCJE"" started.
+2018-11-21 00:03:28.552 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/  
+2018-11-21 00:03:28.596 +01:00 [Debug] The request path "" does not match the path filter
+2018-11-21 00:03:28.782 +01:00 [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+2018-11-21 00:03:29.092 +01:00 [Debug] Request did not match any routes.
+2018-11-21 00:03:29.115 +01:00 [Debug] Connection id ""0HLIF7HGUJCJD"" completed keep alive response.
+2018-11-21 00:03:29.119 +01:00 [Information] Request finished in 576.9044ms 404 
+2018-11-21 00:03:39.581 +01:00 [Debug] Connection id ""0HLIF7HGUJCJE"" received FIN.
+2018-11-21 00:03:39.583 +01:00 [Debug] Connection id ""0HLIF7HGUJCJF"" started.
+2018-11-21 00:03:39.585 +01:00 [Debug] Connection id ""0HLIF7HGUJCJE"" disconnecting.
+2018-11-21 00:03:39.590 +01:00 [Debug] Connection id ""0HLIF7HGUJCJE"" sending FIN.
+2018-11-21 00:03:39.584 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/swagger/  
+2018-11-21 00:03:39.590 +01:00 [Debug] Connection id ""0HLIF7HGUJCJE"" stopped.
+2018-11-21 00:03:39.624 +01:00 [Debug] Connection id ""0HLIF7HGUJCJD"" completed keep alive response.
+2018-11-21 00:03:39.626 +01:00 [Information] Request finished in 43.3252ms 200 text/html
+2018-11-21 00:03:40.039 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/swagger/v1/swagger.json  
+2018-11-21 00:03:41.145 +01:00 [Debug] Connection id ""0HLIF7HGUJCJD"" completed keep alive response.
+2018-11-21 00:03:41.148 +01:00 [Information] Request finished in 1108.7196ms 200 application/json
+2018-11-21 00:04:03.422 +01:00 [Debug] Connection id ""0HLIF7HGUJCJF"" received FIN.
+2018-11-21 00:04:03.425 +01:00 [Debug] Connection id ""0HLIF7HGUJCJF"" disconnecting.
+2018-11-21 00:04:03.427 +01:00 [Debug] Connection id ""0HLIF7HGUJCJF"" sending FIN.
+2018-11-21 00:04:03.427 +01:00 [Debug] Connection id ""0HLIF7HGUJCJF"" stopped.
+2018-11-21 00:04:03.423 +01:00 [Information] Request starting HTTP/1.1 POST http://localhost:54279/v1/oauth/token?grant_type=password&username=admin&password=admin  0
+2018-11-21 00:04:03.436 +01:00 [Debug] "POST" requests are not supported
+2018-11-21 00:04:03.439 +01:00 [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+2018-11-21 00:04:03.456 +01:00 [Debug] Request successfully matched the route with name 'null' and template '"v1/oauth/token"'.
+2018-11-21 00:04:03.520 +01:00 [Debug] Executing action "Edel.Connector.Api.Controllers.AuthController.TokenAsync (Edel.Connector.Api)"
+2018-11-21 00:04:03.559 +01:00 [Information] Executing action method "Edel.Connector.Api.Controllers.AuthController.TokenAsync (Edel.Connector.Api)" with arguments (["password", "admin", "admin", ""]) - ModelState is Valid
+2018-11-21 00:04:03.756 +01:00 [Debug] Executed action method "Edel.Connector.Api.Controllers.AuthController.TokenAsync (Edel.Connector.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult".
+2018-11-21 00:04:03.768 +01:00 [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter"' and content type '"application/json"' to write the response.
+2018-11-21 00:04:03.772 +01:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-11-21 00:04:03.791 +01:00 [Information] Executed action "Edel.Connector.Api.Controllers.AuthController.TokenAsync (Edel.Connector.Api)" in 265.7182ms
+2018-11-21 00:04:03.799 +01:00 [Debug] Connection id ""0HLIF7HGUJCJD"" completed keep alive response.
+2018-11-21 00:04:03.803 +01:00 [Information] Request finished in 379.9349ms 200 application/json; charset=utf-8
+2018-11-21 00:04:42.442 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/v1/bovine?l=50&o=0  
+2018-11-21 00:04:42.445 +01:00 [Debug] The request path "" does not match the path filter
+2018-11-21 00:04:42.484 +01:00 [Information] Successfully validated the token.
+2018-11-21 00:04:42.491 +01:00 [Information] AuthenticationScheme: "Bearer" was successfully authenticated.
+2018-11-21 00:04:42.495 +01:00 [Debug] Request successfully matched the route with name 'null' and template '"v1/bovine"'.
+2018-11-21 00:04:42.499 +01:00 [Debug] Action '"Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Post (Edel.Connector.Api)"' with id '"6a4b5535-bacd-40f4-a084-f9a494214975"' did not match the constraint '"Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint"'
+2018-11-21 00:04:42.517 +01:00 [Debug] Executing action "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)"
+2018-11-21 00:04:42.532 +01:00 [Information] Authorization was successful for user: "admin".
+2018-11-21 00:04:42.558 +01:00 [Information] Executing action method "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)" with arguments (["f => True", "Autumn.Mvc.Models.Paginations.Pageable`1[Edel.Connector.Api.Models.Bovines.Bovine]"]) - ModelState is Valid
+2018-11-21 00:04:42.592 +01:00 [Debug] Executed action method "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult".
+2018-11-21 00:04:42.599 +01:00 [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter"' and content type '"application/json"' to write the response.
+2018-11-21 00:04:42.603 +01:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-11-21 00:04:42.610 +01:00 [Information] Executed action "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)" in 86.2113ms
+2018-11-21 00:04:42.617 +01:00 [Debug] Connection id ""0HLIF7HGUJCJD"" completed keep alive response.
+2018-11-21 00:04:42.621 +01:00 [Information] Request finished in 179.6342ms 200 application/json; charset=utf-8
+2018-11-21 00:04:53.778 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/v1/bovine?l=50&o=0  
+2018-11-21 00:04:53.780 +01:00 [Debug] The request path "" does not match the path filter
+2018-11-21 00:04:53.786 +01:00 [Information] Successfully validated the token.
+2018-11-21 00:04:53.790 +01:00 [Information] AuthenticationScheme: "Bearer" was successfully authenticated.
+2018-11-21 00:04:53.793 +01:00 [Debug] Request successfully matched the route with name 'null' and template '"v1/bovine"'.
+2018-11-21 00:04:53.798 +01:00 [Debug] Action '"Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Post (Edel.Connector.Api)"' with id '"6a4b5535-bacd-40f4-a084-f9a494214975"' did not match the constraint '"Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint"'
+2018-11-21 00:04:53.810 +01:00 [Debug] Executing action "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)"
+2018-11-21 00:04:53.813 +01:00 [Information] Authorization was successful for user: "admin".
+2018-11-21 00:05:11.341 +01:00 [Information] Executing action method "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)" with arguments (["f => True", "Autumn.Mvc.Models.Paginations.Pageable`1[Edel.Connector.Api.Models.Bovines.Bovine]"]) - ModelState is Valid
+2018-11-21 00:05:11.357 +01:00 [Debug] Executed action method "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult".
+2018-11-21 00:05:11.365 +01:00 [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter"' and content type '"application/json"' to write the response.
+2018-11-21 00:05:11.368 +01:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-11-21 00:05:11.372 +01:00 [Information] Executed action "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)" in 17558.516ms
+2018-11-21 00:05:11.379 +01:00 [Debug] Connection id ""0HLIF7HGUJCJD"" completed keep alive response.
+2018-11-21 00:05:11.382 +01:00 [Information] Request finished in 17603.9668ms 200 application/json; charset=utf-8
+2018-11-21 00:11:37.731 +01:00 [Information] User profile is available. Using '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-21 00:11:37.796 +01:00 [Debug] Reading data from file '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys\key-82cdc63c-4783-4a05-addc-a5e0c607481c.xml"'.
+2018-11-21 00:11:37.809 +01:00 [Debug] Found key {82cdc63c-4783-4a05-addc-a5e0c607481c}.
+2018-11-21 00:11:37.829 +01:00 [Debug] Considering key {82cdc63c-4783-4a05-addc-a5e0c607481c} with expiration date 2018-12-10 19:19:01Z as default key.
+2018-11-21 00:11:37.835 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 00:11:37.838 +01:00 [Debug] Decrypting secret element using Windows DPAPI.
+2018-11-21 00:11:37.842 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 00:11:37.861 +01:00 [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+2018-11-21 00:11:37.868 +01:00 [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+2018-11-21 00:11:37.883 +01:00 [Debug] Using key {82cdc63c-4783-4a05-addc-a5e0c607481c} as the default key.
+2018-11-21 00:11:37.886 +01:00 [Debug] Key ring with default key {82cdc63c-4783-4a05-addc-a5e0c607481c} was loaded during application startup.
+2018-11-21 00:11:38.832 +01:00 [Debug] Hosting starting
+2018-11-21 00:11:38.953 +01:00 [Debug] Hosting started
+2018-11-21 00:11:38.954 +01:00 [Debug] Loaded hosting startup assembly "Edel.Connector.Api"
+2018-11-21 00:11:38.956 +01:00 [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.ApplicationInsights.HostingStartup"
+2018-11-21 00:11:38.959 +01:00 [Debug] Connection id ""0HLIF7M39OSUT"" started.
+2018-11-21 00:11:38.997 +01:00 [Debug] Connection id ""0HLIF7M39OSUT"" received FIN.
+2018-11-21 00:11:38.999 +01:00 [Debug] Connection id ""0HLIF7M39OSUT"" disconnecting.
+2018-11-21 00:11:39.002 +01:00 [Debug] Connection id ""0HLIF7M39OSUT"" sending FIN.
+2018-11-21 00:11:39.005 +01:00 [Debug] Connection id ""0HLIF7M39OSUT"" stopped.
+2018-11-21 00:11:39.329 +01:00 [Debug] Connection id ""0HLIF7M39OSUU"" started.
+2018-11-21 00:11:39.390 +01:00 [Debug] Connection id ""0HLIF7M39OSUV"" started.
+2018-11-21 00:11:39.485 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/  
+2018-11-21 00:11:39.536 +01:00 [Debug] The request path "" does not match the path filter
+2018-11-21 00:11:39.669 +01:00 [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+2018-11-21 00:11:39.861 +01:00 [Debug] Request did not match any routes.
+2018-11-21 00:11:39.877 +01:00 [Debug] Connection id ""0HLIF7M39OSUU"" completed keep alive response.
+2018-11-21 00:11:39.881 +01:00 [Information] Request finished in 402.9724ms 404 
+2018-11-21 00:11:46.658 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/swagger/  
+2018-11-21 00:11:46.682 +01:00 [Debug] Connection id ""0HLIF7M39OSUU"" completed keep alive response.
+2018-11-21 00:11:46.686 +01:00 [Information] Request finished in 27.5488ms 200 text/html
+2018-11-21 00:11:46.848 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/swagger/v1/swagger.json  
+2018-11-21 00:11:47.967 +01:00 [Debug] Connection id ""0HLIF7M39OSUU"" completed keep alive response.
+2018-11-21 00:11:47.969 +01:00 [Information] Request finished in 1121.2913ms 200 application/json
+2018-11-21 00:12:03.568 +01:00 [Debug] Connection id ""0HLIF7M39OSUV"" received FIN.
+2018-11-21 00:12:03.570 +01:00 [Debug] Connection id ""0HLIF7M39OSUV"" disconnecting.
+2018-11-21 00:12:03.573 +01:00 [Debug] Connection id ""0HLIF7M39OSUV"" sending FIN.
+2018-11-21 00:12:03.573 +01:00 [Debug] Connection id ""0HLIF7M39OSUV"" stopped.
+2018-11-21 00:12:03.569 +01:00 [Information] Request starting HTTP/1.1 POST http://localhost:54279/v1/oauth/token?grant_type=password&username=admin&password=admin  0
+2018-11-21 00:12:03.581 +01:00 [Debug] "POST" requests are not supported
+2018-11-21 00:12:03.584 +01:00 [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+2018-11-21 00:12:03.588 +01:00 [Debug] Request successfully matched the route with name 'null' and template '"v1/oauth/token"'.
+2018-11-21 00:12:03.648 +01:00 [Debug] Executing action "Edel.Connector.Api.Controllers.AuthController.TokenAsync (Edel.Connector.Api)"
+2018-11-21 00:12:03.690 +01:00 [Information] Executing action method "Edel.Connector.Api.Controllers.AuthController.TokenAsync (Edel.Connector.Api)" with arguments (["password", "admin", "admin", ""]) - ModelState is Valid
+2018-11-21 00:12:03.866 +01:00 [Debug] Executed action method "Edel.Connector.Api.Controllers.AuthController.TokenAsync (Edel.Connector.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult".
+2018-11-21 00:12:03.875 +01:00 [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter"' and content type '"application/json"' to write the response.
+2018-11-21 00:12:03.878 +01:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-11-21 00:12:03.889 +01:00 [Information] Executed action "Edel.Connector.Api.Controllers.AuthController.TokenAsync (Edel.Connector.Api)" in 236.7508ms
+2018-11-21 00:12:03.895 +01:00 [Debug] Connection id ""0HLIF7M39OSUU"" completed keep alive response.
+2018-11-21 00:12:03.898 +01:00 [Information] Request finished in 329.3604ms 200 application/json; charset=utf-8
+2018-11-21 00:12:39.182 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/v1/bovine?l=50&o=0  
+2018-11-21 00:12:39.188 +01:00 [Debug] The request path "" does not match the path filter
+2018-11-21 00:12:39.219 +01:00 [Information] Successfully validated the token.
+2018-11-21 00:12:39.225 +01:00 [Information] AuthenticationScheme: "Bearer" was successfully authenticated.
+2018-11-21 00:12:39.230 +01:00 [Debug] Request successfully matched the route with name 'null' and template '"v1/bovine"'.
+2018-11-21 00:12:39.234 +01:00 [Debug] Action '"Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Post (Edel.Connector.Api)"' with id '"554ff5fa-24f6-4479-8b0f-8f7fa69914cc"' did not match the constraint '"Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint"'
+2018-11-21 00:12:39.245 +01:00 [Debug] Executing action "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)"
+2018-11-21 00:12:39.262 +01:00 [Information] Authorization was successful for user: "admin".
+2018-11-21 00:12:39.295 +01:00 [Information] Executing action method "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)" with arguments (["f => True", "Autumn.Mvc.Models.Paginations.Pageable`1[Edel.Connector.Api.Models.Bovines.Bovine]"]) - ModelState is Valid
+2018-11-21 00:13:26.267 +01:00 [Debug] Executed action method "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult".
+2018-11-21 00:13:26.276 +01:00 [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter"' and content type '"application/json"' to write the response.
+2018-11-21 00:13:26.282 +01:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2018-11-21 00:13:26.289 +01:00 [Information] Executed action "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)" in 47036.2102ms
+2018-11-21 00:13:26.297 +01:00 [Debug] Connection id ""0HLIF7M39OSUU"" completed keep alive response.
+2018-11-21 00:13:26.299 +01:00 [Information] Request finished in 47118.0409ms 200 application/json; charset=utf-8

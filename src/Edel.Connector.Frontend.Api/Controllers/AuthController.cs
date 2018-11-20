@@ -6,16 +6,16 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Edel.Connector.Frontend.Api.Models.Auths;
-using Edel.Connector.Models;
-using Edel.Connector.Services;
+using Edel.Connector.Api.Models;
+using Edel.Connector.Api.Models.Auths;
+using Edel.Connector.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Claim = System.Security.Claims.Claim;
 
-namespace Edel.Connector.Frontend.Api.Controllers
+namespace Edel.Connector.Api.Controllers
 {
     [Route("v1/oauth")]
     public class AuthController : Controller

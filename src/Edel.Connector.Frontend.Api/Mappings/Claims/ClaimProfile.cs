@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
 using AutoMapper;
-using Edel.Connector.Frontend.Api.Models.Claims;
-using Edel.Connector.Frontend.Api.Models.Users;
+using Edel.Connector.Api.Models;
+using Edel.Connector.Api.Models.Claims;
+using Edel.Connector.Api.Models.Users;
 using Edel.Connector.Models;
 
-namespace Edel.Connector.Frontend.Api.Mappings.Claims
+namespace Edel.Connector.Api.Mappings.Claims
 {
     public class ClaimProfile : Profile
     {

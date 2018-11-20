@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Edel.Connector.Frontend.Api.Models.Claims
+namespace Edel.Connector.Api.Models.Claims
 {
     public class ClaimResponseModel
     {

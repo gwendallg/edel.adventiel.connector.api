@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Edel.Connector.Frontend.Api.Models.Users
+namespace Edel.Connector.Api.Models.Users
 {
     public class UserPutRequestModel
     {

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Net;
 using AutoMapper;
 using Autumn.Mvc.Data.Models;
-using Edel.Connector.Frontend.Api.Models.Claims;
-using Edel.Connector.Models;
-using Edel.Connector.Services;
+using Edel.Connector.Api.Models;
+using Edel.Connector.Api.Models.Claims;
+using Edel.Connector.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Edel.Connector.Frontend.Api.Controllers
+namespace Edel.Connector.Api.Controllers
 {
     [Authorize]
     [Route("v1/claim")]

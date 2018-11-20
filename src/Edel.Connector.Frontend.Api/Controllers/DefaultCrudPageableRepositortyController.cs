@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Autumn.Mvc.Configurations;
 using Autumn.Mvc.Data.Repositories;
-using Edel.Connector.Models;
+using Autumn.Mvc.Models.Paginations;
+using Edel.Connector.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace Edel.Connector.Frontend.Api.Controllers
+namespace Edel.Connector.Api.Controllers
 {
     
     /// <summary>
@@ -20,6 +25,9 @@ namespace Edel.Connector.Frontend.Api.Controllers
         : Autumn.Mvc.Data.Controllers.RepositoryControllerAsync<TEntity, TEntityPost, TEntityPut, TKey>
         where TEntity : class where TEntityPost : class where TEntityPut : class
     {
+
+        private readonly ILogger<TEntity> _logger;
+
         /// <summary>
         /// initialize a new instance of controller
         /// </summary>
@@ -27,11 +35,12 @@ namespace Edel.Connector.Frontend.Api.Controllers
         /// <param name="settings"></param>
         /// <param name="httpContextAccessor"></param>
         public DefaultCrudPageableRepositortyController(ICrudPageableRepositoryAsync<TEntity, TKey> repository,
-            AutumnSettings settings, IHttpContextAccessor httpContextAccessor)
+            AutumnSettings settings, IHttpContextAccessor httpContextAccessor, ILogger<TEntity> logger)
             : base(repository, settings, httpContextAccessor)
         {
+            _logger = logger;
         }
-  
+
         /// <summary>
         /// on inserting
         /// </summary>
@@ -48,6 +57,12 @@ namespace Edel.Connector.Frontend.Api.Controllers
                 };
             }
             return entity;
+        }
+
+
+        public override Task<IActionResult> Get(Expression<Func<TEntity, bool>> filter, IPageable<TEntity> pageable)
+        {
+            return base.Get(filter, pageable);
         }
 
         /// <summary>
