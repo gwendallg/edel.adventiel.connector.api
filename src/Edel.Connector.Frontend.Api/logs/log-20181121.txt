@@ -153,3 +153,293 @@
 2018-11-21 00:13:26.289 +01:00 [Information] Executed action "Edel.Connector.Api.Controllers.DefaultCrudPageableRepositortyController`4[[Edel.Connector.Api.Models.Bovines.Bovine, Edel.Connector.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePOSTRequestRequest, BovinePOSTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[BovinePUTRequestRequest, BovinePUTRequestRequest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Get (Edel.Connector.Api)" in 47036.2102ms
 2018-11-21 00:13:26.297 +01:00 [Debug] Connection id ""0HLIF7M39OSUU"" completed keep alive response.
 2018-11-21 00:13:26.299 +01:00 [Information] Request finished in 47118.0409ms 200 application/json; charset=utf-8
+2018-11-21 08:54:49.937 +01:00 [Information] User profile is available. Using '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-21 08:54:50.003 +01:00 [Debug] Reading data from file '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys\key-82cdc63c-4783-4a05-addc-a5e0c607481c.xml"'.
+2018-11-21 08:54:50.031 +01:00 [Debug] Found key {82cdc63c-4783-4a05-addc-a5e0c607481c}.
+2018-11-21 08:54:50.052 +01:00 [Debug] Considering key {82cdc63c-4783-4a05-addc-a5e0c607481c} with expiration date 2018-12-10 19:19:01Z as default key.
+2018-11-21 08:54:50.059 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 08:54:50.061 +01:00 [Debug] Decrypting secret element using Windows DPAPI.
+2018-11-21 08:54:50.064 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 08:54:50.067 +01:00 [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+2018-11-21 08:54:50.072 +01:00 [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+2018-11-21 08:54:50.079 +01:00 [Debug] Using key {82cdc63c-4783-4a05-addc-a5e0c607481c} as the default key.
+2018-11-21 08:54:50.082 +01:00 [Debug] Key ring with default key {82cdc63c-4783-4a05-addc-a5e0c607481c} was loaded during application startup.
+2018-11-21 08:56:19.074 +01:00 [Information] User profile is available. Using '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-21 08:56:19.126 +01:00 [Debug] Reading data from file '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys\key-82cdc63c-4783-4a05-addc-a5e0c607481c.xml"'.
+2018-11-21 08:56:19.136 +01:00 [Debug] Found key {82cdc63c-4783-4a05-addc-a5e0c607481c}.
+2018-11-21 08:56:19.149 +01:00 [Debug] Considering key {82cdc63c-4783-4a05-addc-a5e0c607481c} with expiration date 2018-12-10 19:19:01Z as default key.
+2018-11-21 08:56:19.153 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 08:56:19.156 +01:00 [Debug] Decrypting secret element using Windows DPAPI.
+2018-11-21 08:56:19.158 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 08:56:19.161 +01:00 [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+2018-11-21 08:56:19.168 +01:00 [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+2018-11-21 08:56:19.175 +01:00 [Debug] Using key {82cdc63c-4783-4a05-addc-a5e0c607481c} as the default key.
+2018-11-21 08:56:19.180 +01:00 [Debug] Key ring with default key {82cdc63c-4783-4a05-addc-a5e0c607481c} was loaded during application startup.
+2018-11-21 08:56:57.396 +01:00 [Fatal] Application startup exception
+System.AggregateException: One or more errors occurred. (A timeout occured after 30000ms selecting a server using CompositeServerSelector{ Selectors = MongoDB.Driver.MongoClient+AreSessionsSupportedServerSelector, LatencyLimitingServerSelector{ AllowedLatencyRange = 00:00:00.0150000 } }. Client view of cluster state is { ClusterId : "1", ConnectionMode : "Automatic", Type : "Unknown", State : "Disconnected", Servers : [{ ServerId: "{ ClusterId : 1, EndPoint : "Unspecified/localhost:27017" }", EndPoint: "Unspecified/localhost:27017", State: "Disconnected", Type: "Unknown", HeartbeatException: "MongoDB.Driver.MongoConnectionException: An exception occurred while opening a connection to the server. ---> MongoDB.Driver.MongoAuthenticationException: Unable to authenticate using sasl protocol mechanism SCRAM-SHA-1. ---> MongoDB.Driver.MongoCommandException: Command saslStart failed: Authentication failed..
+   at MongoDB.Driver.Core.WireProtocol.CommandUsingQueryMessageWireProtocol`1.ProcessReply(ConnectionId connectionId, ReplyMessage`1 reply)
+   at MongoDB.Driver.Core.WireProtocol.CommandUsingQueryMessageWireProtocol`1.<ExecuteAsync>d__14.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Authentication.SaslAuthenticator.<AuthenticateAsync>d__7.MoveNext()
+   --- End of inner exception stack trace ---
+   at MongoDB.Driver.Core.Authentication.SaslAuthenticator.<AuthenticateAsync>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Authentication.DefaultAuthenticator.<AuthenticateAsync>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Authentication.AuthenticationHelper.<AuthenticateAsync>d__1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Connections.ConnectionInitializer.<InitializeConnectionAsync>d__3.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Connections.BinaryConnection.<OpenHelperAsync>d__48.MoveNext()
+   --- End of inner exception stack trace ---
+   at MongoDB.Driver.Core.Connections.BinaryConnection.<OpenHelperAsync>d__48.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Servers.ServerMonitor.<HeartbeatAsync>d__27.MoveNext()" }] }.) ---> System.TimeoutException: A timeout occured after 30000ms selecting a server using CompositeServerSelector{ Selectors = MongoDB.Driver.MongoClient+AreSessionsSupportedServerSelector, LatencyLimitingServerSelector{ AllowedLatencyRange = 00:00:00.0150000 } }. Client view of cluster state is { ClusterId : "1", ConnectionMode : "Automatic", Type : "Unknown", State : "Disconnected", Servers : [{ ServerId: "{ ClusterId : 1, EndPoint : "Unspecified/localhost:27017" }", EndPoint: "Unspecified/localhost:27017", State: "Disconnected", Type: "Unknown", HeartbeatException: "MongoDB.Driver.MongoConnectionException: An exception occurred while opening a connection to the server. ---> MongoDB.Driver.MongoAuthenticationException: Unable to authenticate using sasl protocol mechanism SCRAM-SHA-1. ---> MongoDB.Driver.MongoCommandException: Command saslStart failed: Authentication failed..
+   at MongoDB.Driver.Core.WireProtocol.CommandUsingQueryMessageWireProtocol`1.ProcessReply(ConnectionId connectionId, ReplyMessage`1 reply)
+   at MongoDB.Driver.Core.WireProtocol.CommandUsingQueryMessageWireProtocol`1.<ExecuteAsync>d__14.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Authentication.SaslAuthenticator.<AuthenticateAsync>d__7.MoveNext()
+   --- End of inner exception stack trace ---
+   at MongoDB.Driver.Core.Authentication.SaslAuthenticator.<AuthenticateAsync>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Authentication.DefaultAuthenticator.<AuthenticateAsync>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Authentication.AuthenticationHelper.<AuthenticateAsync>d__1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Connections.ConnectionInitializer.<InitializeConnectionAsync>d__3.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Connections.BinaryConnection.<OpenHelperAsync>d__48.MoveNext()
+   --- End of inner exception stack trace ---
+   at MongoDB.Driver.Core.Connections.BinaryConnection.<OpenHelperAsync>d__48.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Servers.ServerMonitor.<HeartbeatAsync>d__27.MoveNext()" }] }.
+   at MongoDB.Driver.Core.Clusters.Cluster.ThrowTimeoutException(IServerSelector selector, ClusterDescription description)
+   at MongoDB.Driver.Core.Clusters.Cluster.WaitForDescriptionChangedHelper.HandleCompletedTask(Task completedTask)
+   at MongoDB.Driver.Core.Clusters.Cluster.<WaitForDescriptionChangedAsync>d__53.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Clusters.Cluster.<SelectServerAsync>d__45.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.MongoClient.<AreSessionsSupportedAfterSeverSelctionAsync>d__47.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.MongoClient.<AreSessionsSupportedAsync>d__44.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.MongoClient.<StartImplicitSessionAsync>d__33.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.MongoCollectionImpl`1.<UsingImplicitSessionAsync>d__101`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Autumn.Mvc.Data.MongoDB.Repositories.MongoDBCrudPageableRepositoryAsync`2.<OnFindAsync>d__4.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Autumn.Mvc.Data.Repositories.CrudPageableRepositoryAsync`2.<FindAsync>d__6.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at Edel.Connector.Api.Services.UserService.<TryAddAdminIfNotExistUsersAsync>d__14.MoveNext() in C:\Projets\PERSO\edel.connector.api\src\Edel.Connector.Frontend.Api\Services\UserService.cs:line 143
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   at System.Threading.Tasks.Task.Wait()
+   at Edel.Connector.Api.ConnectorHelper.TryAddAdminIfNotExistUsers(IUserService userService) in C:\Projets\PERSO\edel.connector.api\src\Edel.Connector.Frontend.Api\ConnectorHelper.cs:line 34
+   at Edel.Connector.Api.ConnectorHelper.Initialize(IApplicationBuilder applicationBuilder) in C:\Projets\PERSO\edel.connector.api\src\Edel.Connector.Frontend.Api\ConnectorHelper.cs:line 25
+   at Edel.Connector.Api.Startup.Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime) in C:\Projets\PERSO\edel.connector.api\src\Edel.Connector.Frontend.Api\Startup.cs:line 149
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Hosting.ConventionBasedStartup.Configure(IApplicationBuilder app)
+   at Microsoft.AspNetCore.ApplicationInsights.HostingStartup.ApplicationInsightsLoggerStartupFilter.<>c__DisplayClass0_0.<Configure>b__0(IApplicationBuilder builder)
+   at Microsoft.ApplicationInsights.AspNetCore.ApplicationInsightsStartupFilter.<>c__DisplayClass0_0.<Configure>b__0(IApplicationBuilder app)
+   at Microsoft.AspNetCore.Hosting.Internal.AutoRequestServicesStartupFilter.<>c__DisplayClass0_0.<Configure>b__0(IApplicationBuilder builder)
+   at Microsoft.AspNetCore.Hosting.Internal.WebHost.BuildApplication()
+---> (Inner Exception #0) System.TimeoutException: A timeout occured after 30000ms selecting a server using CompositeServerSelector{ Selectors = MongoDB.Driver.MongoClient+AreSessionsSupportedServerSelector, LatencyLimitingServerSelector{ AllowedLatencyRange = 00:00:00.0150000 } }. Client view of cluster state is { ClusterId : "1", ConnectionMode : "Automatic", Type : "Unknown", State : "Disconnected", Servers : [{ ServerId: "{ ClusterId : 1, EndPoint : "Unspecified/localhost:27017" }", EndPoint: "Unspecified/localhost:27017", State: "Disconnected", Type: "Unknown", HeartbeatException: "MongoDB.Driver.MongoConnectionException: An exception occurred while opening a connection to the server. ---> MongoDB.Driver.MongoAuthenticationException: Unable to authenticate using sasl protocol mechanism SCRAM-SHA-1. ---> MongoDB.Driver.MongoCommandException: Command saslStart failed: Authentication failed..
+   at MongoDB.Driver.Core.WireProtocol.CommandUsingQueryMessageWireProtocol`1.ProcessReply(ConnectionId connectionId, ReplyMessage`1 reply)
+   at MongoDB.Driver.Core.WireProtocol.CommandUsingQueryMessageWireProtocol`1.<ExecuteAsync>d__14.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Authentication.SaslAuthenticator.<AuthenticateAsync>d__7.MoveNext()
+   --- End of inner exception stack trace ---
+   at MongoDB.Driver.Core.Authentication.SaslAuthenticator.<AuthenticateAsync>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Authentication.DefaultAuthenticator.<AuthenticateAsync>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Authentication.AuthenticationHelper.<AuthenticateAsync>d__1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Connections.ConnectionInitializer.<InitializeConnectionAsync>d__3.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Connections.BinaryConnection.<OpenHelperAsync>d__48.MoveNext()
+   --- End of inner exception stack trace ---
+   at MongoDB.Driver.Core.Connections.BinaryConnection.<OpenHelperAsync>d__48.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Servers.ServerMonitor.<HeartbeatAsync>d__27.MoveNext()" }] }.
+   at MongoDB.Driver.Core.Clusters.Cluster.ThrowTimeoutException(IServerSelector selector, ClusterDescription description)
+   at MongoDB.Driver.Core.Clusters.Cluster.WaitForDescriptionChangedHelper.HandleCompletedTask(Task completedTask)
+   at MongoDB.Driver.Core.Clusters.Cluster.<WaitForDescriptionChangedAsync>d__53.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.Core.Clusters.Cluster.<SelectServerAsync>d__45.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.MongoClient.<AreSessionsSupportedAfterSeverSelctionAsync>d__47.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.MongoClient.<AreSessionsSupportedAsync>d__44.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.MongoClient.<StartImplicitSessionAsync>d__33.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at MongoDB.Driver.MongoCollectionImpl`1.<UsingImplicitSessionAsync>d__101`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Autumn.Mvc.Data.MongoDB.Repositories.MongoDBCrudPageableRepositoryAsync`2.<OnFindAsync>d__4.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Autumn.Mvc.Data.Repositories.CrudPageableRepositoryAsync`2.<FindAsync>d__6.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at Edel.Connector.Api.Services.UserService.<TryAddAdminIfNotExistUsersAsync>d__14.MoveNext() in C:\Projets\PERSO\edel.connector.api\src\Edel.Connector.Frontend.Api\Services\UserService.cs:line 143<---
+
+2018-11-21 08:57:16.601 +01:00 [Information] User profile is available. Using '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-21 08:57:16.679 +01:00 [Debug] Reading data from file '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys\key-82cdc63c-4783-4a05-addc-a5e0c607481c.xml"'.
+2018-11-21 08:57:16.689 +01:00 [Debug] Found key {82cdc63c-4783-4a05-addc-a5e0c607481c}.
+2018-11-21 08:57:16.717 +01:00 [Debug] Considering key {82cdc63c-4783-4a05-addc-a5e0c607481c} with expiration date 2018-12-10 19:19:01Z as default key.
+2018-11-21 08:57:16.730 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 08:57:16.733 +01:00 [Debug] Decrypting secret element using Windows DPAPI.
+2018-11-21 08:57:16.737 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 08:57:16.744 +01:00 [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+2018-11-21 08:57:16.753 +01:00 [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+2018-11-21 08:57:16.769 +01:00 [Debug] Using key {82cdc63c-4783-4a05-addc-a5e0c607481c} as the default key.
+2018-11-21 08:57:16.776 +01:00 [Debug] Key ring with default key {82cdc63c-4783-4a05-addc-a5e0c607481c} was loaded during application startup.
+2018-11-21 08:58:25.491 +01:00 [Information] User profile is available. Using '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-21 08:58:25.560 +01:00 [Debug] Reading data from file '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys\key-82cdc63c-4783-4a05-addc-a5e0c607481c.xml"'.
+2018-11-21 08:58:25.575 +01:00 [Debug] Found key {82cdc63c-4783-4a05-addc-a5e0c607481c}.
+2018-11-21 08:58:25.619 +01:00 [Debug] Considering key {82cdc63c-4783-4a05-addc-a5e0c607481c} with expiration date 2018-12-10 19:19:01Z as default key.
+2018-11-21 08:58:25.625 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 08:58:25.628 +01:00 [Debug] Decrypting secret element using Windows DPAPI.
+2018-11-21 08:58:25.632 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 08:58:25.636 +01:00 [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+2018-11-21 08:58:25.641 +01:00 [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+2018-11-21 08:58:25.647 +01:00 [Debug] Using key {82cdc63c-4783-4a05-addc-a5e0c607481c} as the default key.
+2018-11-21 08:58:25.651 +01:00 [Debug] Key ring with default key {82cdc63c-4783-4a05-addc-a5e0c607481c} was loaded during application startup.
+2018-11-21 08:58:26.541 +01:00 [Debug] Hosting starting
+2018-11-21 08:58:26.677 +01:00 [Debug] Hosting started
+2018-11-21 08:58:26.679 +01:00 [Debug] Loaded hosting startup assembly "Edel.Connector.Api"
+2018-11-21 08:58:26.681 +01:00 [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.ApplicationInsights.HostingStartup"
+2018-11-21 08:58:27.105 +01:00 [Debug] Connection id ""0HLIFGSF8III8"" started.
+2018-11-21 08:58:27.140 +01:00 [Debug] Connection id ""0HLIFGSF8III8"" received FIN.
+2018-11-21 08:58:27.143 +01:00 [Debug] Connection id ""0HLIFGSF8III8"" disconnecting.
+2018-11-21 08:58:27.148 +01:00 [Debug] Connection id ""0HLIFGSF8III8"" sending FIN.
+2018-11-21 08:58:27.152 +01:00 [Debug] Connection id ""0HLIFGSF8III8"" stopped.
+2018-11-21 08:58:27.843 +01:00 [Debug] Connection id ""0HLIFGSF8III9"" started.
+2018-11-21 08:58:27.896 +01:00 [Debug] Connection id ""0HLIFGSF8IIIA"" started.
+2018-11-21 08:58:28.016 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/  
+2018-11-21 08:58:28.074 +01:00 [Debug] The request path "" does not match the path filter
+2018-11-21 08:58:28.201 +01:00 [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+2018-11-21 08:58:28.425 +01:00 [Debug] Request did not match any routes.
+2018-11-21 08:58:28.446 +01:00 [Debug] Connection id ""0HLIFGSF8III9"" completed keep alive response.
+2018-11-21 08:58:28.451 +01:00 [Information] Request finished in 442.832ms 404 
+2018-11-21 08:58:34.502 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/swagger  
+2018-11-21 08:58:34.507 +01:00 [Debug] Connection id ""0HLIFGSF8III9"" completed keep alive response.
+2018-11-21 08:58:34.510 +01:00 [Information] Request finished in 7.1614ms 301 
+2018-11-21 08:58:34.518 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/swagger/  
+2018-11-21 08:58:34.538 +01:00 [Debug] Connection id ""0HLIFGSF8III9"" completed keep alive response.
+2018-11-21 08:58:34.542 +01:00 [Information] Request finished in 24.0178ms 200 text/html
+2018-11-21 08:58:34.737 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/swagger/v1/swagger.json  
+2018-11-21 08:58:35.811 +01:00 [Debug] Connection id ""0HLIFGSF8III9"" completed keep alive response.
+2018-11-21 08:58:35.814 +01:00 [Information] Request finished in 1076.3222ms 200 application/json
+2018-11-21 08:58:45.872 +01:00 [Debug] Connection id ""0HLIFGSF8IIIA"" received FIN.
+2018-11-21 08:58:45.884 +01:00 [Debug] Connection id ""0HLIFGSF8IIIA"" disconnecting.
+2018-11-21 08:58:45.890 +01:00 [Debug] Connection id ""0HLIFGSF8IIIA"" sending FIN.
+2018-11-21 08:58:45.890 +01:00 [Debug] Connection id ""0HLIFGSF8IIIA"" stopped.
+2018-11-21 09:20:02.419 +01:00 [Information] User profile is available. Using '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+2018-11-21 09:20:02.483 +01:00 [Debug] Reading data from file '"C:\Users\gwendall.garnier\AppData\Local\ASP.NET\DataProtection-Keys\key-82cdc63c-4783-4a05-addc-a5e0c607481c.xml"'.
+2018-11-21 09:20:02.498 +01:00 [Debug] Found key {82cdc63c-4783-4a05-addc-a5e0c607481c}.
+2018-11-21 09:20:02.539 +01:00 [Debug] Considering key {82cdc63c-4783-4a05-addc-a5e0c607481c} with expiration date 2018-12-10 19:19:01Z as default key.
+2018-11-21 09:20:02.545 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 09:20:02.548 +01:00 [Debug] Decrypting secret element using Windows DPAPI.
+2018-11-21 09:20:02.553 +01:00 [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+2018-11-21 09:20:02.558 +01:00 [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+2018-11-21 09:20:02.566 +01:00 [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+2018-11-21 09:20:02.573 +01:00 [Debug] Using key {82cdc63c-4783-4a05-addc-a5e0c607481c} as the default key.
+2018-11-21 09:20:02.575 +01:00 [Debug] Key ring with default key {82cdc63c-4783-4a05-addc-a5e0c607481c} was loaded during application startup.
+2018-11-21 09:20:03.486 +01:00 [Debug] Hosting starting
+2018-11-21 09:20:03.612 +01:00 [Debug] Hosting started
+2018-11-21 09:20:03.614 +01:00 [Debug] Loaded hosting startup assembly "Edel.Connector.Api"
+2018-11-21 09:20:03.618 +01:00 [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.ApplicationInsights.HostingStartup"
+2018-11-21 09:20:04.046 +01:00 [Debug] Connection id ""0HLIFH8HP52T2"" started.
+2018-11-21 09:20:04.079 +01:00 [Debug] Connection id ""0HLIFH8HP52T2"" received FIN.
+2018-11-21 09:20:04.082 +01:00 [Debug] Connection id ""0HLIFH8HP52T2"" disconnecting.
+2018-11-21 09:20:04.086 +01:00 [Debug] Connection id ""0HLIFH8HP52T2"" sending FIN.
+2018-11-21 09:20:04.089 +01:00 [Debug] Connection id ""0HLIFH8HP52T2"" stopped.
+2018-11-21 09:20:04.601 +01:00 [Debug] Connection id ""0HLIFH8HP52T3"" started.
+2018-11-21 09:20:04.678 +01:00 [Debug] Connection id ""0HLIFH8HP52T4"" started.
+2018-11-21 09:20:04.749 +01:00 [Information] Request starting HTTP/1.1 GET http://localhost:54279/  
+2018-11-21 09:20:04.794 +01:00 [Debug] The request path "" does not match the path filter
+2018-11-21 09:20:04.919 +01:00 [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+2018-11-21 09:20:05.095 +01:00 [Debug] Request did not match any routes.
+2018-11-21 09:20:05.111 +01:00 [Debug] Connection id ""0HLIFH8HP52T3"" completed keep alive response.
+2018-11-21 09:20:05.115 +01:00 [Information] Request finished in 369.9796ms 404 
+2018-11-21 09:20:26.650 +01:00 [Debug] Connection id ""0HLIFH8HP52T4"" received FIN.
+2018-11-21 09:20:26.655 +01:00 [Debug] Connection id ""0HLIFH8HP52T4"" disconnecting.
+2018-11-21 09:20:26.670 +01:00 [Debug] Connection id ""0HLIFH8HP52T4"" sending FIN.
+2018-11-21 09:20:26.670 +01:00 [Debug] Connection id ""0HLIFH8HP52T4"" stopped.
+2018-11-21 09:25:15.304 +01:00 [Debug] Connection id ""0HLIFH8HP52T3"" received FIN.
+2018-11-21 09:25:15.310 +01:00 [Debug] Connection id ""0HLIFH8HP52T3"" disconnecting.
+2018-11-21 09:25:15.313 +01:00 [Debug] Connection id ""0HLIFH8HP52T3"" sending FIN.
+2018-11-21 09:25:15.314 +01:00 [Debug] Connection id ""0HLIFH8HP52T3"" stopped.

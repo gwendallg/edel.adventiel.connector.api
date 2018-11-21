@@ -11,8 +11,11 @@ using Edel.Connector.Api.Models.Subscriptions;
 using Edel.Connector.Api.Models.Users;
 using Edel.Connector.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
@@ -24,13 +27,12 @@ namespace Edel.Connector.Api
         /// 
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="configuration"></param>
+        /// <param name="connectionString">chaine de connnection</param>
+        /// <param name="databaseName"></param>
         /// <returns></returns>
         public static IServiceCollection AddInitialization(this IServiceCollection serviceCollection,
-            IConfiguration configuration)
+            string connectionString, string databaseName)
         {
-            var connectionString = $"{configuration["ConnectionStrings:0:ConnectionString"]}";
-            var databaseName = $"{configuration["ConnectionStrings:0:Database"]}";
             // mongo Client ioc registration
 
             var mongoClient = new MongoClient(connectionString);
@@ -53,6 +55,13 @@ namespace Edel.Connector.Api
                 // check user collection
                 checks.AddMongoCheck(connectionString, databaseName, new[] {"user"});
             });
+
+            var pack = new ConventionPack
+            {
+                new EnumRepresentationConvention(BsonType.String)
+            };
+
+            ConventionRegistry.Register("EnumStringConvention", pack, t => true);
  
             return serviceCollection;
         }
@@ -79,12 +88,15 @@ namespace Edel.Connector.Api
             return new Mapper(mapperConfiguration);
         }
 
-        
+
         public static IServiceCollection AddSecurity(this IServiceCollection serviceCollection,
             IConfiguration configuration)
         {
             // Get options from app settings
 
+            var validIssuer = configuration.GetValue<string>("JWT_VALID_ISSUER");
+            var validAudience = configuration.GetValue<string>("JWT_VALID_AUDIENCE");
+            var securityKey = configuration.GetValue<string>("JWT_SECURITY_KEY");
 
             serviceCollection
                 .AddAuthentication(options =>
@@ -100,10 +112,10 @@ namespace Edel.Connector.Api
                             ValidateAudience = true,
                             ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
-                            ValidIssuer = $"{configuration["Jwt:ValidIssuer"]}",
-                            ValidAudience = $"{configuration["Jwt:ValidAudience"]}",
+                            ValidIssuer = validIssuer,
+                            ValidAudience = validAudience,
                             IssuerSigningKey =
-                                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecurityKey"]))
+                                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey))
                         };
 
                         options.Events = new JwtBearerEvents()
@@ -115,8 +127,6 @@ namespace Edel.Connector.Api
 
             return serviceCollection;
         }
-
-
 
         private static Task CheckAuthorizationAsync(TokenValidatedContext context)
         {

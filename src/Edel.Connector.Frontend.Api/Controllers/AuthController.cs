@@ -88,11 +88,11 @@ namespace Edel.Connector.Api.Controllers
                 claims.Add(new Claim(ClaimTypes.Role, $"{item.ResourcePath}:{scopes}"));
             }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes($"{_configuration["Jwt:SecurityKey"]}"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("JWT_SECURITY_KEY")));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                issuer: $"{_configuration["Jwt:ValidIssuer"]}",
-                audience: $"{_configuration["Jwt:ValidAudience"]}",
+                issuer: _configuration.GetValue<string>("JWT_VALID_ISSUER"),
+                audience: _configuration.GetValue<string>("JWT_VALID_AUDIENCE"),
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);

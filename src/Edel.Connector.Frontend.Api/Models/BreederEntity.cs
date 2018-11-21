@@ -16,6 +16,10 @@ namespace Edel.Connector.Api.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
+        [Required]
+        public string TenantId {get; set; }
+
         /// <summary>
         /// breeder ID
         /// </summary>

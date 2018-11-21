@@ -1,4 +1,5 @@
-﻿using Autumn.Mvc;
+﻿using System.Text;
+using Autumn.Mvc;
 using Autumn.Mvc.Data;
 using Autumn.Mvc.Data.Configurations;
 using Autumn.Mvc.Data.MongoDB;
@@ -26,18 +27,51 @@ namespace Edel.Connector.Api
     {
         private readonly IConfiguration _configuration;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment environment)
         {
-            _configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(environment.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+            _configuration = builder.Build();
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration).CreateLogger();
+                .ReadFrom.Configuration(_configuration).CreateLogger();
+        }
+
+        private string BuildConnectionString()
+        {
+            var hosts = _configuration.GetValue<string>("DB_HOSTS");
+            var userName = _configuration.GetValue<string>("DB_USER");
+            var password = _configuration.GetValue<string>("DB_PASSWORD");
+            var options = _configuration.GetValue<string>("DB_OPTIONS");
+            var databaseName = _configuration.GetValue<string>("DB_NAME");
+
+            var builder = new StringBuilder();
+            builder.Append("mongodb://");
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                builder.Append(userName + ":");
+                builder.Append(password + "@");
+            }
+
+            builder.Append(hosts);
+            
+            if (!string.IsNullOrWhiteSpace(options))
+            {
+                builder.Append("?" + options);
+            }
+
+            return builder.ToString();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = $"{_configuration[key: "ConnectionStrings:0:ConnectionString"]}";
-            var databaseName = $"{_configuration[key: "ConnectionStrings:0:Database"]}";
+
+            var connectionString = BuildConnectionString();
+            var databaseName = _configuration.GetValue<string>("DB_NAME");
             services
                 .AddAutumn(config =>
                 {
@@ -77,16 +111,9 @@ namespace Edel.Connector.Api
                 .AddMvc();
 
             services
-                .AddInitialization(_configuration)
+                .AddInitialization(connectionString, databaseName)
                 .AddTransient<IServiceFactory, ServiceFactory>()
                 .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            var pack = new ConventionPack
-            {
-                new EnumRepresentationConvention(BsonType.String)
-            };
-
-            ConventionRegistry.Register("EnumStringConvention", pack, t => true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
